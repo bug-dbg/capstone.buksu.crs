@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="/css/style.css"> -->
+    <link rel="stylesheet" href="/css/login.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css">
+
+    <meta name="google-signin-client_id" content="270040489280-ljn99nm3ve4m8su2t77dras268tp2fiu.apps.googleusercontent.com">
+ 
+
+    <title>Login Page</title>
+</head>
+<body>
+    <!-- <div class="main">
+       <form action="/login" method="post">
+            <h1>SIGN IN TO YOUR ACCOUNT</h1>
+        
+            <input type="email" name="email" placeholder="Example@gmail.com" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button>SIGN IN</button>
+       </form>
+       <h6>or using:</h6>
+       <div class="g-signin2" data-onsuccess="onSignIn"></div>
+
+       <div>
+            <p>Dont Have an Account?<a href="/register">Sign up</a></p>
+       </div>
+       
+    </div> -->
+
+    <div class="container">
+        <div class="header">
+            <h2>Sign In</h2>
+        </div>
+        <form action="http://localhost:5000/login" method="post" id="form" class="form">
+            <div class="form-control">
+                <label for="email">Email</label>
+                <input type="email" name="email" placeholder="example@gmail.com" id="email" />
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error message</small>
+            </div>
+            <div class="form-control">
+                <label for="password">Password</label>
+                <input type="password" name="password" placeholder="Password" id="password"/>
+                <i class="fas fa-check-circle"></i>
+                <i class="fas fa-exclamation-circle"></i>
+                <small>Error message</small>
+            </div>
+            <button type="submit">Sign In</button>
+            <div class="child-container">
+                <p>or using:</p>
+                <div class="g-signin2" data-onsuccess="onSignIn"></div>
+         
+                <div>
+                     <p>Don't Have an Account?<a href="/register">Sign up</a></p>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script defer src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script defer src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/client-side_login-validation.js"></script>
+
+
+    <!-- Google -->
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script defer src="/js/google-api.js"></script> 
+
+</body>
+</html>

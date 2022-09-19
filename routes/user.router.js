@@ -1,0 +1,43 @@
+const router = require('express').Router()
+const userCtrl = require('../controllers/user.controller')
+const feedbackCtrl = require('../controllers/feedback.controller')
+
+// Auth middleware
+const { validateToken } = require('../middlewares/JWT')
+
+
+// custom routes
+router.post('/login', userCtrl.login)
+router.post('/register', userCtrl.register)
+router.get('/profile', userCtrl.getUserById)
+router.get('/all-users', userCtrl.getUsers)
+router.get('/logout', userCtrl.logout)
+
+router.get('/user-email', userCtrl.getUserEmail)
+
+router.post('/feedback', feedbackCtrl.feedback)
+
+router.get('/', (req, res) => {
+    res.render('index')
+})
+
+router.get('/register', (req, res) => {
+    res.render('register_view/register')
+})
+
+router.get('/home', validateToken, (req, res) => {
+    res.render('user_view/user')
+    
+})
+
+router.get('/test', /*validateToken,*/ (req, res) => {
+    res.render('test_view/test')
+})
+
+// fix this route
+// create a bug in api/test-data route
+// router.get('*', (req, res) => {
+//     res.render('page_not_found/not_found.html')
+// })
+
+module.exports  = router

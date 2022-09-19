@@ -1,0 +1,40 @@
+{
+  "name": "capstone.crs.project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js",
+    "build": "webpack"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@adminjs/express": "^4.1.0",
+    "@adminjs/mongoose": "^2.0.2",
+    "adminjs": "^5.9.9",
+    "aws-sdk": "^2.1213.0",
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.20.0",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.0.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.3",
+    "express-flash": "^0.0.2",
+    "express-formidable": "^1.2.0",
+    "express-session": "^1.17.2",
+    "google-auth-library": "^8.0.2",
+    "jsonwebtoken": "^8.5.1",
+    "mock-aws-s3": "^4.0.2",
+    "mongoose": "^6.2.10",
+    "nock": "^13.2.9",
+    "tslib": "^2.3.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15",
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2"
+  }
+}
