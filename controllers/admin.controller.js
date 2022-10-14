@@ -18,6 +18,12 @@ const options = {
     branding: {
        companyName: 'Test'
     }
+    // dashboard: {
+    //     handler: async () => {
+    
+    //     },
+    //     component: AdminJS.bundle('./my-dashboard-component')
+    //   }
 }
 
 module.exports = options
