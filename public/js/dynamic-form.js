@@ -8,6 +8,13 @@ const e_text = document.getElementById('e_text')
 const submit = document.getElementById('submit')
 const answerEl = document.querySelectorAll('.answer')
 
+// prevent from submitting 
+// const form = document.getElementsByTagName('form')[0]
+
+// form.onsubmit = () => { 
+//     return false
+// }
+
 var getTestData = $.get('http://localhost:5000/api/test-data')
     
     .done(() => {
@@ -54,7 +61,8 @@ var getTestData = $.get('http://localhost:5000/api/test-data')
         }
 
         submit.addEventListener('click', () => {  
-            
+          
+            //e.preventDefault()
             // event listener when clicking the submit button
         
             const answer = getSelected();
@@ -65,13 +73,34 @@ var getTestData = $.get('http://localhost:5000/api/test-data')
                 // if submitted it will load another question 
 
             }
+            
+            if(currentTest === 9) {
+                submit.innerHTML = `Submit`
+                
+                
+            }
+
+            // if(currentTest === testData.length) {
+            //     console.log('hello')
+            //     form.onsubmit = () => {
+            //         return true
+            //     }
+            // }
+
+            // if(currentTest > 10) {
+            //     form.onsubmit = () => {
+            //         return true
+            //     }
+            // }
+            
 
             if (currentTest < testData.length) {
                 loadTest()
-            } else {
+            }  else {
                 quiz.innerHTML = `<h3>Done</h3>
                 <button onclick="location.reload()">Get Recommendation</button>`             
             }
             console.log(answer); 
+
         });
     })

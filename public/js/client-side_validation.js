@@ -49,10 +49,10 @@ function checkInputs() {
 	if(emailValue === '') {
 		setErrorFor(email, 'Email field cannot be blank')
         success = false
-	} else if (emailAlreadyExist(emailValue)) { 
-		console.log(emailAlreadyExist(emailValue))
-        setErrorFor(email, 'Email Already Existed! Try another one.')
-        success = false
+	// } else if (emailAlreadyExist(emailValue)) { 
+	// 	console.log(emailAlreadyExist(emailValue))
+    //     setErrorFor(email, 'Email Already Existed! Try another one.')
+    //     success = false
     } else if (!isEmail(emailValue)) {
 		setErrorFor(email, 'Not a valid email')
         success = false

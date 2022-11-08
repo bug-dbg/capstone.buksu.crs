@@ -1,4 +1,5 @@
 import os
+import os.path
 from tabnanny import verbose
 from textwrap import indent
 from tkinter import Y
@@ -7,15 +8,19 @@ from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS,cross_origin
 
-import numpy as np 
-from sklearn.linear_model import LinearRegression
+import numpy as np
+from random import randint
+from sklearn.utils import shuffle
+from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import MinMaxScaler
-from sklearn.svm import SVR
-from sklearn.model_selection import train_test_split
-from keras.models import Sequential
-from keras.layers import Dense, LSTM
 
-from sklearn import datasets
+import tensorflow as tf
+from tensorflow import keras
+from keras.models import Sequential
+from keras.layers import Activation, Dense, Dropout, Flatten
+from keras.optimizers import adam_v2
+from keras.metrics import categorical_crossentropy
+from keras.models import load_model
 
 import pandas as pd
 from pandas import DataFrame
@@ -23,48 +28,6 @@ pd.options.mode.chained_assignment = None  # default='warn'
 import sqlite3
 
 import warnings
-
-from keras.models import load_model
-from sklearn.model_selection import train_test_split
-from keras.layers import Input, Embedding, Flatten, Dot, Dense, Concatenate
-from keras.models import Model
-warnings.filterwarnings('ignore')
-
-
-from keras.preprocessing.text import hashing_trick
-from keras.preprocessing.text import text_to_word_sequence
-
-
-# example making new probability predictions for a classification problem
-from keras.models import Sequential
-from keras.layers import Dense
-from sklearn.datasets import make_blobs
-from sklearn.preprocessing import MinMaxScaler
-
-from sklearn.linear_model import LinearRegression
-from sklearn.feature_extraction import DictVectorizer
-
-# from Techvidvan tutorial
-from ast import literal_eval
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
-
-# from medium.com
-import re
-from collections import Counter
-from keras.preprocessing.text import Tokenizer
-from keras.utils import np_utils
-from keras.models import Sequential, load_model
-from keras.layers import Dense, Dropout, LSTM, Bidirectional
-
-import matplotlib.pyplot as plt
-from matplotlib.pylab import rcParams
-rcParams['figure.figsize']=20,10
-from keras.models import Sequential
-from keras.layers import LSTM,Dropout,Dense
-from sklearn.preprocessing import MinMaxScaler
-
-
 
 
 
@@ -100,303 +63,88 @@ class Enrollmentdata(db.Model):
             "studentShiftees" : self.studentShiftees
         }
 
-# @app.route('/')
-# def index():
-#     return 'Welcome to BukSU CRS'
+@app.route('/')
+def index():
+    return 'Welcome to BukSU CRS'
 
-# @app.route('/api/courses')
-# def get_courses():
-#     courseData = Enrollmentdata.query.order_by(Enrollmentdata.course).all()
-#     return jsonify({'Courses': list(map(lambda course: course.serialize(), courseData))})
+@app.route('/api/courses')
+def get_courses():
+    courseData = Enrollmentdata.query.order_by(Enrollmentdata.course).all()
+    return jsonify({'Courses': list(map(lambda course: course.serialize(), courseData))})
 
-# @app.route('/api/courses/recommend/')
-# def get_course_recommendation():
+@app.route('/api/courses/recommend/')
+def get_course_recommendation():
   
+    train_labels = [[1,0,0],[0,1,0],[0,0,1]]
+    train_samples = [
+        [2,3,4,5,2,4,5,2,5,5],
+        [5,5,4,3,2,1,3,3,3,4],
+        [2,3,1,5,5,5,5,5,5,5]
+    ]
 
-# sample code 1
-    # coursedatadf = pd.read_sql('Enrollmentdata', con= engine)   
-    # coursedatadf = coursedatadf.set_index('index')
-    # data = coursedatadf.filter(['courseID'])
+    # to use the fit function the data type of X and y should be the same
+    # that's why train_samples (X) is stored as a numpy array and also the train_lables (y)
 
+    train_labels = np.array(train_labels)
+    train_samples = np.array(train_samples)
+    # used the shuffle function to shuffle both train samples and labels to remove any impose order for the data generation process
+    train_labels, train_samples = shuffle(train_labels, train_samples)
 
-    # data['Prediction'] = data[['courseID']]
-    # X = np.array(data.drop(['Prediction'],1))
-    # y = np.array(data['Prediction'])
-    # x_train, x_test, y_train, y_test = train_test_split(X, y,test_size=0.2)
-    # #  radial basis function (rbf)
-    # svr_rbf = SVR(kernel='rbf', C=1e3, gamma=0.1)
-    # svr_rbf.fit(x_train, y_train)
-    # svm_confidence = svr_rbf.score(x_test, y_test)
-    # print("svm confidence: ", svm_confidence)
+    # we are normalizing or standardizing the data to train the data much quicker and effecient
+    # MinMaxScaler function is use to create a feature range of (0 - 1)
 
-    # lr = LinearRegression()
+    scaler = MinMaxScaler(feature_range=(0, 1))
+    # and is used to rescale from 13-100 (the range of age in the dataset) to 0-1
 
-    # lr.fit(x_train, y_train)
-
-    # lr_confidence =lr.score(x_test, y_test)
-    # print("lr confidence: ", lr_confidence)
-
-    # x_forecast = np.array(data.drop(['Prediction'],1))
-    # #print(x_forecast)
-
-    # lr_prediction = lr.predict(x_forecast)
-    # #print("lr prediction: ", lr_prediction)
-    # dflr=pd.DataFrame(lr_prediction, columns=["prediction"])
-    # dflr['courseID'] = dflr.index + 1 
-    # # print(df.reset_index().to_json(orient='records'))
-    # svm_prediction = svr_rbf.predict(x_forecast)
-    # #print("svm prediction: ", svm_prediction)
-    # dfsvm=pd.DataFrame(svm_prediction, columns=["prediction"])
-    # dfsvm['courseID'] = dfsvm.index + 1
-
-    # return jsonify({'lr': dflr.to_json(orient='records'), 'svm' : dfsvm.to_json(orient='records')})
+    scaled_train_samples = scaler.fit_transform(train_samples)
+    # reshape the data because the fit function does not accecpt 1 dimensional data
 
 
+    # training the data model
+    model = Sequential([
+    Dense(units = 16, activation = 'relu', input_shape = (scaled_train_samples.shape[1], )),
+    Dense(units = 32, activation = 'relu'),
+    Dense(units = 3, activation = 'sigmoid')
+    ])
+
+    print(model.summary())
+
+    # prepares the model for training
+    # gets the order needed before training
+
+    model.compile(optimizer=adam_v2.Adam(learning_rate=0.0001), loss='binary_crossentropy', metrics=['accuracy'])
+
+    # training accured when fit function is called
+    # batch_size, how many samples is included in one batch to be process
+    # epochs, train the data 30x before completing the training process 
+    # verbose, option to see output when we run the fit function
+    # validation_split, it splits the portion of the training dataset to a validation dataset
+
+    model.fit(x=scaled_train_samples, y=train_labels, batch_size=10, epochs=30)
+    scores = model.evaluate(scaled_train_samples, train_labels, verbose=0)
+
+    print("%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
+    if os.path.isfile('models/crs_model.h5') is False:
+        model.save_weights('models/crs_model.h5')
+
+    new_model = load_model('models/crs_model.h5')
+    new_model.compile(optimizer=adam_v2.Adam(learning_rate=0.0001), loss='binary_crossentropy', metrics=['accuracy'])
+    new_model.fit(x=scaled_train_samples, y=train_labels, batch_size=10, epochs=30)
+    score = new_model.evaluate(scaled_train_samples, train_labels, verbose=0)
+    print("%s: %.2f%%" % (new_model.metrics_names[1], score[1]*100))
+    actual_sample = np.array([[2,3,4,5,2,4,5,2,5,5]])
+
+    prediction = new_model.predict(actual_sample, batch_size=None, verbose=0, steps=None)
+    print(prediction)
+
+    return jsonify({'prediction': prediction.to_json(orient='records')})
 
 
-    
-# sample code 2
-
-    # dat = sqlite3.connect('course.db')
-    # query = dat.execute("SELECT * From Enrollmentdata")
-    # cols = [column[0] for column in query.description]
-    # dataset= pd.DataFrame.from_records(data = query.fetchall(), columns = cols)
-
-    # #print(datadf)
-
-    # train, test = train_test_split(dataset, test_size=0.2, random_state=42)
-
-    # # creating course embedding path
-    # student_dropout_input = Input(shape=[1], name="Student-Dropout-Input")
-    # student_dropout_embedding = Embedding(1000, 5, name="Course-Embedding")(student_dropout_input)
-    # student_dropout_vec = Flatten(name="Flatten-dropout")(student_dropout_embedding)
-
-    # # creating enrolled student embedding path
-    # enrolled_student_input = Input(shape=[1], name="Enrolled-Student-Input")
-    # enrolled_student_embedding = Embedding(1000, 5, name="Enrolled-Student-Embedding")(enrolled_student_input)
-    # enrolled_student_vec = Flatten(name="Flatten-enrollment")(enrolled_student_embedding)
-    # conc = Concatenate()([student_dropout_vec, enrolled_student_vec])
-    # # add fully-connected-layers
-    # fc1 = Dense(128, activation='relu')(conc)
-    # fc2 = Dense(32, activation='relu')(fc1)
-    # out = Dense(1)(fc2)
-    # # Create model and compile it
-    # model2 = Model([student_dropout_input, enrolled_student_input], out)
-    # model2.compile('adam', 'mean_squared_error')
-
-    # history = model2.fit([train.student_dropouts, train.enrolled_students], train.student_dropouts, epochs=5, verbose=1)
-
-# sample code 3
-# generate 2d classification dataset
-    # X, y = make_blobs(n_samples=100, centers=2, n_features=2, random_state=1)
-    # scalar = MinMaxScaler()
-    # scalar.fit(X)
-    # X = scalar.transform(X)
-    # # define and fit the final model
-    # model = Sequential()
-    # model.add(Dense(4, input_shape=(2,), activation='relu'))
-    # model.add(Dense(4, activation='relu'))
-    # model.add(Dense(1, activation='sigmoid'))
-    # model.compile(loss='binary_crossentropy', optimizer='adam')
-    # model.fit(X, y, epochs=500, verbose=0)
-    # # new instances where we do not know the answer
-    # Xnew, _ = make_blobs(n_samples=3, centers=2, n_features=2, random_state=1)
-    # Xnew = scalar.transform(Xnew)
-    # # make a prediction
-    # ynew = model.predict(Xnew)
-    # # show the inputs and predicted outputs
-    # for i in range(len(Xnew)):
-    #     print("X=%s, Predicted=%s" % (Xnew[i], ynew[i]))
-
-
-# sample code 4
-    # mapping  = {}
-
-    # cols = coursedatadf.drop('courseID', axis= 1).columns
-    
-    # for col in cols:
-    #     mapping[col] = {course: i for i, course in enumerate(df[col].unique())}
-
-    # def mapping_func(row):
-    #     return pd.Series([mapping[col][row[col]] for col in cols])
-    # #return 'Recommended Course API in JSON format'
-
-    # X = coursedatadf.apply(mapping_func, axis=1 )
-    # y = coursedatadf['course']
-    # model = LinearRegression()
-    # model.fit(X, y)
-    # print(model.predict([mapping['course']['Bachelor in Science in Information Technology'], mapping['enrolledStudents']['200']]))
-
-
-
-# if __name__ == "__main__":
-#     app.run(debug=True)
-
-# test code
-
-coursedatadf = pd.read_sql('Enrollmentdata', con= engine) 
-
-
-features = ["course", "enrolledStudents", "studentDropouts", "studentShiftees"]
 
 
     
-#print(coursedatadf[features].head(10))
-
-def clean_data(row):
-    if isinstance(row, list):
-        return [str.lower(i.replace("", "")) for i in row]
-    else:
-        if isinstance(row, str):
-            return str.lower(row.replace("", ""))
-        else:
-            return ""
-
-for feature in features:
-    coursedatadf[feature] = coursedatadf[feature].apply(clean_data)
-
-def create_soup(features):
-    return ' '.join(features['course']) + ' ' + ''.join(features['enrolledStudents'])
-
-coursedatadf["soup"] = coursedatadf.apply(create_soup, axis=1)
-
-# print(coursedatadf["soup"].head())
 
 
-# Create a reverse mapping of course to indices. 
-# By this, we can easily find the course description of the course based on the index.
-
-coursedatadf = coursedatadf.reset_index()
-indices = pd.Series(coursedatadf.index, index=coursedatadf['course'])
-indices = pd.Series(coursedatadf.index, index=coursedatadf["course"]).drop_duplicates()
-
-print(indices.head())
-
-def get_recommendations():
-    # coursedatadf = pd.read_sql('Enrollmentdata', con= engine)
-    # data = coursedatadf.filter(['courseID'])
-    # pd.set_option("display.max.columns", None)
-    # data['Prediction'] = data[['courseID']]
-    # X = np.array(data.drop(['Prediction'],1))
-    # X = np_utils.to_categorical(X)
-    # print(X.shape)
-    # y = np.array(data['Prediction'])
-    # print(y.shape)
-
-    coursedatadf = pd.read_sql('Enrollmentdata', con= engine)
-    data = coursedatadf.filter(['courseID'])
-    pd.set_option("display.max.columns", None)
-
-    
-    data['Prediction Data'] = coursedatadf[["enrolledStudents"]]
-    X = np.array(data.drop(['Prediction Data'],1))
-    print(X.shape)
-    y = np.array(data['Prediction Data'])
-    print(y.shape)
-
-
-   
-    x_train, x_test, y_train, y_test = train_test_split(X, y, test_size= 0.2)
-    #  radial basis function (rbf)
-    # support vector regression (svr)
-    svr_rbf = SVR(kernel='rbf', C=1e3, gamma=0.1)
-    svr_rbf.fit(x_train, y_train)
-
-    svm_confidence = svr_rbf.score(x_test, y_test)
-    print("svm confidence: ", svm_confidence)
-
-    # linear regression (lr)
-    lr = LinearRegression()
-
-    lr.fit(x_train, y_train)
-
-    lr_confidence =lr.score(x_test, y_test)
-    print("lr confidence: ", lr_confidence)
-
-    x_forecast = np.array(data.drop(['Prediction Data'],1))[-3:]
-    # print(x_forecast)
-
-    lr_prediction = lr.predict(x_forecast)
-    #print("lr prediction: ", lr_prediction)
-    # Course Prediction Rate
-    dflr=pd.DataFrame(lr_prediction, columns=["prediction"])
-    print(dflr)
-    # print(df.reset_index().to_json(orient='records'))
-    svm_prediction = svr_rbf.predict(x_forecast)
-    #print("svm prediction: ", svm_prediction)
-    dfsvm=pd.DataFrame(svm_prediction, columns=["prediction"])
-    print(dfsvm)
-
-    prediction_score = list(enumerate(dflr))
-    prediction_score = sorted(prediction_score, key=lambda x: x[1], reverse=True)
-# get course description  by index
-    course_indices = [ind[0] for ind in prediction_score]
-    course = coursedatadf["course"].iloc(course_indices)
-
-    return course
-
-print(get_recommendations())
-
-
-
-# towardsdatascience.com
-
-# coursedatadf = pd.read_sql('Enrollmentdata', con= engine) 
-
-# coursedatadf = coursedatadf.sort_index(ascending=True, axis=0)
-
-# data = pd.DataFrame(index=range(0, len(coursedatadf)), columns=['enrolledStudents', 'studentDropouts', 'studentShiftees'])
-
-# for i in range(0, len(data)):
-#     data["enrolledStudents"][i] = coursedatadf['enrolledStudents'][i]
-#     data["studentDropouts"][i] = coursedatadf['studentDropouts'][i]
-#     data["studentShiftees"][i] = coursedatadf['studentShiftees'][i]
-
-# #print(data.head())
-
-# scaler=MinMaxScaler(feature_range=(0,1))
-
-# final_data = data.values
-# train_data = final_data[0:200,:]
-# valid_data = final_data[200:,:]
-
-# scaler=MinMaxScaler(feature_range=(0,1))
-
-# scaled_data=scaler.fit_transform(final_data)
-# x_train_data,y_train_data=[],[]
-# for i in range(60,len(train_data)):
-#     x_train_data.append(scaled_data[i-60:i,0])
-#     y_train_data.append(scaled_data[i,0])
-
-# #LSTM Model
-
-# lstm_model=Sequential()
-# lstm_model.add(LSTM(units=50,return_sequences=True,input_shape=(np.shape(x_train_data)[1],1)))
-# lstm_model.add(LSTM(units=50))
-# lstm_model.add(Dense(1))
-# model_data=data[len(data)-len(valid_data)-60:].values
-# model_data=model_data.reshape(-1,1)
-# model_data=scaler.transform(model_data)
-
-# # Train and test data
-
-# lstm_model.compile(loss='mean_squared_error',optimizer='adam')
-# lstm_model.fit(x_train_data,y_train_data,epochs=1,batch_size=1,verbose=2)
-
-# X_test=[]
-# for i in range(60,model_data.shape[0]):
-#     X_test.append(model_data[i-60:i,0])
-# X_test=np.array(X_test)
-# X_test=np.reshape(X_test,(X_test.shape[0],X_test.shape[1],1))
-
-# # Prediction Function
-# predicted_course_data=lstm_model.predict(X_test)
-# predicted_course_data=scaler.inverse_transform(predicted_course_data)
-# print(predicted_course_data)
-
-# train_data=data[:200]
-# valid_data=data[200:]
-# valid_data['Predictions']=predicted_course_data
-# plt.plot(train_data["Close"])
-# plt.plot(valid_data[['Close',"Predictions"]])
+if __name__ == "__main__":
+    app.run(debug=True)
 
