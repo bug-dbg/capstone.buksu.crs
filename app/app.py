@@ -137,6 +137,10 @@ def get_course_recommendation():
     prediction = new_model.predict(actual_sample, batch_size=None, verbose=0, steps=None)
     print(prediction)
 
+    convertedPrediction = np.array(prediction).tolist()
+
+    print(convertedPrediction)
+
     return jsonify({'prediction': prediction.to_json(orient='records')})
 
 
