@@ -1,97 +1,185 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/test-style.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/css/test-style.css">
 
-    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css"/>
-    <!-- <script defer src="/js/test-api.js"></script> -->
-    <script defer src="/js/dynamic-form.js"></script>
+  <link rel="stylesheet"
+    href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css" />
+  <!-- <script defer src="/js/test-api.js"></script> -->
+  <!-- <script defer src="/js/dynamic-form.js"></script> -->
 
 
-    <title>Test Page</title>
+  <title>Test Page</title>
 </head>
-  <body>
-    <div class="main-container" id="quiz">
-      <h2 id="question">Question Text</h2>
-      <form id="form" action="/api/user/test-choice/value" method="post">
-        <div class="radio-buttons" >
-          <label class="custom-radio"  for="choice1">
-            <input type="radio" name="answer" value="5" id="choice1" class="answer" />
-            <span class="radio-btn">
-                <i class="las la-check"></i>
-              <div class="hobbies-icon">
-                <img src="https://img.icons8.com/external-colours-bomsymbols-/91/000000/external-awesome-hand-conversation-colours-colours-bomsymbols-.png"/>
-                <h3 id="a_text"></h3>
-              </div>
-            </span>
-          </label>
-          <label class="custom-radio" for="choice2">
-            <input type="radio" name="answer" value="4" id="choice2"  class="answer"/>
-            <span class="radio-btn"
-              ><i class="las la-check"></i>
-              <div class="hobbies-icon">
-                <img src="https://img.icons8.com/external-colours-bomsymbols-/91/000000/external-agree-hand-conversation-colours-colours-bomsymbols--2.png"/>
-                <h3 id="b_text"></h3>
-              </div>
-            </span>
-          </label>
-          <label class="custom-radio" for="choice3">
-            <input type="radio" name="answer" value="3" id="choice3"  class="answer" />
-            <span class="radio-btn"
-              ><i class="las la-check"></i>
-              <div class="hobbies-icon">
-                <img src="https://img.icons8.com/color/96/000000/neutral-emoticon--v1.png"/>
-                <h3 id="c_text"></h3>
-              </div>
-            </span>
-          </label>
-          <label class="custom-radio" for="choice4">
-            <input type="radio" name="answer"  value="2" id="choice4" class="answer"/>
-            <span class="radio-btn"
-              ><i class="las la-check"></i>
-              <div class="hobbies-icon">
-                <img src="https://img.icons8.com/external-colours-bomsymbols-/91/000000/external-bad-hand-conversation-colours-colours-bomsymbols-.png"/>
-                <h3 id="d_text"></h3>
-              </div>
-            </span>
-          </label>
-          <label class="custom-radio" for="choice5">
-            <input type="radio" name="answer" value="1" id="choice5"  class="answer" />
-            <span class="radio-btn"
-              ><i class="las la-check"></i>
-              <div class="hobbies-icon">
-                <img src="https://img.icons8.com/color/96/000000/ban-skin-type-1.png"/>
-                <h3 id="e_text"></h3>
-              </div>
-            </span>
-          </label>
-        </div>
-        <div class="submit-btn-container">
-          <button type="submit" id="submit">Next</button>
-        </div>
-      </form>
-    </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    
-    <script>
-       
-      $(function() {
+<body>
+  <div class="main-container" id="quiz">
+    <!-- <h2 id="question">Question Text</h2>
+    <form id="form" action="/api/user/test-choice/value">
+      <div class="radio-buttons">
+        <label class="custom-radio" for="choice1">
+          <input type="radio" name="answer" value="5" id="choice1" class="answer" />
+          <span class="radio-btn">
+            <i class="las la-check"></i>
+            <div class="hobbies-icon">
+              <img
+                src="https://img.icons8.com/external-colours-bomsymbols-/91/000000/external-awesome-hand-conversation-colours-colours-bomsymbols-.png" />
+              <h3 id="a_text"></h3>
+            </div>
+          </span>
+        </label>
+        <label class="custom-radio" for="choice2">
+          <input type="radio" name="answer" value="4" id="choice2" class="answer" />
+          <span class="radio-btn"><i class="las la-check"></i>
+            <div class="hobbies-icon">
+              <img
+                src="https://img.icons8.com/external-colours-bomsymbols-/91/000000/external-agree-hand-conversation-colours-colours-bomsymbols--2.png" />
+              <h3 id="b_text"></h3>
+            </div>
+          </span>
+        </label>
+        <label class="custom-radio" for="choice3">
+          <input type="radio" name="answer" value="3" id="choice3" class="answer" />
+          <span class="radio-btn"><i class="las la-check"></i>
+            <div class="hobbies-icon">
+              <img src="https://img.icons8.com/color/96/000000/neutral-emoticon--v1.png" />
+              <h3 id="c_text"></h3>
+            </div>
+          </span>
+        </label>
+        <label class="custom-radio" for="choice4">
+          <input type="radio" name="answer" value="2" id="choice4" class="answer" />
+          <span class="radio-btn"><i class="las la-check"></i>
+            <div class="hobbies-icon">
+              <img
+                src="https://img.icons8.com/external-colours-bomsymbols-/91/000000/external-bad-hand-conversation-colours-colours-bomsymbols-.png" />
+              <h3 id="d_text"></h3>
+            </div>
+          </span>
+        </label>
+        <label class="custom-radio" for="choice5">
+          <input type="radio" name="answer" value="1" id="choice5" class="answer" />
+          <span class="radio-btn"><i class="las la-check"></i>
+            <div class="hobbies-icon">
+              <img src="https://img.icons8.com/color/96/000000/ban-skin-type-1.png" />
+              <h3 id="e_text"></h3>
+            </div>
+          </span>
+        </label>
+      </div>
+      <div class="submit-btn-container">
+        <button type="submit" id="submit">Next</button>
+      </div>
+    </form> -->
+  </div>
 
-        $("#form").submit(function(e) {
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+  <script>
+
+    $(function () {
+
+      $(function () {
+        
+        let currentQuestion = 0;
+        let questions = [];
+        $(document).on("submit", "#form", function (e) {
           e.preventDefault();
-          var url = $(this).attr("action");
           var data = $(this).serialize();
-          $.post(url, data, function(response) {
+          console.log(data);
+          $.post("/api/user/test-choice/value", data, function (response) {
             console.log(response);
+            currentQuestion += 1;
+            createquestion();
           });
         });
+
+        $.get("/api/test-data", function (result, status) {
+          // console.log(result.data);
+          questions = result.data;
+          createquestion();
+        });
+
+        function createquestion() {
+          $("#quiz").html(`
+          <h2>${questions[currentQuestion].question}</h2>
+          <form id="form">
+            <input type="hidden" name="id" value="${questions[currentQuestion]._id}"
+            <div class="radio-buttons">
+              <label class="custom-radio" for="choice1">
+                <input type="radio" name="answer" value="5" id="choice1" class="answer" />
+                <span class="radio-btn">
+                  <i class="las la-check"></i>
+                  <div class="hobbies-icon">
+                    <img
+                      src="https://img.icons8.com/external-colours-bomsymbols-/91/000000/external-awesome-hand-conversation-colours-colours-bomsymbols-.png" />
+                    <h3 id="a_text">${questions[currentQuestion].choice1}</h3>
+                  </div>
+                </span>
+              </label>
+              <label class="custom-radio" for="choice2">
+                <input type="radio" name="answer" value="4" id="choice2" class="answer" />
+                <span class="radio-btn"><i class="las la-check"></i>
+                  <div class="hobbies-icon">
+                    <img
+                      src="https://img.icons8.com/external-colours-bomsymbols-/91/000000/external-agree-hand-conversation-colours-colours-bomsymbols--2.png" />
+                    <h3 id="b_text">${questions[currentQuestion].choice2}</h3>
+                  </div>
+                </span>
+              </label>
+              <label class="custom-radio" for="choice3">
+                <input type="radio" name="answer" value="3" id="choice3" class="answer" />
+                <span class="radio-btn"><i class="las la-check"></i>
+                  <div class="hobbies-icon">
+                    <img src="https://img.icons8.com/color/96/000000/neutral-emoticon--v1.png" />
+                    <h3 id="c_text">${questions[currentQuestion].choice3}</h3>
+                  </div>
+                </span>
+              </label>
+              <label class="custom-radio" for="choice4">
+                <input type="radio" name="answer" value="2" id="choice4" class="answer" />
+                <span class="radio-btn"><i class="las la-check"></i>
+                  <div class="hobbies-icon">
+                    <img
+                      src="https://img.icons8.com/external-colours-bomsymbols-/91/000000/external-bad-hand-conversation-colours-colours-bomsymbols-.png" />
+                    <h3 id="d_text">${questions[currentQuestion].choice4}</h3>
+                  </div>
+                </span>
+              </label>
+              <label class="custom-radio" for="choice5">
+                <input type="radio" name="answer" value="1" id="choice5" class="answer" />
+                <span class="radio-btn"><i class="las la-check"></i>
+                  <div class="hobbies-icon">
+                    <img src="https://img.icons8.com/color/96/000000/ban-skin-type-1.png" />
+                    <h3 id="e_text">${questions[currentQuestion].choice5}</h3>
+                  </div>
+                </span>
+              </label>
+            </div>
+            <div class="submit-btn-container">
+              <button type="submit" id="submit">Next</button>
+            </div>
+          </form>
+          `);
+        }
+
+        // function deselectAnswers() {
+        //     answerEl.forEach((answerEl) => {
+        //         answerEl.checked = false;
+        //     });
+        // }
       });
-    
-    </script>
-  </body>
+
+    });
+
+  </script>
+</body>
+
 </html>
