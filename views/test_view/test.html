@@ -13,70 +13,85 @@
 
     <title>Test Page</title>
 </head>
-<body>
-   <div class="main-container" id="quiz">
-    <h2 id="question">Question Text</h2>
-    <form id="form" action="/api/user/test-choice/value" method="post" enctype="multipart/form-data">
-      <div class="radio-buttons" >
-        <label class="custom-radio"  for="choice1">
-          <input type="radio" name="answer" value="5" id="choice1" class="answer" />
-          <span class="radio-btn">
-              <i class="las la-check"></i>
-            <div class="hobbies-icon">
-              <img src="https://img.icons8.com/external-colours-bomsymbols-/91/000000/external-awesome-hand-conversation-colours-colours-bomsymbols-.png"/>
-              <h3 id="a_text"></h3>
-            </div>
-          </span>
-        </label>
-        <label class="custom-radio" for="choice2">
-          <input type="radio" name="answer" value="4" id="choice2"  class="answer"/>
-          <span class="radio-btn"
-            ><i class="las la-check"></i>
-            <div class="hobbies-icon">
-              <img src="https://img.icons8.com/external-colours-bomsymbols-/91/000000/external-agree-hand-conversation-colours-colours-bomsymbols--2.png"/>
-              <h3 id="b_text"></h3>
-            </div>
-          </span>
-        </label>
-        <label class="custom-radio" for="choice3">
-          <input type="radio" name="answer" value="3" id="choice3"  class="answer" />
-          <span class="radio-btn"
-            ><i class="las la-check"></i>
-            <div class="hobbies-icon">
-              <img src="https://img.icons8.com/color/96/000000/neutral-emoticon--v1.png"/>
-              <h3 id="c_text"></h3>
-            </div>
-          </span>
-        </label>
-        <label class="custom-radio" for="choice4">
-          <input type="radio" name="answer"  value="2" id="choice4" class="answer"/>
-          <span class="radio-btn"
-            ><i class="las la-check"></i>
-            <div class="hobbies-icon">
-              <img src="https://img.icons8.com/external-colours-bomsymbols-/91/000000/external-bad-hand-conversation-colours-colours-bomsymbols-.png"/>
-              <h3 id="d_text"></h3>
-            </div>
-          </span>
-        </label>
-        <label class="custom-radio" for="choice5">
-          <input type="radio" name="answer" value="1" id="choice5"  class="answer" />
-          <span class="radio-btn"
-            ><i class="las la-check"></i>
-            <div class="hobbies-icon">
-              <img src="https://img.icons8.com/color/96/000000/ban-skin-type-1.png"/>
-              <h3 id="e_text"></h3>
-            </div>
-          </span>
-        </label>
-      </div>
-      <div class="submit-btn-container">
-        <button type="submit" id="submit" >Next</button>
-      </div>
-    </form>
-  </div>
+  <body>
+    <div class="main-container" id="quiz">
+      <h2 id="question">Question Text</h2>
+      <form id="form" action="/api/user/test-choice/value" method="post">
+        <div class="radio-buttons" >
+          <label class="custom-radio"  for="choice1">
+            <input type="radio" name="answer" value="5" id="choice1" class="answer" />
+            <span class="radio-btn">
+                <i class="las la-check"></i>
+              <div class="hobbies-icon">
+                <img src="https://img.icons8.com/external-colours-bomsymbols-/91/000000/external-awesome-hand-conversation-colours-colours-bomsymbols-.png"/>
+                <h3 id="a_text"></h3>
+              </div>
+            </span>
+          </label>
+          <label class="custom-radio" for="choice2">
+            <input type="radio" name="answer" value="4" id="choice2"  class="answer"/>
+            <span class="radio-btn"
+              ><i class="las la-check"></i>
+              <div class="hobbies-icon">
+                <img src="https://img.icons8.com/external-colours-bomsymbols-/91/000000/external-agree-hand-conversation-colours-colours-bomsymbols--2.png"/>
+                <h3 id="b_text"></h3>
+              </div>
+            </span>
+          </label>
+          <label class="custom-radio" for="choice3">
+            <input type="radio" name="answer" value="3" id="choice3"  class="answer" />
+            <span class="radio-btn"
+              ><i class="las la-check"></i>
+              <div class="hobbies-icon">
+                <img src="https://img.icons8.com/color/96/000000/neutral-emoticon--v1.png"/>
+                <h3 id="c_text"></h3>
+              </div>
+            </span>
+          </label>
+          <label class="custom-radio" for="choice4">
+            <input type="radio" name="answer"  value="2" id="choice4" class="answer"/>
+            <span class="radio-btn"
+              ><i class="las la-check"></i>
+              <div class="hobbies-icon">
+                <img src="https://img.icons8.com/external-colours-bomsymbols-/91/000000/external-bad-hand-conversation-colours-colours-bomsymbols-.png"/>
+                <h3 id="d_text"></h3>
+              </div>
+            </span>
+          </label>
+          <label class="custom-radio" for="choice5">
+            <input type="radio" name="answer" value="1" id="choice5"  class="answer" />
+            <span class="radio-btn"
+              ><i class="las la-check"></i>
+              <div class="hobbies-icon">
+                <img src="https://img.icons8.com/color/96/000000/ban-skin-type-1.png"/>
+                <h3 id="e_text"></h3>
+              </div>
+            </span>
+          </label>
+        </div>
+        <div class="submit-btn-container">
+          <button type="submit" id="submit">Next</button>
+        </div>
+      </form>
+    </div>
 
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-</body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    
+    <script>
+       
+      $(function() {
+
+        $("#form").submit(function(e) {
+          e.preventDefault();
+          var url = $(this).attr("action");
+          var data = $(this).serialize();
+          $.post(url, data, function(response) {
+            console.log(response);
+          });
+        });
+      });
+    
+    </script>
+  </body>
 </html>
