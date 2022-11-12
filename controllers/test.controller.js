@@ -143,11 +143,29 @@ const testCtrl = {
                
             }   
 
+            let arr = []
 
 
-            const value = await TestValue.find({currentUserID: userID || userid, currentQuestion: id})
+            const value = await TestValue.find({currentUserID: userID || userid, currentQuestion: id}, 'value -_id')
 
-            console.log(value)
+
+            value.forEach(function(data) {
+
+                arr.push(data.value)
+                
+            })
+
+            console.log(arr)
+
+
+            return res.status(200).json({arrayValues: arr})
+            // console.log(value)
+            // for(let i = 0; i < value.length; i++) {
+            //     arr.push(value)
+            // }
+            // // arr.push(value)
+
+            // console.log(arr)
 
             // MongoClient.connect(url, function(err, db) {
             //     if (err) throw err;
