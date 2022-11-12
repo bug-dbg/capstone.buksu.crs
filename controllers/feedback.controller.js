@@ -1,22 +1,49 @@
 const { Feedbacks } = require('../models/Feedback')
 const { sign, verify } = require("jsonwebtoken")
 
+const {OAuth2Client} = require('google-auth-library');
+const CLIENT_ID = '270040489280-ljn99nm3ve4m8su2t77dras268tp2fiu.apps.googleusercontent.com'
+const client = new OAuth2Client(CLIENT_ID);
+
 const feedbackCtrl = {
     feedback: async (req, res) => {
         try {
 
             const { userFeedback } = req.body
             const accessToken = req.cookies['access-token']
+            const sessionToken = req.cookies['session-token']
             
-            const user = verify(accessToken, process.env.JWT_SECRET)
-            if (user) {
-              req.user = user
+            if (accessToken) {
+                  
+            var user = verify(accessToken, process.env.JWT_SECRET)
+
+            } else {
+                var ticket = await client.verifyIdToken({
+                    idToken: sessionToken,
+                    audience: CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
+                })
             }
-            const userID = req.user.id
+         
+
+          
+
+            if (user) {
+                req.user = user
+                var userID = req.user.id
+               
+            } else {
+                const payload = ticket.getPayload();
+                var userid = payload['sub']
+                console.log(userid)
+            }   
+            
+           
+                     
+            
     
             const newFeedback = new Feedbacks({
                 userFeedback, 
-                userID: userID
+                userID: userID || userid
                
             })
     

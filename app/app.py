@@ -29,6 +29,8 @@ import sqlite3
 
 import warnings
 
+import urllib.request, json
+
 
 
 app = Flask(__name__)
@@ -66,6 +68,22 @@ class Enrollmentdata(db.Model):
 @app.route('/')
 def index():
     return 'Welcome to BukSU CRS'
+    
+# get api in flask
+@app.route('/test')
+def get_test():
+    url = "http://localhost:5000/api/test-data"
+
+    response = urllib.request.urlopen(url)
+    data = response.read()
+    dict = json.loads(data)
+    for data in dict["data"]:
+        data = {
+            "question": data["question"]
+            
+        }
+        print(data)
+    return jsonify({"result":data})
 
 @app.route('/api/courses')
 def get_courses():
@@ -141,7 +159,7 @@ def get_course_recommendation():
 
     print(convertedPrediction)
 
-    return jsonify({'prediction': prediction.to_json(orient='records')})
+    return jsonify({'prediction': convertedPrediction})
 
 
 
@@ -150,5 +168,5 @@ def get_course_recommendation():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=3000)
 

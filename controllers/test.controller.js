@@ -1,5 +1,15 @@
 const { Test } = require('../models/Test')
+const { TestValue } = require('../models/TestValue')
 const axios = require('axios')
+
+const { sign, verify } = require("jsonwebtoken")
+
+const {OAuth2Client} = require('google-auth-library');
+const CLIENT_ID = '270040489280-ljn99nm3ve4m8su2t77dras268tp2fiu.apps.googleusercontent.com'
+const client = new OAuth2Client(CLIENT_ID);
+
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://127.0.0.1:27017/";
 
 const testCtrl = {
     getTestData: async (req, res) => {
@@ -16,50 +26,185 @@ const testCtrl = {
         }
     },
 
-    sendTestData: async (req, res) => {
+    saveTestDataToDB: async (req, res) => {
         try {
-    
-            const {id,answer} = req.body
 
-            let arr = []
+            // get user id 
+            const accessToken = req.cookies['access-token']
+            const sessionToken = req.cookies['session-token']
+            
+            if (accessToken) {
+                  
+            var user = verify(accessToken, process.env.JWT_SECRET)
 
-            if(answer != null) {
-                arr.push(answer)
-                
+            } else {
+                var ticket = await client.verifyIdToken({
+                    idToken: sessionToken,
+                    audience: CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
+                })
             }
+         
+            if (user) {
+                req.user = user
+                var userID = req.user.id
+               
+            } else {
+                const payload = ticket.getPayload();
+                var userid = payload['sub']
+               
+            }   
+            
+            // get user choice value
 
-            // // for (i = 0; i < 10; i++) {
+            const { id, answer } = req.body
+
+            const questionID = await TestValue.findOne({currentQuestionID: id})
+
+            if(!questionID) {
+                const value = new TestValue({
+                    value: answer, 
+                    currentUserID: userID || userid,
+                    currentQuestionID: id
+                })
+    
+                // console.log(value)
+                await value.save()
+
+            } else {
+                MongoClient.connect(url, function(err, db) {
+                    if (err) throw err;
+                    var dbo = db.db("CRS-Capstone-Project-LocalDB");
+                    var myquery = { currentQuestionID: id };
+                    var newvalues = { $set: {value: answer} };
+                    dbo.collection("testvalues").updateOne(myquery, newvalues, function(err, res) {
+                      if (err) throw err;
+                      console.log("1 document updated");
+                      db.close();
+                    });
+                  });
+            }
+           
+            res.redirect('/test')
+
+
+
+            
+       
+            // const getValue = await TestValue.find({currentUserID: userID || userid })
+            
+            // // for(let i = 0; i < getValue.length; i++) {
                 
-            // //     arr.push(answer);
             // // }
+            // console.log(getValue)
 
-            // arr.forEach(element => {
-            //     element.push(answer)
-                
-            // });
-              
         
-            console.log(arr)
-            console.log(arr.length)
-            
+          
+            // return res.status(200).json({
+            //     UserID: userID || userid,
+            //     value: getValue,
+            // })
         
+    
             
-            return res.json({msg: `questionid: ${id} - answer: ${answer}`})
+            
+            // res.json({msg: `questionid: ${id} - answer: ${answer}`})
         
         } catch (err) {
             return res.status(500).json({msg: err.message})
         }
     },
 
+    // add classification to test question model
+
+    evaluate: async (req, res) => {
+        try {
+            const { id, answer } = req.body
+            const accessToken = req.cookies['access-token']
+            const sessionToken = req.cookies['session-token']
+            
+            if (accessToken) {
+                  
+            var user = verify(accessToken, process.env.JWT_SECRET)
+
+            } else {
+                var ticket = await client.verifyIdToken({
+                    idToken: sessionToken,
+                    audience: CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
+                })
+            }
+         
+            if (user) {
+                req.user = user
+                var userID = req.user.id
+               
+            } else {
+                const payload = ticket.getPayload();
+                var userid = payload['sub']
+               
+            }   
+
+
+
+            const value = await TestValue.find({currentUserID: userID || userid, currentQuestion: id})
+
+            console.log(value)
+
+            // MongoClient.connect(url, function(err, db) {
+            //     if (err) throw err;
+            //     var dbo = db.db("CRS-Capstone-Project-LocalDB");
+            //     var myquery = { currentQuestionID: id, currentUserID: userID || userid };
+            //     dbo.collection("testvalues").find(myquery, function(err, res) {
+            //       if (err) throw err;
+            //       db.close();
+            //     })
+
+            
+            //   });
+
+              
+
+            // const {currentuserid} = req.body;
+
+            // const getValue = await TestValue.find({currentUserID: currentuserid || userid });
+
+            // //    getValue. if format daan nga array of answers.. 
+
+            // const resp = await axios.get("http://point to flusk nga endpoint or api")
+            // // const { data } = await axios.get(
+            // //     "http://localhost:5000/api/test/userchoices"
+
+            // // )
+            // // resp.ratings;
+            // const ratings = [0.90,0.80,0.50];
+
+            // let courses = [
+            //     {name: "course1",description:"this course is para sa mga hilas og math..."},
+            //     {name: "course2"},
+            //     {name: "course3"},
+
+            // ]
+            // let i = 0;
+            // foreach(let c in courses){
+            //     c.rating = ratings[i];
+            //     i ++;
+            // }
+            // return res.status(200).json(courses);
+
+            // [{name:"course1",rating:0.90}....]
+
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
+
+    },
     getTestDataResult: async (req, res) => {
         try {
-            const res = await axios.get('http://localhost:5000/api/user/test-choice/value')
+            const resp = await axios.get("http://localhost:5000/api/user/test-choice/value")
             // const { data } = await axios.get(
             //     "http://localhost:5000/api/test/userchoices"
+
             // )
-            res.status(200).json({
-                data: res.data
-            })
+            console.log(resp)
 
         } catch (err) {
             return res.status(500).json({msg: err.message})
@@ -68,3 +213,111 @@ const testCtrl = {
 }
 
 module.exports = testCtrl
+
+
+// Reference Code
+
+// sendTestData: async (req, res) => {
+//     try {
+
+//         // get user id 
+//         const accessToken = req.cookies['access-token']
+//         const sessionToken = req.cookies['session-token']
+        
+//         if (accessToken) {
+              
+//         var user = verify(accessToken, process.env.JWT_SECRET)
+
+//         } else {
+//             var ticket = await client.verifyIdToken({
+//                 idToken: sessionToken,
+//                 audience: CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
+//             })
+//         }
+     
+//         if (user) {
+//             req.user = user
+//             var userID = req.user.id
+           
+//         } else {
+//             const payload = ticket.getPayload();
+//             var userid = payload['sub']
+           
+//         }   
+        
+//         // get user choice value
+
+//         const { id, answer } = req.body
+       
+//         const value = new TestValue({
+//             value: answer, 
+//             currentUserID: userID || userid
+//         })
+
+//         // console.log(value)
+//         await value.save()
+
+        
+   
+//         const getValue = await TestValue.find({currentUserID: userID || userid })
+        
+//         // for(let i = 0; i < getValue.length; i++) {
+            
+//         // }
+//         console.log(getValue)
+
+    
+      
+//         return res.status(200).json({
+//             UserID: userID || userid,
+//             value: getValue,
+//         })
+    
+
+        
+        
+//         // res.json({msg: `questionid: ${id} - answer: ${answer}`})
+    
+//     } catch (err) {
+//         return res.status(500).json({msg: err.message})
+//     }
+// },
+
+// // add classification to test question model
+
+// evaluate(req, res) => {
+//     const {currentuserid} = req.body;
+
+//    const getValue = await TestValue.find({currentUserID: currentuserid || userid });
+
+// //    getValue. if format daan nga array of answers.. 
+
+// try {
+//     const resp = await axios.get("http://point to flusk nga endpoint or api")
+//     // const { data } = await axios.get(
+//     //     "http://localhost:5000/api/test/userchoices"
+
+//     // )
+//     // resp.ratings;
+//     const ratings = [0.90,0.80,0.50];
+
+//     let courses = [
+//         {name: "course1",description:"this course is para sa mga hilas og math..."},
+//         {name: "course2"},
+//         {name: "course3"},
+
+//     ]
+//     let i = 0;
+//     foreach(let c in courses){
+//         c.rating = ratings[i];
+//         i ++;
+//     }
+//     return res.status(200).json(courses);
+
+//     [{name:"course1",rating:0.90}....]
+
+// } catch (err) {
+//     return res.status(500).json({msg: err.message})
+// }
+
+// }
