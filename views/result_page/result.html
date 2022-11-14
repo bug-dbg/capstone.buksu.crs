@@ -127,7 +127,13 @@
       $(function () {
 
           let index = 0
-          let c = []
+          let c1 
+          let c2
+          let c3
+
+          let c1Description
+          let c2Description
+          let c3Description
         // $(document).on("load", function () {
           
         //   displayData()
@@ -136,39 +142,45 @@
 
         $.get("/api/user/result", function (result, status) {
           var course = result.data;
-          console.log(course[0].name)
+          console.log(course)
           c1 = course[0].name
           c2 = course[1].name
           c3 = course[2].name
+          
+          c1Description = course[0].description
+          c2Description = course[1].description
+          c3Description = course[2].description
+
 
           console.log(c1 + '\n' + c2 + '\n' + c3 )
+          displayData()
 
         });
 
-        displayData()
+       
 
         function displayData() {
           $("#foo").html(`
           <div class="col-md-6 col-lg-4 wow bounceInUp" data-aos="zoom-in" data-aos-delay="100">
           <div class="box">
             <div class="icon" style="background: #fceef3;"><i class="bi bi-journal-check" style="color: #ff689b;"></i></div>
-            <h4 class="title"></h4>
-            <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
+            <h4 class="title">${c1}</h4>
+            <p class="description">${c1Description}</p>
           </div>
         </div>
         <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="200">
           <div class="box">
             <div class="icon" style="background: #fff0da;"><i class="bi bi-journal-check" style="color: #e98e06;"></i></div>
-            <h4 class="title">Dolor Sitema</h4>
-            <p class="description">Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat tarad limino ata</p>
+            <h4 class="title">${c2}</h4>
+            <p class="description">${c2Description}</p>
           </div>
         </div>
 
         <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="300">
           <div class="box">
             <div class="icon" style="background: #e6fdfc;"><i class="bi bi-journal-check" style="color: #3fcdc7;"></i></div>
-            <h4 class="title">Sed ut perspiciatis</h4>
-            <p class="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dsdfsdfsdfsdfsdfsdfsdfsdfolore eu fugiat nulla pariatur</p>
+            <h4 class="title">${c3}</h4>
+            <p class="description">${c3Description}</p>
           </div>
         </div>
           `)
