@@ -415,6 +415,10 @@ section {
   text-align: left;
 }
 
+#footer {
+  padding-bottom: 20px;
+}
+
 #footer .copyright {
   text-align: center;
   padding-top: 30px;
@@ -432,4 +436,27 @@ section {
 }
 #footer .credits a:hover {
   color: #0a98c0;
+}
+
+
+/* Send to Email */
+
+.email-button {
+  margin-top: 60px;
+  float: right;
+}
+
+.email-button span, i {
+  padding: 0 10px;
+}
+
+.email-button button {
+  background-color: #1bb1dc;
+  color: #fff;
+}
+
+.email-button button:hover {
+  background-color: #fff;
+  border-color: #1bb1dc;
+  color: #1bb1dc;
 }

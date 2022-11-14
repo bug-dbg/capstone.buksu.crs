@@ -11,7 +11,9 @@
   <meta content="" name="keywords">
 
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Montserrat:300,400,500,600,700" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Montserrat:300,400,500,600,700"
+    rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="/vendor/aos/aos.css" rel="stylesheet">
@@ -46,7 +48,8 @@
 
       <div class="social-links">
         <a href="https://buksu.edu.ph/" class="website"><i class="bi bi-globe2"></i></a>
-        <a href="https://www.facebook.com/profile.php?id=100063992682487" class="facebook"><i class="bi bi-facebook"></i></a>
+        <a href="https://www.facebook.com/profile.php?id=100063992682487" class="facebook"><i
+            class="bi bi-facebook"></i></a>
       </div>
 
     </div>
@@ -62,30 +65,24 @@
       </header>
 
       <div class="row g-5" id="foo">
-        <!-- <div class="col-md-6 col-lg-4 wow bounceInUp" data-aos="zoom-in" data-aos-delay="100">
-          <div class="box">
-            <div class="icon" style="background: #fceef3;"><i class="bi bi-journal-check" style="color: #ff689b;"></i></div>
-            <h4 class="title">`${course[0].name}`</h4>
-            <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
+        <% for(var i=0; i < prediction.length; i++) { %>
+          <div class="col-md-6 col-lg-4 wow bounceInUp" data-aos="zoom-in" data-aos-delay="100">
+            <div class="box">
+              <div class="icon" style="background: #fceef3;"><i class="bi bi-journal-check" style="color: #ff689b;"></i>
+              </div>
+              <h4 class="title"><%= prediction[i].name %></h4>
+              <p class="description"><%= prediction[i].description %></p>
+            </div>
           </div>
-        </div>
-        <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="200">
-          <div class="box">
-            <div class="icon" style="background: #fff0da;"><i class="bi bi-journal-check" style="color: #e98e06;"></i></div>
-            <h4 class="title">Dolor Sitema</h4>
-            <p class="description">Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat tarad limino ata</p>
-          </div>
-        </div>
+          <% } %>
+      </div>
 
-        <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="300">
-          <div class="box">
-            <div class="icon" style="background: #e6fdfc;"><i class="bi bi-journal-check" style="color: #3fcdc7;"></i></div>
-            <h4 class="title">Sed ut perspiciatis</h4>
-            <p class="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dsdfsdfsdfsdfsdfsdfsdfsdfolore eu fugiat nulla pariatur</p>
-          </div>
-        </div> -->
+      <div class="col-lg email-button float-right">
+        <form action="/api/user/result/email" method="post">
+          <button class="btn btn-lg float-right"><i class="bi bi-envelope"></i><span>Send to Email</span></button>
+        </form>
 
-    </div>
+      </div>
 
     </div>
   </section>
@@ -107,8 +104,8 @@
 
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
-  integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
-  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
   <!-- Vendor JS Files -->
   <script src="/vendor/purecounter/purecounter.js"></script>
@@ -123,70 +120,70 @@
 
   <script>
     $(function () {
-      
-      $(function () {
 
-          let index = 0
-          let c1 
-          let c2
-          let c3
+      // $(function () {
 
-          let c1Description
-          let c2Description
-          let c3Description
-        // $(document).on("load", function () {
-          
-        //   displayData()
-        // });
-        
+      //     let index = 0
+      //     let c1 
+      //     let c2
+      //     let c3
 
-        $.get("/api/user/result", function (result, status) {
-          var course = result.data;
-          console.log(course)
-          c1 = course[0].name
-          c2 = course[1].name
-          c3 = course[2].name
-          
-          c1Description = course[0].description
-          c2Description = course[1].description
-          c3Description = course[2].description
+      //     let c1Description
+      //     let c2Description
+      //     let c3Description
+      //   // $(document).on("load", function () {
+
+      //   //   displayData()
+      //   // });
 
 
-          console.log(c1 + '\n' + c2 + '\n' + c3 )
-          displayData()
+      //   $.get("/api/user/result", function (result, status) {
+      //     var course = result.data;
+      //     console.log(course)
+      //     c1 = course[0].name
+      //     c2 = course[1].name
+      //     c3 = course[2].name
 
-        });
+      //     c1Description = course[0].description
+      //     c2Description = course[1].description
+      //     c3Description = course[2].description
 
-       
 
-        function displayData() {
-          $("#foo").html(`
-          <div class="col-md-6 col-lg-4 wow bounceInUp" data-aos="zoom-in" data-aos-delay="100">
-          <div class="box">
-            <div class="icon" style="background: #fceef3;"><i class="bi bi-journal-check" style="color: #ff689b;"></i></div>
-            <h4 class="title">${c1}</h4>
-            <p class="description">${c1Description}</p>
-          </div>
-        </div>
-        <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="200">
-          <div class="box">
-            <div class="icon" style="background: #fff0da;"><i class="bi bi-journal-check" style="color: #e98e06;"></i></div>
-            <h4 class="title">${c2}</h4>
-            <p class="description">${c2Description}</p>
-          </div>
-        </div>
+      //     console.log(c1 + '\n' + c2 + '\n' + c3 )
+      //     displayData()
 
-        <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="300">
-          <div class="box">
-            <div class="icon" style="background: #e6fdfc;"><i class="bi bi-journal-check" style="color: #3fcdc7;"></i></div>
-            <h4 class="title">${c3}</h4>
-            <p class="description">${c3Description}</p>
-          </div>
-        </div>
-          `)
-        }
+      //   });
 
-      });
+
+
+      //   function displayData() {
+      //     $("#foo").html(`
+      //     <div class="col-md-6 col-lg-4 wow bounceInUp" data-aos="zoom-in" data-aos-delay="100">
+      //     <div class="box">
+      //       <div class="icon" style="background: #fceef3;"><i class="bi bi-journal-check" style="color: #ff689b;"></i></div>
+      //       <h4 class="title">${c1}</h4>
+      //       <p class="description">${c1Description}</p>
+      //     </div>
+      //   </div>
+      //   <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="200">
+      //     <div class="box">
+      //       <div class="icon" style="background: #fff0da;"><i class="bi bi-journal-check" style="color: #e98e06;"></i></div>
+      //       <h4 class="title">${c2}</h4>
+      //       <p class="description">${c2Description}</p>
+      //     </div>
+      //   </div>
+
+      //   <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="300">
+      //     <div class="box">
+      //       <div class="icon" style="background: #e6fdfc;"><i class="bi bi-journal-check" style="color: #3fcdc7;"></i></div>
+      //       <h4 class="title">${c3}</h4>
+      //       <p class="description">${c3Description}</p>
+      //     </div>
+      //   </div>
+      //     `)
+      //   }
+
+      // });
 
     });
 

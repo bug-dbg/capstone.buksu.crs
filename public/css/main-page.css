@@ -1626,3 +1626,54 @@ section {
   #footer .credits a:hover {
     color: #0a98c0;
   }
+
+  /* Feedback Modal */
+
+  
+ .cross {
+  padding: 10px;
+color: #d6312d;
+cursor: pointer;
+font-size: 23px;
+}
+
+.cross i{
+
+margin-top: -5px;
+cursor: pointer;
+}
+
+
+
+
+
+
+
+.comment-box {
+padding: 5px
+}
+
+.comment-area textarea {
+resize: none;
+border: 1px solid #373232
+}
+
+.form-control:focus {
+color: #495057;
+background-color: #fff;
+border-color: #ffffff;
+outline: 0;
+box-shadow: 0 0 0 1px rgb(93, 89, 89) !important
+}
+
+.send {
+color: #fff;
+background-color: #0a98c0;
+border-color: #0a98c0
+}
+
+.send:hover {
+color: #fff;
+background-color: #0d7e9d;
+border-color: #0d7e9d
+}

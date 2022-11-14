@@ -30,9 +30,12 @@ const testCtrl = {
         try {
 
             // get user id 
-            const accessToken = req.cookies['access-token']
-            const sessionToken = req.cookies['session-token']
-            
+            if(req.cookies['access-token']) {
+                var accessToken = req.cookies['access-token']
+            } else {
+                var sessionToken = req.cookies['session-token']
+            }
+
             if (accessToken) {
                   
             var user = verify(accessToken, process.env.JWT_SECRET)
@@ -109,49 +112,85 @@ const testCtrl = {
             })
     
             if(value) {
-                res.json({
-                    status: 'Success',
-                    length: arr.length,
-                    data: arr
-                }) 
+                // res.json({
+                //     status: 'Success',
+                //     length: arr.length,
+                //     data: arr
+                // }) 
+                const { data } = await axios.post("http://localhost:3000/api/courses/recommend/", arr);
+
+                console.log(data);
+
+                const ratings = data.prediction[0]
+
+                console.log(ratings)
+                
+                
+                let courses = [
+                    {name: "Bachelor of Science in Biology Major in Biotechnology ", description: "BS Bio Description"},
+                    {name: "Bachelor of Arts in English Language", description: "BA EL Description"},
+                    {name: "Bachelor of Secondary Education Major in Social Studies", description: "BSE Social Studies Description"},
+                    {name: "Bachelor of Arts in Economics", description: "BA Economics Description"},
+                    {name: "Bachelor of Arts in Sociology", description: "BA Sociology Description"},
+              
+                ]
+    
+                // Map to courses Object 
+    
+                let i = 0;
+                courses.forEach(function(c) {
+                    c.ratings = ratings[i]
+                    i++
+                })
+            
+    
+                // Sort the top three result of the recommendation
+                const topThreeResult = courses.sort((a,b) => b.ratings - a.ratings).slice(0, 3)
+                console.log(topThreeResult);
+                
+                return res.render('result_page/result', {prediction: topThreeResult});
+                // return res.status(200).json({data: topThreeResult});
+            }
+            else {
+                return res.status(500).json({error: "ERROR"});
             }
 
           
-            // redirect('/evaluation/result')
+            // res.redirect('/evaluation/result')
           
             
           
-            const { data } = await axios.get("http://localhost:3000/api/courses/recommend/")
+            // const { data } = await axios.get("http://localhost:3000/api/courses/recommend/",arr)
             
-            const ratings = data.prediction[0]
+            // const ratings = data.prediction[0]
 
-            console.log(ratings)
+            // console.log(ratings)
             
             
-             let courses = [
-                {name: "Bachelor of Science in Biology Major in Biotechnology "},
-                {name: "Bachelor of Arts in English Language"},
-                {name: "Bachelor of Secondary Education Major in Social Studies"},
-                {name: "Bachelor of Arts in Economics"},
-                {name: "Bachelor of Arts in Sociology"},
+            //  let courses = [
+            //     {name: "Bachelor of Science in Biology Major in Biotechnology "},
+            //     {name: "Bachelor of Arts in English Language"},
+            //     {name: "Bachelor of Secondary Education Major in Social Studies"},
+            //     {name: "Bachelor of Arts in Economics"},
+            //     {name: "Bachelor of Arts in Sociology"},
           
-             ]
+            //  ]
 
-            // Map to courses in Object 
-            let i = 0;
-            courses.forEach(function(c) {
-                c.ratings = ratings[i]
-                i++
-            })
+            // // Map to courses in Object 
+            // let i = 0;
+            // courses.forEach(function(c) {
+            //     c.ratings = ratings[i]
+            //     i++
+            // })
         
 
-            // Sort the top three result of the recommendation
-            const topThreeResult = courses.sort((a,b) => b.ratings - a.ratings).slice(0, 3)
-            console.log(topThreeResult)
+            // // Sort the top three result of the recommendation
+            // const topThreeResult = courses.sort((a,b) => b.ratings - a.ratings).slice(0, 3)
+            // console.log(topThreeResult)
      
-            // TODO: Fix Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+            // // TODO: Fix Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
 
-            return res.status(200).json({data: topThreeResult});
+            return res.status(200).json({data});
    
             
 
@@ -170,11 +209,11 @@ const testCtrl = {
             
             
             let courses = [
-                {name: "Bachelor of Science in Biology Major in Biotechnology "},
-                {name: "Bachelor of Arts in English Language"},
-                {name: "Bachelor of Secondary Education Major in Social Studies"},
-                {name: "Bachelor of Arts in Economics"},
-                {name: "Bachelor of Arts in Sociology"},
+                {name: "Bachelor of Science in Biology Major in Biotechnology ", description: "BS Bio Description"},
+                {name: "Bachelor of Arts in English Language", description: "BA EL Description"},
+                {name: "Bachelor of Secondary Education Major in Social Studies", description: "BSE Social Studies Description"},
+                {name: "Bachelor of Arts in Economics", description: "BA Economics Description"},
+                {name: "Bachelor of Arts in Sociology", description: "BA Sociology Description"},
           
             ]
 

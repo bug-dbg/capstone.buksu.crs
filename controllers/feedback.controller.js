@@ -9,9 +9,15 @@ const feedbackCtrl = {
     feedback: async (req, res) => {
         try {
 
+            if(req.cookies['access-token']) {
+                var accessToken = req.cookies['access-token']
+            } else {
+                var sessionToken = req.cookies['session-token']
+            }
+
             const { userFeedback } = req.body
-            const accessToken = req.cookies['access-token']
-            const sessionToken = req.cookies['session-token']
+          
+          
             
             if (accessToken) {
                   
@@ -34,7 +40,6 @@ const feedbackCtrl = {
             } else {
                 const payload = ticket.getPayload();
                 var userid = payload['sub']
-                console.log(userid)
             }   
             
            

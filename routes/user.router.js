@@ -46,5 +46,9 @@ router.get('/sample', (req, res) => {
     res.render('test_view/sample')
 })
 
+router.get('/success/email', (req, res) => {
+    res.render('email_sent_page/sent')
+})
+
 
 module.exports  = router

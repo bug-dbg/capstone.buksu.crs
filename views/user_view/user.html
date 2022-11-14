@@ -232,10 +232,10 @@
 
     <!-- Button trigger modal -->
   <!-- Feedback Modal-->
-  <a href="" class="comment d-flex align-items-center justify-content-center" data-bs-toggle="modal" data-bs-target="#feedbackModel"><img src="/img/message-solid.svg" alt="" ></a>
+  <a href="" class="comment d-flex align-items-center justify-content-center" data-bs-toggle="modal" data-bs-target="#form"><img src="/img/message-solid.svg" alt="" ></a>
 
   <!-- Modal -->
-  <div class="modal fade" id="feedbackModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <!-- <div class="modal fade" id="feedbackModel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -245,13 +245,38 @@
         <form action="http://localhost:5000/feedback" method="post">
           <div class="modal-body">
               <textarea name="userFeedback" id="" cols="53" rows=10" style="resize: none;" placeholder="Enter Text...."></textarea>
-              <!-- <input type="text" name="" id=""> -->
+            
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-primary">Send</button>
               </div>
           </div>
        </form>
+      </div>
+    </div>
+  </div> -->
+
+  <!--
+    modal
+  -->
+
+      
+  <div class="modal fade" id="form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+              <div class="text-right cross"> <i class="fa fa-times mr-2"></i> </div>
+                <div class="card-body text-center"> <img src=" https://i.imgur.com/d2dKtI7.png" height="100" width="100">
+                    <div class="comment-box text-center">
+                    <h4>Feedback</h4>
+                    <form action="/feedback" method="post">
+                      <div class="comment-area"> <textarea class="form-control" name="userFeedback" placeholder="Enter feedback..." rows="4"></textarea> </div>
+                        
+                      <div class="text-center mt-4"> <button class="btn btn-success send px-5">Send message <i class="fa fa-long-arrow-right ml-1"></i></button>
+                    </form>
+                    
+                </div>
+              </div>
+          </div>
       </div>
     </div>
   </div>

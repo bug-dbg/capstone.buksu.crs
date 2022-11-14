@@ -98,6 +98,8 @@
           console.log(data);
           $.post("/api/user/test-choice/value", data, function (response) {
             // console.log(response);
+
+            // google how to get status code..
             currentQuestion += 1;
             if (currentQuestion < questions.length) {
             
@@ -124,7 +126,6 @@
             <header class="section-header">
               <h2>${questions[currentQuestion].question}</h2>
             </header>
-            
             <form id="form">
               <input type="hidden" name="id" value="${questions[currentQuestion]._id}">
               <div class="row g-5">
