@@ -34,14 +34,17 @@ router.get('/test', /*validateToken,*/ (req, res) => {
     res.render('test_view/test')
 })
 
+router.get('/evaluation', (req, res) => {
+    res.render('congrats_page/congrats')
+})
+
 router.get('/evaluation/result', (req, res) => {
     res.render('result_page/result')
 })
 
-// fix this route
-// create a bug in api/test-data route
-// router.get('*', (req, res) => {
-//     res.render('page_not_found/not_found.html')
-// })
+router.get('/sample', (req, res) => {
+    res.render('test_view/sample')
+})
+
 
 module.exports  = router

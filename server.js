@@ -39,6 +39,9 @@ app.use(express.urlencoded({extended: true }))
 app.use('/', require('./routes/user.router'))
 app.use('/api', require('./routes/test.router'))
 app.use('/google', require('./routes/google.user.router'))
+app.all('*', (req, res) => {
+    res.render('page_not_found/not_found')
+})
 
 
 

@@ -106,26 +106,14 @@ function isEmail(email) {
 // function emailAlreadyExist(email) {
 
 // 	let e = email
-// 	let getEmailData = $.get('http://localhost:5000/all-users')
-
-// 	.done(() => {
-// 		var emailData = getEmailData.responseJSON.users
-	
-
-// 		for(let i = 0; i < emailData.length; i++) {
-// 			var data = emailData[i].email
-
-// 			if(data === e) {
-// 				console.log(data + ' = ' + e)
-// 				return true
-// 			}
-			
-// 		}
-	
+// 	let getEmailData = $.get('http://localhost:5000/all-users').done(() => {
+// 		var val = getEmailData.responseJSON.users
+// 		console.log(val)
 // 	})
 	
-// }
 
+// }
+// emailAlreadyExist(email)
 // async function emailAlreadyExist(email) {
 // 	const userEmail = await Users.findOne({email})
 
