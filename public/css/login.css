@@ -157,5 +157,6 @@ a {
 .error{
 	color: #D8000C;
 	background-color: #FFBABA;
-	background-image: url('https://i.imgur.com/GnyDvKN.png');
+	background-image: url('/img/err.png');
+	background-size: 30px;
 }
