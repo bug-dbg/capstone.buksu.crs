@@ -32,7 +32,6 @@ function checkInputs() {
     //     setErrorFor(email, 'User does not exist!')
     //     success = false
     } else {
-		setsuccessFor(email)
         success = true
 
 	}
@@ -44,7 +43,6 @@ function checkInputs() {
     //     setErrorFor(password, 'Invalid Password! Try again.')
     //     success = false
     } else {
-		setsuccessFor(password)
         success = true
 
 	}

@@ -18,7 +18,7 @@ const validateToken = (req, res, next) => {
   const googleAccessToken = req.cookies['session-token'];
   
   if (!accessToken && !googleAccessToken) 
-    return res.status(400).json({ error: "User not Authenticated!" })
+    return res.render('page_not_found/not_found')
 
   try {
    

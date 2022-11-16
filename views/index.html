@@ -26,13 +26,13 @@
       
 
         <% if(err){ %>
-            <div class="error">
+            <div class="error-container">
                 <p><%= msg%> </p>
                
               </div>
           
         <% } else{ %>  
-            <small></small>
+            <p></p>
         <% } %>
 
      
@@ -43,14 +43,15 @@
                 <input type="email" name="email" placeholder="example@gmail.com" id="email" />
                 <i class="fas fa-check-circle"></i>
                 <i class="fas fa-exclamation-circle"></i>
-                
+                <small></small>
             </div>
+
             <div class="form-control">
                 <label for="password">Password</label>
                 <input type="password" name="password" placeholder="Password" id="password" />
                 <i class="fas fa-check-circle"></i>
                 <i class="fas fa-exclamation-circle"></i>
-                
+                <small></small>
             </div>
             <button type="submit">Sign In</button>
             <div class="child-container">

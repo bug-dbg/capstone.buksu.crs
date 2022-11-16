@@ -146,7 +146,7 @@ a {
 
 /* login validation css*/
 
-.error {
+.error-container {
 	border: 1px solid;
 	margin: 5px 0px;
 	padding: 15px 50px 10px 80px;
@@ -154,7 +154,7 @@ a {
 	background-position: 40px center;
 }
 
-.error{
+.error-container {
 	color: #D8000C;
 	background-color: #FFBABA;
 	background-image: url('/img/err.png');

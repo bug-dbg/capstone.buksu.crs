@@ -28,7 +28,7 @@ router.get('/', (req, res) => {
 
 
 router.get('/register', (req, res) => {
-    res.render('register_view/register')
+    res.render('register_view/register', {err: false, msg: ''})
 })
 
 router.get('/home', validateToken, (req, res) => {
@@ -36,23 +36,19 @@ router.get('/home', validateToken, (req, res) => {
     
 })
 
-router.get('/test', /*validateToken,*/ (req, res) => {
+router.get('/test', validateToken, (req, res) => {
     res.render('test_view/test')
 })
 
-router.get('/evaluation', (req, res) => {
+router.get('/evaluation', validateToken, (req, res) => {
     res.render('congrats_page/congrats')
 })
 
-router.get('/evaluation/result', (req, res) => {
+router.get('/evaluation/result', validateToken, (req, res) => {
     res.render('result_page/result')
 })
 
-router.get('/sample', (req, res) => {
-    res.render('test_view/sample')
-})
-
-router.get('/success/email', (req, res) => {
+router.get('/success/email', validateToken, (req, res) => {
     res.render('email_sent_page/sent')
 })
 

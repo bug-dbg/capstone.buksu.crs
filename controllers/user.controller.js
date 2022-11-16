@@ -19,12 +19,13 @@ const userCtrl = {
             const { firstName, lastName, email, password } = req.body
             const user = await Users.findOne({email})
             if(user){
-                return res.status(400).json({msg: "The email already exists."});
+                // return res.status(400).json({msg: "The email already exists."});
+                return res.render('register_view/register', {err: true, msg: 'Email already registered! Try again.'})
             } 
             
-            if(password.length < 6){
-                return res.status(400).json({msg: "Password is at least 6 characters long."})
-            }
+            // if(password.length < 6){
+            //     return res.status(400).json({msg: "Password is at least 6 characters long."})
+            // }
 
             // Password Encryption
             const passwordHash = await bcrypt.hash(password, 10)
@@ -53,7 +54,7 @@ const userCtrl = {
 
             // if(!user) return res.status(400).json({ error: "User Doesn't Exist" })
             if(!user) {
-                return res.render('index', {err: true, msg: 'User doesnt\'t exist'})
+                return res.render('index', {err: true, msg: 'User doesn\'t exist'})
             }
 
             const dbPassword = user.encryptedPassword
