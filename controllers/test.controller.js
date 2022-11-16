@@ -119,7 +119,7 @@ const testCtrl = {
                 // }) 
                 const { data } = await axios.post("http://localhost:3000/api/courses/recommend/", arr);
 
-                console.log(data);
+                // console.log(data);
 
                 const ratings = data.prediction[0]
 
@@ -149,8 +149,8 @@ const testCtrl = {
                 console.log(topThreeResult);
                 
                 return res.render('result_page/result', {prediction: topThreeResult});
-                // return res.status(200).json({data: topThreeResult});
             }
+            
             else {
                 return res.status(500).json({error: "ERROR"});
             }
@@ -231,7 +231,7 @@ const testCtrl = {
             console.log(topThreeResult)
     
 
-            return res.status(200).json({data: topThreeResult});
+            return res.status(200).json({prediction: topThreeResult});
 
         } catch (err) {
             return res.status(500).json({msg: err.message})

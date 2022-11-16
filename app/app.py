@@ -30,9 +30,9 @@ import sqlite3
 
 import warnings
 
-import urllib.request, json
-import requests
 from flask import request
+
+import sys
 
 
 app = Flask(__name__)
@@ -167,14 +167,13 @@ def get_course_recommendation():
     #     model.save('models/crs_model.h5')
 
 
-   
     new_model = load_model('models/crs_model.h5')
-    # print(request.get_json()[0]);
+    print(request.get_json()[0]);
     # new_model.compile(optimizer=adam_v2.Adam(learning_rate=0.0001), loss='binary_crossentropy', metrics=['accuracy'])
     # new_model.fit(x=scaled_train_samples, y=train_labels, batch_size=10, epochs=100)
     # score = new_model.evaluate(scaled_train_samples, train_labels, verbose=0)
     # print("%s: %.2f%%" % (new_model.metrics_names[1], score[1]*100))
-    print(request.get_json())
+    # print(request.get_json())
     actual_sample = np.array([request.get_json()])
     # actual_sample = np.array([[2,3,4,5,2,4,5,2,5,5]])
 
@@ -185,7 +184,7 @@ def get_course_recommendation():
 
     print(convertedPrediction)
 
-    return jsonify({'prediction': convertedPrediction})
+    return jsonify({'prediction': convertedPrediction})\
 
 
 

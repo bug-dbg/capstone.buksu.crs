@@ -8,6 +8,7 @@ const { default: AdminJS } = require('adminjs')
 const options = require('./controllers/admin.controller')
 const buildAdminRouter = require('./routes/adminjs.router')
 
+
 const app = express()
 
 // AdminJs 

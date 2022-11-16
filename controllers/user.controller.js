@@ -2,6 +2,17 @@ const bcrypt = require('bcrypt')
 const { createTokens } = require('../middlewares/JWT')
 const { Users } = require('../models/User')
 
+const { body, check, validationResult, validationErrors } = require('express-validator')
+
+// const express = require('express')
+
+// var api = express.Router();
+// var expressValidator = require('express-validator');
+
+// const flash = require('express-flash')
+
+
+
 const userCtrl = {
     register: async (req, res) => {
         try {
@@ -33,27 +44,36 @@ const userCtrl = {
         
     },
 
-    login: async (req, res) => {
-        const { email, password } = req.body
+    login:  async (req, res) => {
 
-        const user = await Users.findOne({email: email})
+        try {
+            const { email, password } = req.body
 
-        if(!user) return res.status(400).json({ error: "User Doesn't Exist" })
+            const user = await Users.findOne({email: email})
 
-        const dbPassword = user.encryptedPassword
-        bcrypt.compare(password, dbPassword).then((match) => {
-            if(!match) {
-                res.status(400).json({error: 'Invalid Password'})
-            } else {
-                const accessToken = createTokens(user)
-                            
-                res.cookie("access-token", accessToken, {
-                    maxAge: 60 * 60 * 24 * 30 * 1000,
-                    httpOnly: true,
-                });
+            // if(!user) return res.status(400).json({ error: "User Doesn't Exist" })
+            if(!user) {
+                return res.render('index', {err: true, msg: 'User doesnt\'t exist'})
             }
-            res.redirect('/home')
-        })
+
+            const dbPassword = user.encryptedPassword
+            bcrypt.compare(password, dbPassword).then((match) => {
+                if(!match) {
+                    // res.status(400).json({error: 'Invalid Password'})
+                    return res.render('index', {err: true, msg: 'Invalid Password'})
+                } else {
+                    const accessToken = createTokens(user)
+                                
+                    res.cookie("access-token", accessToken, {
+                        maxAge: 60 * 60 * 24 * 30 * 1000,
+                        httpOnly: true,
+                    });
+                }
+                res.redirect('/home')
+            })
+        } catch (err) {
+            return res.status(500).json({msg: err.message})
+        }
         
     }, 
     getUsers: async (req, res) => {

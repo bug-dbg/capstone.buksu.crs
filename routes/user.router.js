@@ -2,8 +2,11 @@ const router = require('express').Router()
 const userCtrl = require('../controllers/user.controller')
 const feedbackCtrl = require('../controllers/feedback.controller')
 
+
 // Auth middleware
 const { validateToken } = require('../middlewares/JWT')
+
+
 
 
 // custom routes
@@ -17,9 +20,12 @@ router.get('/user-email', userCtrl.getUserEmail)
 
 router.post('/feedback', feedbackCtrl.feedback)
 
+
+
 router.get('/', (req, res) => {
-    res.render('index')
+    res.render('index', {err: false, msg: ''})
 })
+
 
 router.get('/register', (req, res) => {
     res.render('register_view/register')
