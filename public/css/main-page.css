@@ -1677,3 +1677,25 @@ color: #fff;
 background-color: #0d7e9d;
 border-color: #0d7e9d
 }
+
+/* feedback button */
+
+.feedback-button {
+  height: 40px;
+  border: solid 3px #29a7ca;
+  background: #0a98c0;
+  width: 100px;
+  line-height: 32px;
+  -webkit-transform: rotate(-90deg);
+  font-weight: 600;
+  color: white;
+  transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  text-align: center;
+  font-size: 17px;
+  position: fixed;
+  right: -40px;
+  top: 65%;
+  z-index: 999;
+}
