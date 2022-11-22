@@ -61,7 +61,7 @@ const testCtrl = {
             const { id, answer } = req.body
 
             const questionID = await TestValue.findOne({currentQuestionID: id})
-
+            
             if(!questionID) {
                 const value = new TestValue({
                     value: answer, 
@@ -153,44 +153,6 @@ const testCtrl = {
             else {
                 return res.status(500).json({error: "ERROR"});
             }
-
-          
-            // res.redirect('/evaluation/result')
-          
-            
-          
-            // const { data } = await axios.get("http://localhost:3000/api/courses/recommend/",arr)
-            
-            // const ratings = data.prediction[0]
-
-            // console.log(ratings)
-            
-            
-            //  let courses = [
-            //     {name: "Bachelor of Science in Biology Major in Biotechnology "},
-            //     {name: "Bachelor of Arts in English Language"},
-            //     {name: "Bachelor of Secondary Education Major in Social Studies"},
-            //     {name: "Bachelor of Arts in Economics"},
-            //     {name: "Bachelor of Arts in Sociology"},
-          
-            //  ]
-
-            // // Map to courses in Object 
-            // let i = 0;
-            // courses.forEach(function(c) {
-            //     c.ratings = ratings[i]
-            //     i++
-            // })
-        
-
-            // // Sort the top three result of the recommendation
-            // const topThreeResult = courses.sort((a,b) => b.ratings - a.ratings).slice(0, 3)
-            // console.log(topThreeResult)
-     
-            // // TODO: Fix Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
-
-            return res.status(200).json({data});
-   
             
 
         } catch (err) {

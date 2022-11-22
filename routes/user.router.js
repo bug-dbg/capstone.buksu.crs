@@ -52,5 +52,9 @@ router.get('/success/email', validateToken, (req, res) => {
     res.render('email_sent_page/sent')
 })
 
+router.get('/instructions', (req, res) => {
+    res.render('instructions_page/instruction')
+})
+
 
 module.exports  = router

@@ -1669,7 +1669,7 @@ box-shadow: 0 0 0 1px rgb(93, 89, 89) !important
 .send {
 color: #fff;
 background-color: #0a98c0;
-border-color: #0a98c0
+border-color: #0a98c0;
 }
 
 .send:hover {

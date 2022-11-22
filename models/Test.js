@@ -16,7 +16,7 @@ const testSchema = new mongoose.Schema({
     },
     choice3: {
         type: String,
-        default: "Nuetral",
+        default: "Neutral",
     },
     choice4: {
         type: String,

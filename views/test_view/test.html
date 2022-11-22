@@ -5,33 +5,32 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/css/test-style.css">
+
 
   <link rel="stylesheet"
     href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css" />
-  <!-- <link rel="stylesheet" href="/css/c-modal.css"> -->
-  <!-- <script defer src="/js/test-api.js"></script> -->
-  <!-- <script defer src="/js/dynamic-form.js"></script> -->
 
-   <!-- Google Fonts -->
-   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Montserrat:300,400,500,600,700" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Montserrat:300,400,500,600,700"
+    rel="stylesheet">
 
-   <!-- Vendor CSS Files -->
-   <link href="/vendor/aos/aos.css" rel="stylesheet">
-   <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-   <link href="/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-   <link href="/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-   <link href="/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
- 
-   <link rel="stylesheet"
-   href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css" />
- 
- 
-   <!-- Template Main CSS File -->
-   <link href="/css/test-style.css" rel="stylesheet">
+  <!-- Vendor CSS Files -->
+  <link href="/vendor/aos/aos.css" rel="stylesheet">
+  <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <link rel="stylesheet"
+    href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css" />
 
 
-  <title>Test Page</title>
+  <!-- Custom CSS File -->
+  <link href="/css/test-style.css" rel="stylesheet">
+
+
+  <title>Aptitude Test</title>
 </head>
 
 <body>
@@ -53,7 +52,8 @@
 
       <div class="social-links">
         <a href="https://buksu.edu.ph/" class="website"><i class="bi bi-globe2"></i></a>
-        <a href="https://www.facebook.com/profile.php?id=100063992682487" class="facebook"><i class="bi bi-facebook"></i></a>
+        <a href="https://www.facebook.com/profile.php?id=100063992682487" class="facebook"><i
+            class="bi bi-facebook"></i></a>
       </div>
 
     </div>
@@ -62,26 +62,26 @@
   <!-- <div class="main-container" id="quiz"></div> -->
 
   <section id="result" class="result section-bg">
-    <div class="container" data-aos="fade-up" id="quiz">
-    
-    </div>
+    <div class="container" data-aos="fade-up" id="quiz"></div>
   </section>
+
+
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
     integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-    <!-- Vendor JS Files -->
-  
-    <script src="/vendor/aos/aos.js"></script>
-    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="/vendor/glightbox/js/glightbox.min.js"></script>
-    <script src="/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-    <script src="/vendor/swiper/swiper-bundle.min.js"></script>
-  
-    <!-- Template Main JS File -->
-    <script src="/js/front-end.page.js"></script>
+  <!-- Vendor JS Files -->
+
+  <script src="/vendor/aos/aos.js"></script>
+  <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+  <script src="/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="/js/front-end.page.js"></script>
 
 
   <script>
@@ -89,7 +89,6 @@
     $(function () {
 
       $(function () {
-        
         let currentQuestion = 0;
         let questions = [];
         $(document).on("submit", "#form", function (e) {
@@ -99,13 +98,12 @@
           $.post("/api/user/test-choice/value", data, function (response) {
             // console.log(response);
 
-            // google how to get status code..
             currentQuestion += 1;
             if (currentQuestion < questions.length) {
-            
               createquestion();
+              checkIfRadioBtnIsSelected()
               
-            }else {
+            } else {
               //navigate to final page 
               window.location.replace('/evaluation/')
               // currentQuestion-=1            
@@ -119,7 +117,35 @@
           questions = result.data;
           console.log(questions.length)
           createquestion();
+          checkIfRadioBtnIsSelected()
+      
+
         });
+
+        function checkIfRadioBtnIsSelected() {
+              //get all the radio buttons
+              var radios = document.querySelectorAll('input[type=radio]');
+          //get only the checked radio button
+          var checked = document.querySelectorAll('input[type=radio]:checked');
+          //get the submit button
+          var btn = document.querySelector('[type=submit]');
+          //disable the button on page load by checking the length
+          if (!checked.length) {
+            btn.setAttribute("disabled", "disabled");
+          }
+          //attach the event handler to all the radio buttons with forEach and addEventListener
+          radios.forEach(function (el) {
+            el.addEventListener('click', function () {
+              checked = document.querySelectorAll('input[type=radio]:checked');
+              if (checked.length) {
+                //enable the button by removing the attribute
+                btn.removeAttribute("disabled");
+              }
+            });
+          });
+        }
+
+
 
         function createquestion() {
           $("#quiz").html(`
@@ -165,7 +191,7 @@
                       <input type="radio" name="answer" value="3" id="choice3" class="answer" />
                       <span class="radio-btn"><i class="las la-check"></i>
                         <div class="hobbies-icon">
-                          <img src="https://img.icons8.com/color/96/000000/neutral-emoticon--v1.png" />
+                          <img class="neutral" src="https://img.icons8.com/color/96/000000/neutral-emoticon--v1.png" />
                           <h3 id="c_text">${questions[currentQuestion].choice3}</h3>
                         </div>
                       </span>
@@ -201,74 +227,11 @@
                 </div>
             </div>
             <div class="d-flex justify-content-center button-container">
-              <button class="btn btn-primary btn-lg p-2" type="submit" id="submit">Next</button>
+              <button class="btn btn-lg  p-2 btn-primary" type="submit" id="submit"><span class="next-text">Next</span><i class="bi bi-arrow-right"></i></button>
             </div>
         </form>
           `);
         }
-
-        // function createquestion() {
-        //   $("#quiz").html(`
-        //   <h2>${questions[currentQuestion].question}</h2>
-        //   <form id="form">
-        //     <input type="hidden" name="id" value="${questions[currentQuestion]._id}"
-        //     <div class="radio-buttons">
-        //       <label class="custom-radio" for="choice1">
-        //         <input type="radio" name="answer" value="5" id="choice1" class="answer" />
-        //         <span class="radio-btn">
-        //           <i class="las la-check"></i>
-        //           <div class="hobbies-icon">
-        //             <img
-        //               src="https://img.icons8.com/external-colours-bomsymbols-/91/000000/external-awesome-hand-conversation-colours-colours-bomsymbols-.png" />
-        //             <h3 id="a_text">${questions[currentQuestion].choice1}</h3>
-        //           </div>
-        //         </span>
-        //       </label>
-        //       <label class="custom-radio" for="choice2">
-        //         <input type="radio" name="answer" value="4" id="choice2" class="answer" />
-        //         <span class="radio-btn"><i class="las la-check"></i>
-        //           <div class="hobbies-icon">
-        //             <img
-        //               src="https://img.icons8.com/external-colours-bomsymbols-/91/000000/external-agree-hand-conversation-colours-colours-bomsymbols--2.png" />
-        //             <h3 id="b_text">${questions[currentQuestion].choice2}</h3>
-        //           </div>
-        //         </span>
-        //       </label>
-        //       <label class="custom-radio" for="choice3">
-        //         <input type="radio" name="answer" value="3" id="choice3" class="answer" />
-        //         <span class="radio-btn"><i class="las la-check"></i>
-        //           <div class="hobbies-icon">
-        //             <img src="https://img.icons8.com/color/96/000000/neutral-emoticon--v1.png" />
-        //             <h3 id="c_text">${questions[currentQuestion].choice3}</h3>
-        //           </div>
-        //         </span>
-        //       </label>
-        //       <label class="custom-radio" for="choice4">
-        //         <input type="radio" name="answer" value="2" id="choice4" class="answer" />
-        //         <span class="radio-btn"><i class="las la-check"></i>
-        //           <div class="hobbies-icon">
-        //             <img
-        //               src="https://img.icons8.com/external-colours-bomsymbols-/91/000000/external-bad-hand-conversation-colours-colours-bomsymbols-.png" />
-        //             <h3 id="d_text">${questions[currentQuestion].choice4}</h3>
-        //           </div>
-        //         </span>
-        //       </label>
-        //       <label class="custom-radio" for="choice5">
-        //         <input type="radio" name="answer" value="1" id="choice5" class="answer" />
-        //         <span class="radio-btn"><i class="las la-check"></i>
-        //           <div class="hobbies-icon">
-        //             <img src="https://img.icons8.com/color/96/000000/ban-skin-type-1.png" />
-        //             <h3 id="e_text">${questions[currentQuestion].choice5}</h3>
-        //           </div>
-        //         </span>
-        //       </label>
-        //     </div>
-        //     <div class="submit-btn-container">
-        //       <button type="submit" id="submit">Next</button>
-        //     </div>
-        //   </form>
-        //   `);
-        // }
       });
 
     });

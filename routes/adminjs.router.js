@@ -4,6 +4,8 @@ const express = require('express')
 const bcrypt = require('bcrypt')
 const { Users } = require('../models/User')
 const session = require('express-session')
+const { default: mongoose } = require('mongoose')
+const MongoStore = require('connect-mongo')
 
 
 /**
@@ -12,7 +14,7 @@ const session = require('express-session')
  */
 const buildAdminRouter = (admin) => {
   const router = buildAuthenticatedRouter(admin, {
-    cookieName: 'access-token',
+    cookieName: 'admin-access-token',
     cookiePassword: 'process.env.JWT_SECRET',
     authenticate: async (email, password) => {
       const user = await Users.findOne({email})
@@ -25,6 +27,7 @@ const buildAdminRouter = (admin) => {
   }, null, {
     resave: false,
     saveUninitialized: true,
+    store: MongoStore.create({mongoUrl: process.env.LOCAL_MONGODB_URL})
   })
   return router
 }
