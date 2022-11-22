@@ -52,7 +52,7 @@ router.get('/success/email', validateToken, (req, res) => {
     res.render('email_sent_page/sent')
 })
 
-router.get('/instructions', (req, res) => {
+router.get('/instructions', validateToken, (req, res) => {
     res.render('instructions_page/instruction')
 })
 
