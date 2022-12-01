@@ -41,87 +41,80 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 CORS(app, resources={r"/api/*": {"origins": "*"}})
 
-from sqlalchemy import create_engine
-
-# dfs = pd.read_excel('data/BUKSU-Enrollment-Data.xlsx')
-
-# import excel data to sqlite db
-engine = create_engine('sqlite:///course.db')
-# dfs.to_sql('Enrollmentdata', con= engine)
-
-class Enrollmentdata(db.Model):
-    courseID = db.Column(db.Integer, primary_key=True, nullable=False)
-    course = db.Column(db.String(300), index=True, nullable=False)
-    college = db.Column(db.String(64), nullable=False)
-    enrolledStudents = db.Column(db.Float(), nullable=False)
-    studentDropouts = db.Column(db.Float(), nullable=False)
-    studentShiftees = db.Column(db.Float(), nullable=False)
-
-    def serialize(self):
-        return {
-            "courseID" : self.courseID,
-            "course" : self.course,
-            "college" : self.college,
-            "enrolledStudents" : self.enrolledStudents,
-            "studentDropouts" : self.studentDropouts,
-            "studentShiftees" : self.studentShiftees
-        }
 
 @app.route('/')
 def index():
     return 'Welcome to BukSU CRS'
-    
-@app.route('/api/courses')
-def get_courses():
-    courseData = Enrollmentdata.query.order_by(Enrollmentdata.course).all()
-    return jsonify({'Courses': list(map(lambda course: course.serialize(), courseData))})
 
-@app.route('/api/courses/recommend/',  methods=['POST'])
+@app.route('/api/courses/recommend/', methods=['POST'])
 def get_course_recommendation():
 
-    # def get_api_value():
-    #     # get user choices values
-    #     url = "http://localhost:5000/api/user/evaluate/data"
-
-    #     response = urllib.request.urlopen(url)
-    #     data = response.read()
-    #     dict = json.loads(data)
-
-    #     arrVal = dict["data"]
-    #     return arrVal
-
-  
-        
-
-    # print(d)    
-       
-
-   
-    
-
-    # response = requests.get("http://localhost:5000/api/user/evaluate/data")
-    # dict = json.loads(response)
-
-    # print(dict["data"])
-
-    # url = "http://localhost:5000/api/user/evaluate/data"
-    # headers = {'Accept': 'application/json'}
-    
-    # response = requests.get(url, headers=headers).json()
-    
-    # print(response)
-    # train_labels = [[1,0,0,0,0],[0,1,0,0,0],[0,0,1,0,0],[0,0,0,1,0],[0,0,0,0,1]]
-    
+    # train_labels = [
+    #     [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    #     [0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    #     [0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    #     [0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    #     [0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    #     [0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    #     [0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    #     [0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    #     [0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    #     [0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    #     [0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    #     [0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    #     [0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    #     [0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    #     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    #     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0],
+    #     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0],
+    #     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0],
+    #     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0],
+    #     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0],
+    #     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0],
+    #     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0],
+    #     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0],
+    #     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0],
+    #     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0],
+    #     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0],
+    #     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0],
+    #     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
+    #     [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],  
+    # ]
     # train_samples = [
-    #     [2,3,4,5,2,4,5,2,5,5],
-    #     [5,5,4,3,2,1,3,3,3,4],
-    #     [2,3,1,5,5,5,5,5,5,5],
-    #     [4,2,1,5,5,2,5,4,1,5],
-    #     [1,3,1,3,5,3,5,4,3,1]
+    #     [1,1,2,1,1,3,5,5,3,5,1,2,1,4,3,4,2,1,2,1,5,2,5,1,5,2,1,5,5,5,5,5,2,5,2,5],
+    #     [1,2,1,2,2,3,4,3,1,3,1,2,1,4,3,4,1,2,1,2,3,1,3,2,3,1,2,3,3,3,4,5,5,4,5,5],
+    #     [2,1,2,1,2,5,5,5,5,5,1,2,2,4,1,3,1,1,2,2,4,1,5,4,4,5,2,1,4,2,1,4,2,1,2,1],
+    #     [2,1,2,1,2,5,4,5,4,5,1,5,2,4,5,3,1,2,1,2,5,4,5,5,4,5,4,1,4,4,2,4,1,2,1,5],
+    #     [3,1,5,5,2,5,5,5,5,5,1,2,2,4,1,3,3,1,2,2,5,4,5,4,4,5,5,1,4,2,1,4,2,1,2,4],
+    #     [2,1,4,1,2,5,4,5,4,5,3,5,2,5,5,3,1,2,1,2,5,4,5,5,4,5,4,1,4,4,3,4,1,2,4,5],
+    #     [2,1,2,1,2,5,4,5,4,5,1,5,2,4,5,3,1,2,1,2,5,4,5,5,4,5,4,1,4,4,2,5,1,2,4,5],
+    #     [2,1,4,2,2,1,2,1,2,3,5,4,5,5,5,3,3,1,2,1,3,1,2,4,2,5,2,1,4,2,1,4,2,1,3,3],
+    #     [3,1,5,5,2,5,5,5,5,5,2,2,1,4,1,3,3,1,1,2,5,4,5,4,4,5,5,1,4,1,1,4,1,1,1,4],
+    #     [1,1,2,1,2,5,5,5,5,5,1,2,2,4,1,3,1,1,2,1,4,1,5,4,4,5,2,1,4,1,1,3,1,1,1,1],
+    #     [3,1,3,3,2,5,4,5,4,5,2,5,2,4,5,3,3,2,1,2,5,4,5,5,4,5,4,1,4,4,1,4,1,1,1,5],
+    #     [3,1,2,1,1,3,5,5,3,5,1,3,1,4,3,4,2,1,2,1,5,3,5,4,5,5,5,5,5,5,5,5,2,5,2,5],
+    #     [2,1,3,1,2,3,4,5,1,3,5,4,5,5,5,3,3,1,1,1,3,2,1,4,2,5,1,1,4,1,1,4,1,1,2,2],
+    #     [3,1,2,2,3,3,3,5,1,3,5,4,5,5,5,3,4,1,1,1,3,2,1,4,2,5,2,1,4,1,1,4,1,1,1,1],
+    #     [4,3,5,4,2,4,5,5,4,5,1,2,1,4,2,3,4,1,2,1,4,2,1,4,4,4,1,1,2,2,1,3,1,1,1,1],
+    #     [3,2,4,3,2,1,4,4,1,3,1,4,1,4,2,5,2,2,2,2,3,3,2,4,4,4,3,1,4,1,1,4,1,1,1,2],
+    #     [3,2,4,3,2,2,4,4,1,3,2,4,1,4,3,5,3,1,3,1,3,3,2,4,4,4,3,1,3,1,1,4,1,1,1,1],
+    #     [2,2,4,3,2,3,4,4,1,4,2,4,1,4,3,5,3,5,2,1,3,3,3,4,4,4,3,1,3,3,1,4,1,4,3,2],
+    #     [1,2,5,3,2,3,3,5,1,3,3,4,2,4,4,5,4,2,5,4,2,2,4,4,4,4,3,1,3,3,1,5,1,2,3,4],
+    #     [1,2,5,4,2,3,3,5,3,3,3,4,2,5,4,5,5,2,5,5,2,2,4,4,4,4,3,1,3,3,1,5,1,2,3,4],
+    #     [4,4,4,3,3,3,5,5,3,5,3,3,2,4,1,4,4,2,1,2,5,5,5,5,5,5,3,1,4,4,2,3,1,2,1,2],
+    #     [4,4,4,3,3,3,5,5,3,5,5,5,5,5,5,4,4,2,1,2,5,5,5,5,5,5,3,1,4,4,2,3,1,2,1,2],
+    #     [4,4,4,3,3,4,5,5,4,5,2,3,1,4,1,3,4,2,1,2,5,5,5,5,5,5,3,1,4,4,2,3,1,2,1,2],
+    #     [4,4,4,3,3,5,5,5,5,5,3,4,2,4,3,4,4,2,1,2,5,5,5,5,5,5,3,1,4,4,2,3,1,2,1,2],
+    #     [4,4,4,2,2,5,5,5,5,5,3,4,1,4,2,4,4,1,1,2,5,5,5,5,5,5,3,1,4,4,1,3,1,2,1,1],
+    #     [4,4,4,3,3,3,5,5,3,5,3,3,2,4,3,4,4,3,1,2,5,5,5,5,5,5,3,1,4,4,4,4,5,5,5,5],
+    #     [4,4,4,3,3,3,5,5,3,5,3,3,2,4,1,4,4,2,1,2,5,5,5,5,5,5,3,1,5,5,2,3,3,2,3,2],
+    #     [5,5,5,5,5,5,5,5,3,5,3,3,2,4,1,4,4,2,1,2,5,5,5,5,5,5,3,1,4,4,2,3,1,2,1,2],
+    #     [3,1,3,3,2,5,5,5,5,5,4,5,2,5,5,3,3,2,1,2,5,4,5,5,4,5,4,1,5,4,1,5,1,1,2,5],
+        
     # ]
 
-    # to use the fit function the data type of X and y should be the same
-    # that's why train_samples (X) is stored as a numpy array and also the train_lables (y)
+    # # to use the fit function the data type of X and y should be the same
+    # # that's why train_samples (X) is stored as a numpy array and also the train_lables (y)
 
     # train_labels = np.array(train_labels)
     # train_samples = np.array(train_samples)
@@ -142,7 +135,7 @@ def get_course_recommendation():
     # model = Sequential([
     # Dense(units = 16, activation = 'relu', input_shape = (scaled_train_samples.shape[1], )),
     # Dense(units = 32, activation = 'relu'),
-    # Dense(units = 5, activation = 'sigmoid')
+    # Dense(units = 29, activation = 'sigmoid')
     # ])
 
     # print(model.summary())
@@ -158,25 +151,21 @@ def get_course_recommendation():
     # # verbose, option to see output when we run the fit function
     # # validation_split, it splits the portion of the training dataset to a validation dataset
 
-    # model.fit(x=scaled_train_samples, y=train_labels, batch_size=10, epochs=5000)
+    # model.fit(x=scaled_train_samples, y=train_labels, batch_size=10, epochs=20000)
     # scores = model.evaluate(scaled_train_samples, train_labels, verbose=0)
 
     # print("%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
 
+    # # Save trained model
+    # if os.path.isfile('models/crs_trained_model.h5') is False:
+    #     model.save('models/crs_trained_model.h5')
 
-    # if os.path.isfile('models/crs_model.h5') is False:
-    #     model.save('models/crs_model.h5')
 
+    # Load trained model
 
-    new_model = load_model('models/crs_model.h5')
-    print(request.get_json()[0]);
-    # new_model.compile(optimizer=adam_v2.Adam(learning_rate=0.0001), loss='binary_crossentropy', metrics=['accuracy'])
-    # new_model.fit(x=scaled_train_samples, y=train_labels, batch_size=10, epochs=100)
-    # score = new_model.evaluate(scaled_train_samples, train_labels, verbose=0)
-    # print("%s: %.2f%%" % (new_model.metrics_names[1], score[1]*100))
-    # print(request.get_json())
+    new_model = load_model('models/crs_trained_model.h5')
     actual_sample = np.array([request.get_json()])
-    # actual_sample = np.array([[2,3,4,5,2,4,5,2,5,5]])
+    # actual_sample = np.array([[4,4,4,3,3,3,5,5,3,5,3,3,2,4,3,4,4,3,1,2,5,5,5,5,5,5,3,1,4,4,4,4,5,5,5,5]])
 
     prediction = new_model.predict(actual_sample, batch_size=None, verbose=0, steps=None)
     print(prediction)
@@ -186,11 +175,6 @@ def get_course_recommendation():
     print(convertedPrediction)
 
     return jsonify({'prediction': convertedPrediction})\
-
-
-
-
-    
 
 
 if __name__ == "__main__":
