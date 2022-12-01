@@ -151,7 +151,7 @@ def get_course_recommendation():
     # # verbose, option to see output when we run the fit function
     # # validation_split, it splits the portion of the training dataset to a validation dataset
 
-    # model.fit(x=scaled_train_samples, y=train_labels, batch_size=10, epochs=20000)
+    # model.fit(x=scaled_train_samples, y=train_labels, batch_size=10, epochs=10000)
     # scores = model.evaluate(scaled_train_samples, train_labels, verbose=0)
 
     # print("%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
@@ -163,9 +163,9 @@ def get_course_recommendation():
 
     # Load trained model
 
-    new_model = load_model('models/crs_trained_model.h5')
+    new_model = load_model('models/trained_model.h5')
     actual_sample = np.array([request.get_json()])
-    # actual_sample = np.array([[4,4,4,3,3,3,5,5,3,5,3,3,2,4,3,4,4,3,1,2,5,5,5,5,5,5,3,1,4,4,4,4,5,5,5,5]])
+    # actual_sample = np.array([[4,4,4,3,3,3,5,5,3,5,3,3,2,4,1,4,4,2,1,2,5,5,5,5,5,5,3,1,5,5,2,3,3,2,3,2]])
 
     prediction = new_model.predict(actual_sample, batch_size=None, verbose=0, steps=None)
     print(prediction)
