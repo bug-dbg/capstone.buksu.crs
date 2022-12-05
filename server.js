@@ -27,7 +27,7 @@ app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html')
 app.use(express.static('public'))
 app.use(express.urlencoded({ limit: '10mb', extended: false }))
-app.use(express.urlencoded({extended: true }))
+app.use(express.urlencoded({ extended: true }))
 
 // app.use(function(req, res, next) {
 //     res.header("Access-Control-Allow-Origin", "*");

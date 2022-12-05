@@ -17,17 +17,17 @@ const buildAdminRouter = (admin) => {
     cookieName: 'admin-access-token',
     cookiePassword: 'process.env.JWT_SECRET',
     authenticate: async (email, password) => {
-      const user = await Users.findOne({email})
+      const user = await Users.findOne({ email })
 
-      if(user && await bcrypt.compare(password, user.encryptedPassword) && user.role === 1) {
+      if (user && await bcrypt.compare(password, user.encryptedPassword) && user.role === 1) {
         return user.toJSON()
-      } 
+      }
       return null
     }
   }, null, {
     resave: false,
     saveUninitialized: true,
-    store: MongoStore.create({mongoUrl: process.env.LOCAL_MONGODB_URL})
+    store: MongoStore.create({ mongoUrl: process.env.LOCAL_MONGODB_URL })
   })
   return router
 }

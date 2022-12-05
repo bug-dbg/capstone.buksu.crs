@@ -176,7 +176,7 @@ const testCtrl = {
             
     
                 // Sort the top three result of the recommendation
-                const topThreeResult = courses.sort((a,b) => b.ratings - a.ratings).slice(0, 3)
+                const topThreeResult = courses.sort((a,b) => b.ratings - a.ratings).slice(0, 6)
                 console.log(topThreeResult);
                 
                 return res.render('result_page/result', {prediction: topThreeResult});

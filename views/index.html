@@ -38,7 +38,7 @@
 
             <% } else{ %>
                 <p></p>
-                <% } %>
+        <% } %>
 
 
 
@@ -85,8 +85,8 @@
     <script>
         // function that blocks click event
         // unless ctrl + click is entered
-        function blockClick(e){
-            if(e.ctrlKey && e.type == "click") {
+        function blockClick(e) {
+            if (e.ctrlKey && e.type == "click") {
                 window.location.href = '/admin'
             } else {
                 e.preventDefault();

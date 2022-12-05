@@ -16,11 +16,11 @@ const options = {
     loginPath: '/admin/login',
     rootPath: '/admin',
     branding: {
-       companyName: 'Test'
+        companyName: 'Test'
     }
     // dashboard: {
     //     handler: async () => {
-    
+
     //     },
     //     component: AdminJS.bundle('./my-dashboard-component')
     //   }

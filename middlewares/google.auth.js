@@ -1,5 +1,5 @@
 // Google Auth
-const {OAuth2Client} = require('google-auth-library');
+const { OAuth2Client } = require('google-auth-library');
 const CLIENT_ID = '270040489280-ljn99nm3ve4m8su2t77dras268tp2fiu.apps.googleusercontent.com'
 const client = new OAuth2Client(CLIENT_ID);
 
@@ -17,15 +17,15 @@ const checkAuthenticated = async (req, res, next) => {
         user.name = payload.name;
         user.email = payload.email;
         user.picture = payload.picture;
-      }
-      verify()
-      .then(() => {
-          req.user = user;
-          next();
-      })
-      .catch(err => {
-          res.redirect('/')
-      })
+    }
+    verify()
+        .then(() => {
+            req.user = user;
+            next();
+        })
+        .catch(err => {
+            res.redirect('/')
+        })
 
 }
 
