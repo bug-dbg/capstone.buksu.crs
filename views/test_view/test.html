@@ -146,6 +146,11 @@
         }
 
 
+        // strongly agree <img src="https://img.icons8.com/external-colours-bomsymbols-/91/000000/external-awesome-hand-conversation-colours-colours-bomsymbols-.png" />
+        //  agree  <img src="https://img.icons8.com/external-colours-bomsymbols-/91/000000/external-agree-hand-conversation-colours-colours-bomsymbols--2.png" />
+        // nuetral <img class="neutral" src="https://img.icons8.com/color/96/000000/neutral-emoticon--v1.png" />
+        //  disagree <img src="https://img.icons8.com/external-colours-bomsymbols-/91/000000/external-bad-hand-conversation-colours-colours-bomsymbols-.png" />
+        // strongly disagree  <img src="https://img.icons8.com/color/96/000000/ban-skin-type-1.png" />
 
         function createquestion() {
           $("#quiz").html(`
@@ -162,8 +167,7 @@
                       <span class="radio-btn">
                         <i class="las la-check"></i>
                         <div class="hobbies-icon">
-                          <img
-                            src="https://img.icons8.com/external-colours-bomsymbols-/91/000000/external-awesome-hand-conversation-colours-colours-bomsymbols-.png" />
+                          <i class="bi bi-emoji-laughing emoji"></i>
                           <h3 id="a_text">${questions[currentQuestion].choice1}</h3>
                         </div>
                       </span>
@@ -176,8 +180,7 @@
                       <input type="radio" name="answer" value="4" id="choice2" class="answer" />
                       <span class="radio-btn"><i class="las la-check"></i>
                         <div class="hobbies-icon">
-                          <img
-                            src="https://img.icons8.com/external-colours-bomsymbols-/91/000000/external-agree-hand-conversation-colours-colours-bomsymbols--2.png" />
+                          <i class="bi bi-emoji-smile emoji"></i>
                           <h3 id="b_text">${questions[currentQuestion].choice2}</h3>
                         </div>
                       </span>
@@ -191,7 +194,7 @@
                       <input type="radio" name="answer" value="3" id="choice3" class="answer" />
                       <span class="radio-btn"><i class="las la-check"></i>
                         <div class="hobbies-icon">
-                          <img class="neutral" src="https://img.icons8.com/color/96/000000/neutral-emoticon--v1.png" />
+                          <i class="bi bi-emoji-neutral emoji"></i>
                           <h3 id="c_text">${questions[currentQuestion].choice3}</h3>
                         </div>
                       </span>
@@ -204,8 +207,7 @@
                       <input type="radio" name="answer" value="2" id="choice4" class="answer" />
                       <span class="radio-btn"><i class="las la-check"></i>
                         <div class="hobbies-icon">
-                          <img
-                            src="https://img.icons8.com/external-colours-bomsymbols-/91/000000/external-bad-hand-conversation-colours-colours-bomsymbols-.png" />
+                          <i class="bi bi-emoji-frown emoji"></i>
                           <h3 id="d_text">${questions[currentQuestion].choice4}</h3>
                         </div>
                       </span>
@@ -218,7 +220,7 @@
                       <input type="radio" name="answer" value="1" id="choice5" class="answer" />
                       <span class="radio-btn"><i class="las la-check"></i>
                         <div class="hobbies-icon">
-                          <img src="https://img.icons8.com/color/96/000000/ban-skin-type-1.png" />
+                          <i class="bi bi-emoji-angry emoji"></i>
                           <h3 id="e_text">${questions[currentQuestion].choice5}</h3>
                         </div>
                       </span>

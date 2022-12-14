@@ -12,11 +12,11 @@ const { Feedbacks } = require('../models/Feedback')
 
 const options = {
     resources: [AdminResources, Test, Feedbacks],
-    logoutPath: '/logout',
+    logoutPath: '/adminlogout',
     loginPath: '/admin/login',
     rootPath: '/admin',
     branding: {
-        companyName: 'Test'
+        companyName: 'BukSU CRS'
     }
     // dashboard: {
     //     handler: async () => {

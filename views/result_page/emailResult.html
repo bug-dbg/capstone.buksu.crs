@@ -16,7 +16,8 @@
     rel="stylesheet">
 
   <!-- Vendor CSS Files -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 
 
@@ -25,8 +26,7 @@
   <!-- <link href="/css/result.css" rel="stylesheet"> -->
 
   <style>
-
-  /* @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"); */
+    /* @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"); */
 
     body {
       background: #fff;
@@ -40,7 +40,9 @@
       transition: 0.5s;
     }
 
-    a:hover, a:active, a:focus {
+    a:hover,
+    a:active,
+    a:focus {
       color: #0a98c0;
       outline: none;
       text-decoration: none;
@@ -51,14 +53,19 @@
       margin: 0 0 30px 0;
     }
 
-    h1, h2, h3, h4, h5, h6 {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
       font-family: "Montserrat", sans-serif;
       font-weight: 400;
       margin: 0 0 20px 0;
       padding: 0;
     }
 
-    
+
 
 
     /*--------------------------------------------------------------
@@ -83,6 +90,7 @@
       position: relative;
       font-family: "Montserrat", sans-serif;
     }
+
     .section-header p {
       text-align: center;
       margin: auto;
@@ -91,6 +99,7 @@
       color: #535074;
       width: 50%;
     }
+
     @media (max-width: 767px) {
       .section-header p {
         width: 100%;
@@ -110,6 +119,7 @@
     #result {
       padding: 60px 0 40px 0;
     }
+
     #result .box {
       padding: 30px;
       position: relative;
@@ -120,9 +130,11 @@
       text-align: center;
       height: 100%;
     }
+
     #result .box:hover {
       transform: scale(1.1);
     }
+
     #result .icon {
       margin: 0 auto 15px auto;
       padding-top: 12px;
@@ -132,21 +144,26 @@
       width: 60px;
       height: 60px;
     }
+
     #result .icon i {
       font-size: 36px;
       line-height: 0;
     }
+
     #result .title {
       font-weight: 700;
       margin-bottom: 15px;
       font-size: 18px;
     }
+
     #result .title a {
       color: #111;
     }
+
     #result .box:hover .title a {
       color: #1bb1dc;
     }
+
     #result .description {
       font-size: 14px;
       line-height: 28px;
@@ -164,15 +181,18 @@
       color: #535074;
       font-size: 15px;
     }
+
     #footer .credits {
       text-align: center;
       font-size: 14px;
       padding-top: 4px;
       color: #8582a8;
     }
+
     #footer .credits a {
       color: #1bb1dc;
     }
+
     #footer .credits a:hover {
       color: #0a98c0;
     }
@@ -185,7 +205,8 @@
       float: right;
     }
 
-    .email-button span, i {
+    .email-button span,
+    i {
       padding: 0 10px;
     }
 
@@ -198,6 +219,25 @@
       background-color: #fff;
       border-color: #1bb1dc;
       color: #1bb1dc;
+    }
+
+    .ranking {
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      background: #ffee55;
+      /* border: 4px solid #ff686f; */
+      padding: -20px 0 0 0;
+      color: #291300;
+      text-align: center;
+      margin-top: 20px;
+
+      font-size: 30px;
+      font-weight: bold;
+
+      float: left;
+      position: relative;
+      top: -30px;
     }
   </style>
 
@@ -213,7 +253,7 @@
       <!-- Uncomment below if you prefer to use an image logo -->
       <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
-   
+
     </div>
   </header><!-- End Header -->
 
@@ -230,10 +270,19 @@
         <% for(var i=0; i < prediction.length; i++) { %>
           <div class="col-md-6 col-lg-4 wow bounceInUp" data-aos="zoom-in" data-aos-delay="100">
             <div class="box">
+              <div class="ranking">
+                <%= i + 1 %>
+              </div>
+              <br>
+              <br>
               <!-- <div class="icon" style="background: #fceef3;"><i class="bi bi-journal-check" style="color: #ff689b;"></i>
               </div> -->
-              <h4 class="title"><%= prediction[i].name %></h4>
-              <p class="description"><%= prediction[i].description %></p>
+              <h4 class="title">
+                <%= prediction[i].name %>
+              </h4>
+              <p class="description">
+                <%= prediction[i].description %>
+              </p>
             </div>
           </div>
           <% } %>
@@ -263,7 +312,9 @@
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
   <!-- JavaScript Bundle with Popper -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+    crossorigin="anonymous"></script>
 
 </body>
 

@@ -15,6 +15,7 @@ router.post('/register', userCtrl.register)
 router.get('/profile', userCtrl.getUserById)
 router.get('/all-users', userCtrl.getUsers)
 router.get('/logout', userCtrl.logout)
+router.get('/adminlogout', userCtrl.adminjsLogout)
 
 router.get('/user-email', userCtrl.getUserEmail)
 

@@ -127,6 +127,11 @@ const userCtrl = {
         res.clearCookie('access-token')
         res.clearCookie('session-token')
         res.redirect('/')
+    },
+    
+    adminjsLogout: (req, res) => {
+        res.clearCookie('admin-access-token')
+        res.redirect('/')
     }
 }
 
