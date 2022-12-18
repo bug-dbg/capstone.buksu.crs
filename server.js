@@ -1,4 +1,11 @@
-require("dotenv").config()
+// check if were running in the production env or not
+// we need to not load this production env 
+// unless were in our development env
+if(process.env.NODE_ENV !== 'production') {
+    require('dotenv').config()
+    // load of dotenv dependencies
+}
+
 const express = require('express')
 const mongoose = require('mongoose')
 const cookieParser = require('cookie-parser')

@@ -102,7 +102,7 @@
             if (currentQuestion < questions.length) {
               createquestion();
               checkIfRadioBtnIsSelected()
-              
+
             } else {
               //navigate to final page 
               window.location.replace('/evaluation/')
@@ -118,13 +118,13 @@
           console.log(questions.length)
           createquestion();
           checkIfRadioBtnIsSelected()
-      
+
 
         });
 
         function checkIfRadioBtnIsSelected() {
-              //get all the radio buttons
-              var radios = document.querySelectorAll('input[type=radio]');
+          //get all the radio buttons
+          var radios = document.querySelectorAll('input[type=radio]');
           //get only the checked radio button
           var checked = document.querySelectorAll('input[type=radio]:checked');
           //get the submit button
