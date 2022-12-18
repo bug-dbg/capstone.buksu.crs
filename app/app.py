@@ -162,20 +162,21 @@ def get_course_recommendation():
 
 
     # Load trained model
+    try:
+        new_model = load_model('models/crs_ai_trained_model.h5')
+        actual_sample = np.array([request.get_json()])
+        # actual_sample = np.array([[1,1,2,1,1,3,5,5,3,5,1,2,1,4,3,4,2,1,2,1,5,2,5,1,5,2,1,5,5,5,5,5,2,5,2,5]])
 
-    new_model = load_model('models/crs_ai_trained_model.h5')
-    actual_sample = np.array([request.get_json()])
-    # actual_sample = np.array([[1,1,2,1,1,3,5,5,3,5,1,2,1,4,3,4,2,1,2,1,5,2,5,1,5,2,1,5,5,5,5,5,2,5,2,5]])
+        prediction = new_model.predict(actual_sample, batch_size=None, verbose=0, steps=None)
+        print(prediction)
 
-    prediction = new_model.predict(actual_sample, batch_size=None, verbose=0, steps=None)
-    print(prediction)
+        convertedPrediction = np.array(prediction).tolist()
 
-    convertedPrediction = np.array(prediction).tolist()
+        return jsonify({'prediction': convertedPrediction})
 
-    print(convertedPrediction)
-
-    return jsonify({'prediction': convertedPrediction})\
-
+    except Exception as err:
+        print(f"Unexpected {err=}, {type(err)=}")
+    
 
 if __name__ == "__main__":
     app.run(debug=True, port=3000)
