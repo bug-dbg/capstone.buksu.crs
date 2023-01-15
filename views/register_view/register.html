@@ -8,6 +8,17 @@
     <link rel="stylesheet" href="/css/register.css">
     <!-- <link rel="stylesheet" href="/css/style.css"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css">
+
+    <script defer src="/js/client-side_validation.js"></script>
+
+    <!-- Google recaptcha-->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script>
+      function onSubmit(token) {
+        document.getElementById("form").submit();
+      }
+    </script>
+
     <title>Sign Up</title>
 </head>
 
@@ -66,7 +77,12 @@
                             <i class="fas fa-exclamation-circle"></i>
                             <small>Error message</small>
                         </div>
-                        <button type="submit">Sign Up</button>
+                        <div class="terms">
+                            <input id="terms" type="checkbox" onclick="isChecked()"><p>I agree to all your <a href="/terms-and-condition">terms and conditions</a>.</p>
+                            <small id="message"></small>
+                        </div>
+
+                        <button class="g-recaptcha" data-sitekey="6Lf3DvUjAAAAABlWt0K5f1E7sk7Vw6VUhBAa5WbQ" data-callback="onSubmit" type="submit">Sign Up</button>
                         <div class="child-container">
                             <p>Already have an account?<a href="/">Sign In</a></p>
                         </div>
@@ -76,7 +92,7 @@
         integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script defer src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script defer src="/js/client-side_validation.js"></script>
+   
 </body>
 
 </html>

@@ -110,7 +110,9 @@
             }
 
           });
+          
         });
+
 
         $.get("/api/test-data", function (result, status) {
           console.log(result);
@@ -118,7 +120,6 @@
           console.log(questions.length)
           createquestion();
           checkIfRadioBtnIsSelected()
-
 
         });
 
@@ -154,9 +155,13 @@
 
         function createquestion() {
           $("#quiz").html(`
+            <div class="d-flex justify-content-end count">
+              <p>${currentQuestion + 1} out of  ${questions.length}</p>
+            </div>
             <header class="section-header">
-              <h2>${questions[currentQuestion].question}</h2>
+              <h2>${currentQuestion + 1}. ${questions[currentQuestion].question}</h2>
             </header>
+
             <form id="form">
               <input type="hidden" name="id" value="${questions[currentQuestion]._id}">
               <div class="row g-5">
@@ -187,7 +192,7 @@
                     </label>
                   </div>
                 </div>
-      
+
                 <div class="col" data-aos="zoom-in" data-aos-delay="200">
                   <div class="radio-buttons ">
                     <label class="custom-radio" for="choice3">
@@ -227,7 +232,13 @@
                     </label>
                   </div>
                 </div>
+
             </div>
+
+            <div class="d-flex justify-content-center button-container">
+              <button class="btn btn-lg  p-2 btn-primary" id="prev"><span class="next-text">Previous</span><i class="bi bi-arrow-right"></i></button>
+            </div>
+
             <div class="d-flex justify-content-center button-container">
               <button class="btn btn-lg  p-2 btn-primary" type="submit" id="submit"><span class="next-text">Next</span><i class="bi bi-arrow-right"></i></button>
             </div>

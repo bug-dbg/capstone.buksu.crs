@@ -46,6 +46,7 @@ app.use(express.urlencoded({ extended: true }))
 // Routes
 app.use('/', require('./routes/user.router'))
 app.use('/api', require('./routes/test.router'))
+app.use('/api', require('./routes/reports.router'))
 app.use('/google', require('./routes/google.user.router'))
 app.all('*', (req, res) => {
     res.render('page_not_found/not_found')
@@ -60,5 +61,7 @@ const db = mongoose.connection
 db.on('error', error => console.error(error))
 db.once('open', () => console.log('Connected to Mongodb'))
 
-
-app.listen(process.env.PORT || 5000)
+const PORT = process.env.PORT || 5000
+app.listen(PORT, () => {
+    console.log(`App is listening in PORT ${PORT}`)
+})

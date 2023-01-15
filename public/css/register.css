@@ -160,3 +160,12 @@ a {
 	background-image: url('/img/err.png');
 	background-size: 30px;
 }
+
+.terms {
+	display: flex;
+	flex-direction: row;
+}
+
+.terms p {
+	margin-left: 1rem;
+}

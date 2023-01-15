@@ -1,11 +1,11 @@
 const mongoose = require('mongoose')
 
-const userSchema = new mongoose.Schema({
-    firstName: {
+const googleUserSchema = new mongoose.Schema({
+    given_name: {
         type: String,
         required: true,
     },
-    lastName: {
+    family_name: {
         type: String,
         required: true,
     },
@@ -13,10 +13,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true
-    },
-    encryptedPassword: {
-        type: String,
-        required: true
     },
     role: {
         type: Number,
@@ -29,5 +25,5 @@ const userSchema = new mongoose.Schema({
     }
 })
 
-const Users = mongoose.model('User', userSchema)
-module.exports = { userSchema, Users }
+const GoogleUsers = mongoose.model('GoogleUser', googleUserSchema)
+module.exports = { googleUserSchema, GoogleUsers }

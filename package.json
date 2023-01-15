@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon server.js",
     "start": "node server.js",
-    "build": "npm install"
+    "build": "node npm install"
   },
   "keywords": [],
   "author": "",
@@ -34,7 +34,8 @@
     "mongoose": "^6.2.10",
     "nock": "^13.2.9",
     "nodemailer": "^6.8.0",
-    "tslib": "^2.3.1"
+    "tslib": "^2.3.1",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.15",

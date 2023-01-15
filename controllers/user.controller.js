@@ -1,16 +1,103 @@
 const bcrypt = require('bcrypt')
 const { createTokens } = require('../middlewares/JWT')
 const { Users } = require('../models/User')
+const { UserVerification } = require('../models/UserVerification')
 
-const { body, check, validationResult, validationErrors } = require('express-validator')
+const { numOfUsers } = require('./reports.controller')
 
-// const express = require('express')
+// email handler
+const nodemailer = require('nodemailer')
 
-// var api = express.Router();
-// var expressValidator = require('express-validator');
+// generate unique string
+const { v4: uuidv4 } = require('uuid')
 
-// const flash = require('express-flash')
 
+// nodemailer code
+let transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: process.env.AUTH_EMAIL,
+        pass: process.env.AUTH_PASS
+    }
+})
+
+
+// testing
+
+transporter.verify((error, success) => {
+    if(error) {
+        console.log(error)
+    } else {
+        console.log("Ready for messages")
+        console.log(success)
+    }
+})
+
+// send verication email function
+const sendVerificationEmail = ({_id, email}, res) => {
+    const currentUrl = 'http://localhost:5000/'
+
+    const uniqueString = uuidv4() + _id
+
+    // nodemailer mail options 
+    const mailOptions = {
+        from: process.env.AUTH_EMAIL,
+        to: email,
+        subject: "Verify Your Email",
+        html: `<p>Verify you email address to complete the signup and log in into your account.</p>
+        <p>This link <b>expires in 6 hours</b>.</p>
+        <p>Press <a href=${currentUrl + "verify/" + _id + "/" + uniqueString}>here</a> to proceed.</p>`,
+    }
+
+    // hash the uniqueString
+    const saltRounds = 10
+    bcrypt
+        .hash(uniqueString, saltRounds)
+        .then((hashUniqueString) => {
+            // set value in userVerification collection
+            const newVerification = new UserVerification({
+                userID: _id,
+                uniqueString: hashUniqueString,
+                createdAt: Date.now(),
+                expiresAt: Date.now() + 21600000,
+
+            })
+
+            newVerification
+                .save()
+                .then(() => {
+                    transporter
+                        .sendMail(mailOptions)
+                        .then(() => {
+                            // email send and verification record save
+                            // res.json({
+                            //     status: "PENDING",
+                            //     message: "Verification Email Sent! Check your email to verify!"
+                            // })
+
+                            res.redirect('/email-verification/pending')
+                            
+                        })
+                        .catch((err) => {
+                            console.log(err)
+                            
+                            let message = "Verification Email Failed!"
+                            return res.render('register_view/register', { err: true, msg: message })
+                        })
+                })  
+                .catch((err) => {
+                    console.log(err)
+                    
+                    let message = "Couldn't save verification email!"
+                    return res.render('register_view/register', { err: true, msg: message })
+                })
+        })
+        .catch(() => {
+            
+            let message = "An error occured while hashing the email data!"
+            return res.render('register_view/register', { err: true, msg: message })
+        })
+}
 
 
 const userCtrl = {
@@ -30,19 +117,125 @@ const userCtrl = {
             // Password Encryption
             const passwordHash = await bcrypt.hash(password, 10)
             const newUser = new Users({
-                firstName, lastName, email, encryptedPassword: passwordHash,
+                firstName, 
+                lastName, 
+                email, 
+                encryptedPassword: passwordHash,
+                verified: false
             })
 
             // Save to database
-            await newUser.save()
+            await newUser
+            .save()
+            .then((result) => {
+                // handle account verification
+                sendVerificationEmail(result, res)
+            })
+            .catch((err) => {
+                console.log(err)
 
-            res.redirect('/')
+                let message = "An error occured while saving the user account!"
+                return res.render('register_view/register', { err: true, msg: message })
+            })
+
+            // res.redirect('/')
         } catch (err) {
             return res.status(500).json({ msg: err.message })
         }
 
 
 
+    },
+
+    verifySignin: async (req, res) => {
+        let { userID, uniqueString } = req. params
+
+        UserVerification.find({userID})
+            .then((result) => {
+                if(result.length > 0) {
+                    // user verification record exists so we proceed
+
+                    const  { expiresAt } = result[0]
+                    const hashUniqueString = result[0].uniqueString
+
+                    // checking for expired unique String
+                    if (expiresAt < Date.now()) {
+                        // record has expired so we delete it
+
+                        UserVerification
+                            .deleteOne({userID})
+                            .then((result) => {
+                                Users
+                                    .deleteOne({_id: userID})
+                                    .then((result) => {
+                                        let message = "Link has expired. Please sign up again."
+                                        return res.render('verify_page/verified', { err: true, message: message })
+                                    })
+                                    .catch((error) => {
+                                        console.log(error)
+                                        let message = "Clearing user with expired unique string failed!"
+                                        return res.render('verify_page/verified', { err: true, message: message })
+                                    })
+                            })
+                            .catch((error) => {
+                                console.log(error)
+                                let message = "An error occured while clearing expired record!"
+                                return res.render('verify_page/verified', { err: true, message: message })
+                            })
+                    } else {
+                        // valid record exist so we validate the user string
+                        // first compare the hashed unique string
+
+                        bcrypt
+                            .compare(uniqueString, hashUniqueString)
+                            .then((result) => {
+                                if(result) {
+                                    // string match
+                                    Users
+                                        .updateOne({_id: userID}, {verified: true})
+                                        .then(() => {
+                                            UserVerification    
+                                                .deleteOne({userID})
+                                                .then(() => {
+                                                    res.redirect('/verified')
+                                                })
+                                                .catch((error) => {
+                                                    console.log(error)
+                                                    let message = "An error occured while finalizing successful verification."
+                                                    return res.render('verify_page/verified', { err: true, message: message })
+                                                })
+                                        })
+                                        .catch((error) => {
+                                            console.log(error)
+                                            let message = "An error occured while updating user record to show verified!"
+                                            return res.render('verify_page/verified', { err: true, message: message })
+                                        })
+                                } else {
+                                    // existing record but incorrect
+                                    let message = "Invalid verification details passed. Check your inbox."
+                                    return res.render('verify_page/verified', { err: true, message: message })
+                                }
+                            })
+                            .catch((error) => {
+                                console.log(error)
+                                let message = "An error occured while comparing unique string!"
+                                return res.render('verify_page/verified', { err: true, message: message })
+                            })
+                    }
+
+                } else {
+                    // user verification doesn't exist
+                    let message = "Account record doesn't exist or has been verified already. Please sign up or log in!"
+                    // res.redirect(`/verified/error=true&message=${message}`)
+                    return res.render('verify_page/verified', { err: true, message: message })
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+                let message = "An error occured while checking for existing user verification record!"
+                return res.render('verify_page/verified', { err: true, message: message })
+                
+            })
     },
 
     login: async (req, res) => {
@@ -55,6 +248,10 @@ const userCtrl = {
             // if(!user) return res.status(400).json({ error: "User Doesn't Exist" })
             if (!user) {
                 return res.render('index', { err: true, msg: 'User doesn\'t exist' })
+            }
+
+            if(!user.verified) {
+                return res.render('index', { err: true, msg: 'Email hasn\'t been verified. Check your inbox.'})
             }
 
             const dbPassword = user.encryptedPassword
@@ -85,7 +282,8 @@ const userCtrl = {
 
             res.json({
                 status: 'Success',
-                users: users
+                users: users,
+                length: users.length
             })
         } catch (err) {
             return res.status(500).json({ msg: err.message })

@@ -30,7 +30,6 @@ a:focus {
 
 p {
   padding: 0;
-  margin: 0 0 30px 0;
 }
 
 h1,
@@ -396,7 +395,7 @@ section {
 /* Sections Header
   --------------------------------*/
 .section-header {
-  margin-top: 80px;
+  margin-top: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -628,4 +627,9 @@ button {
 
 form .radio-btn .hobbies-icon .neutral {
   width: 100%;
+}
+
+.count {
+  padding-top: 60px;
+  margin: 0 20px;
 }

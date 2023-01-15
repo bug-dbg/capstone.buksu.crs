@@ -12,6 +12,7 @@ const googleUserCtrl = {
                 audience: CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
             })
             const payload = ticket.getPayload();
+            console.log(payload)
             const userid = payload['sub']
         }
         verify()

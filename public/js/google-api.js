@@ -6,7 +6,7 @@ function onSignIn(googleUser) {
      //console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
 
     var id_token = googleUser.getAuthResponse().id_token;
-    //console.log(id_token);
+    // console.log(id_token);
 
     var xhr = new XMLHttpRequest();
     xhr.open('POST', '/google/login');

@@ -22,6 +22,10 @@
   <link href="/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
+  <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+  <script type='text/javascript'
+    src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js'></script>
+
 
   <!-- Template Main CSS File -->
   <link href="/css/result.css" rel="stylesheet">
@@ -67,13 +71,16 @@
       <div class="row gy-5" id="foo">
         <% for(var i=0; i < prediction.length; i++) { %>
           <div class="col-md-6 col-lg-4 wow bounceInUp" data-aos="zoom-in" data-aos-delay="100">
-            
+
             <div class="box">
-              <div class="ranking"><%= i + 1 %></div>
+              <div class="ranking">
+                <%= i + 1 %>
+              </div>
               <br>
               <br>
-              
-              <div class="icon" style="background: #fceef3; position:relative; right: 30px; margin-bottom: 20px;"><i class="bi bi-journal-check" style="color: #ff689b;"></i>
+
+              <div class="icon" style="background: #fceef3; position:relative; right: 30px; margin-bottom: 20px;"><i
+                  class="bi bi-journal-check" style="color: #ff689b;"></i>
               </div>
               <h4 class="title">
                 <%= prediction[i].name %>
@@ -95,6 +102,36 @@
 
     </div>
   </section>
+
+  <!-- Feedback modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="text-right cross"> <i class="fa fa-times mr-2"></i> </div>
+      <div class="card-body text-center"> <img src=" https://i.imgur.com/d2dKtI7.png" height="100" width="100">
+        <div class="comment-box text-center">
+          <h4>Feedback</h4>
+          <form action="/test-feedback" method="post">
+            <div class="comment-area"> <textarea class="form-control" name="userFeedback"
+                placeholder="Enter feedback..." rows="4"></textarea> </div>
+
+            <div class="text-center mt-4"> <button class="btn btn-success send px-5">Send message <i
+                  class="fa fa-long-arrow-right ml-1"></i></button>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script type='text/javascript'>
+    $(window).on("load", function () {
+      setTimeout(function () {
+        $('#myModal').modal('show');
+      }, 3000);
+    })
+  </script>
 
 
 
@@ -126,77 +163,6 @@
 
   <!-- Template Main JS File -->
   <script src="/js/front-end.page.js"></script>
-
-  <script>
-    $(function () {
-
-      // $(function () {
-
-      //     let index = 0
-      //     let c1 
-      //     let c2
-      //     let c3
-
-      //     let c1Description
-      //     let c2Description
-      //     let c3Description
-      //   // $(document).on("load", function () {
-
-      //   //   displayData()
-      //   // });
-
-
-      //   $.get("/api/user/result", function (result, status) {
-      //     var course = result.data;
-      //     console.log(course)
-      //     c1 = course[0].name
-      //     c2 = course[1].name
-      //     c3 = course[2].name
-
-      //     c1Description = course[0].description
-      //     c2Description = course[1].description
-      //     c3Description = course[2].description
-
-
-      //     console.log(c1 + '\n' + c2 + '\n' + c3 )
-      //     displayData()
-
-      //   });
-
-
-
-      //   function displayData() {
-      //     $("#foo").html(`
-      //     <div class="col-md-6 col-lg-4 wow bounceInUp" data-aos="zoom-in" data-aos-delay="100">
-      //     <div class="box">
-      //       <div class="icon" style="background: #fceef3;"><i class="bi bi-journal-check" style="color: #ff689b;"></i></div>
-      //       <h4 class="title">${c1}</h4>
-      //       <p class="description">${c1Description}</p>
-      //     </div>
-      //   </div>
-      //   <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="200">
-      //     <div class="box">
-      //       <div class="icon" style="background: #fff0da;"><i class="bi bi-journal-check" style="color: #e98e06;"></i></div>
-      //       <h4 class="title">${c2}</h4>
-      //       <p class="description">${c2Description}</p>
-      //     </div>
-      //   </div>
-
-      //   <div class="col-md-6 col-lg-4" data-aos="zoom-in" data-aos-delay="300">
-      //     <div class="box">
-      //       <div class="icon" style="background: #e6fdfc;"><i class="bi bi-journal-check" style="color: #3fcdc7;"></i></div>
-      //       <h4 class="title">${c3}</h4>
-      //       <p class="description">${c3Description}</p>
-      //     </div>
-      //   </div>
-      //     `)
-      //   }
-
-      // });
-
-    });
-
-  </script>
 
 </body>
 
