@@ -91,6 +91,7 @@
       $(function () {
         let currentQuestion = 0;
         let questions = [];
+
         $(document).on("submit", "#form", function (e) {
           e.preventDefault();
           var data = $(this).serialize();
@@ -146,13 +147,6 @@
           });
         }
 
-
-        // strongly agree <img src="https://img.icons8.com/external-colours-bomsymbols-/91/000000/external-awesome-hand-conversation-colours-colours-bomsymbols-.png" />
-        //  agree  <img src="https://img.icons8.com/external-colours-bomsymbols-/91/000000/external-agree-hand-conversation-colours-colours-bomsymbols--2.png" />
-        // nuetral <img class="neutral" src="https://img.icons8.com/color/96/000000/neutral-emoticon--v1.png" />
-        //  disagree <img src="https://img.icons8.com/external-colours-bomsymbols-/91/000000/external-bad-hand-conversation-colours-colours-bomsymbols-.png" />
-        // strongly disagree  <img src="https://img.icons8.com/color/96/000000/ban-skin-type-1.png" />
-
         function createquestion() {
           $("#quiz").html(`
             <div class="d-flex justify-content-end count">
@@ -164,7 +158,7 @@
 
             <form id="form">
               <input type="hidden" name="id" value="${questions[currentQuestion]._id}">
-              <div class="row g-5">
+              <div class="row g-2" style="padding: 50px">
                 <div class="col wow bounceInUp" data-aos="zoom-in" data-aos-delay="100">
                   <div class="radio-buttons ">
                     <label class="custom-radio" for="choice1">
@@ -235,9 +229,7 @@
 
             </div>
 
-            <div class="d-flex justify-content-center button-container">
-              <button class="btn btn-lg  p-2 btn-primary" id="prev"><span class="next-text">Previous</span><i class="bi bi-arrow-right"></i></button>
-            </div>
+          
 
             <div class="d-flex justify-content-center button-container">
               <button class="btn btn-lg  p-2 btn-primary" type="submit" id="submit"><span class="next-text">Next</span><i class="bi bi-arrow-right"></i></button>
