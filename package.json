@@ -6,7 +6,7 @@
   "scripts": {
     "test": "nodemon server.js",
     "start": "node server.js",
-    "dev": "concurrently \"npm run start\" \"cd ./app && python app.py\"",
+    "dev": "concurrently \"npm run test\" \"cd ./app && python app.py\"",
     "production": "concurrently \"npm run start\" \"cd ./app && python app.py\"",
     "build": "node npm install"
   },
