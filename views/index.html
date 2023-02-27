@@ -21,10 +21,7 @@
 
     <div class="main-container" id="main">
         <div class="header">
-
-            <a onclick="blockClick(event)">
-                <h2>Sign In</h2>
-            </a>
+            <h2>Sign In</h2>
         </div>
 
 
@@ -60,8 +57,8 @@
                         </div>
                         <button type="submit">Sign In</button>
                         <div class="child-container">
-                            <p>or using:</p>
-                            <div class="g-signin2" data-onsuccess="onSignIn"></div>
+                            <!-- <p>or using:</p>
+                            <div class="g-signin2" data-onsuccess="onSignIn"></div> -->
                             <div>
                                 <p>Don't Have an Account?<a href="/register">Sign up</a></p>
                             </div>
@@ -81,18 +78,6 @@
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script defer src="/js/google-api.js"></script>
 
-
-    <script>
-        // function that blocks click event
-        // unless ctrl + click is entered
-        function blockClick(e) {
-            if (e.ctrlKey && e.type == "click") {
-                window.location.href = '/admin'
-            } else {
-                e.preventDefault();
-            }
-        }
-    </script>
 </body>
 
 </html>

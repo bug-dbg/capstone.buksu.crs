@@ -3,6 +3,8 @@ const { createTokens } = require('../middlewares/JWT')
 const { Users } = require('../models/User')
 const { UserVerification } = require('../models/UserVerification')
 
+const axios = require('axios')
+
 const { numOfUsers } = require('./reports.controller')
 
 // email handler
@@ -104,11 +106,23 @@ const userCtrl = {
     register: async (req, res) => {
         try {
             const { firstName, lastName, email, password } = req.body
+            const { terms } = req.body
             const user = await Users.findOne({ email })
             if (user) {
                 // return res.status(400).json({msg: "The email already exists."});
                 return res.render('register_view/register', { err: true, msg: 'Email already registered! Try again.' })
             }
+
+
+            // if(!firstName && !lastName && !email && !password)  {
+            //     return res.render('register_view/register', { err: true, msg: 'Please fill in all the fields!' })
+            // }
+
+            // check if terms and conditions is checked
+            if(!terms) {
+                return res.render('register_view/register', { err: true, msg: 'Please accept the terms and conditions to proceed.' })
+            }
+
 
             // if(password.length < 6){
             //     return res.status(400).json({msg: "Password is at least 6 characters long."})
@@ -197,6 +211,8 @@ const userCtrl = {
                                             UserVerification    
                                                 .deleteOne({userID})
                                                 .then(() => {
+                                                    // add data to reports                                
+                                                    // axios.get('http://localhost:5000/api/reports')
                                                     res.redirect('/verified')
                                                 })
                                                 .catch((error) => {
@@ -292,7 +308,7 @@ const userCtrl = {
 
     getUserById: async (req, res) => {
         try {
-            const user = await Users.findById(req.user.id).select('-encryptedPassword').catch(
+            const user = await Users.findById(req.params.id).select('-encryptedPassword').catch(
                 (err) => {
                     console.log('Error: ', err)
                 }

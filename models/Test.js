@@ -25,12 +25,8 @@ const testSchema = new mongoose.Schema({
     choice5: {
         type: String,
         default: "Strongly Disagree",
-    },
-    categories: {
-        type: String,
-        required: true,
     }
 })
 
-const Test = mongoose.model('Test', testSchema)
+const Test = mongoose.model('Tests', testSchema)
 module.exports = { testSchema, Test }

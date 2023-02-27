@@ -1,8 +1,8 @@
 const AdminJS = require('adminjs')
 const { Users } = require('../../models/User')
-const { 
-    after: passwordAfterHook, 
-    before: passwordBeforeHook, 
+const {
+    after: passwordAfterHook,
+    before: passwordBeforeHook,
 } = require('./actions/password.hook')
 
 /** @type {AdminJS.ResourceOptions} */
@@ -10,20 +10,20 @@ const {
 const options = {
     properties: {
         encryptedPassword: {
-           isVisible: false,
-       },
-       password: {
-           type: 'password'
-       }
+            isVisible: false,
+        },
+        password: {
+            type: 'password'
+        }
     },
     actions: {
         new: {
-            after: passwordAfterHook, 
-            before: passwordBeforeHook, 
+            after: passwordAfterHook,
+            before: passwordBeforeHook,
         },
         edit: {
-            after: passwordAfterHook, 
-            before: passwordBeforeHook, 
+            after: passwordAfterHook,
+            before: passwordBeforeHook,
         }
     }
 
