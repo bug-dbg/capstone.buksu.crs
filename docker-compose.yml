@@ -1,0 +1,13 @@
+version: '2'
+
+services:
+  chubybunnies:
+    container_name: chubybunniescontainer
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    image: chubybunnies:latest
+    ports:
+      - "7000:5000"
+      - "7001:3000"
