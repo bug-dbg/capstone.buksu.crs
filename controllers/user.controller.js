@@ -37,18 +37,55 @@ transporter.verify((error, success) => {
 
 // send verication email function
 const sendVerificationEmail = ({_id, email}, res) => {
-    const currentUrl = 'http://localhost:5000/'
+    const currentUrl = 'http://192.168.254.105:5000/'
+    const devUrl = 'http://localhost:5000/'
 
     const uniqueString = uuidv4() + _id
 
     // nodemailer mail options 
+    // const mailOptions = {
+    //     from: process.env.AUTH_EMAIL,
+    //     to: email,
+    //     subject: "Verify Your Email",
+    //     html: `<p>Verify you email address to complete the signup and log in into your account.</p>
+    //     <p>This link <b>expires in 6 hours</b>.</p>
+    //     <p>Press <a href=${currentUrl + "verify/" + _id + "/" + uniqueString}>here</a> to proceed.</p>`,
+    // }
+    // const mailOptions = {
+    //     from: process.env.AUTH_EMAIL,
+    //     to: email,
+    //     subject: "Verify Your Email",
+    //     html: `<div style="font-family: Arial, sans-serif; color: #333;">
+    //         <p style="font-size: 16px;">Verify your email address to complete the signup and log in into your account.</p>
+    //         <p style="font-size: 14px; margin-bottom: 20px;">This link <b>expires in 6 hours</b>.</p>
+    //         <a href="${currentUrl + "verify/" + _id + "/" + uniqueString}" style="display: inline-block; background-color: #007bff; color: #fff; text-decoration: none; font-size: 16px; padding: 10px 20px; border-radius: 4px;">Verify Email</a>
+    //     </div>`,
+    // }
+
+
+    // const mailOptions = {
+    //     from: process.env.AUTH_EMAIL,
+    //     to: email,
+    //     subject: "Verify Your Email",
+    //     html: `<div style="font-family: Arial, sans-serif; color: #333;">
+    //         <img src="https://res.cloudinary.com/chuy/image/upload/v1678365297/logo_uiawi7.png" alt="Logo" style="max-width: 100px; margin-bottom: 20px;">
+    //         <p style="font-size: 16px;">Verify your email address to complete the signup and log in into your account.</p>
+    //         <p style="font-size: 14px; margin-bottom: 20px;">This link <b>expires in 6 hours</b>.</p>
+    //         <a href="${currentUrl + "verify/" + _id + "/" + uniqueString}" style="display: inline-block; align-items: center; background-color: #007bff; color: #fff; text-decoration: none; font-size: 16px; padding: 10px 20px; border-radius: 4px;">Verify Email</a>
+    //     </div>`,
+    // }
+
     const mailOptions = {
         from: process.env.AUTH_EMAIL,
         to: email,
         subject: "Verify Your Email",
-        html: `<p>Verify you email address to complete the signup and log in into your account.</p>
-        <p>This link <b>expires in 6 hours</b>.</p>
-        <p>Press <a href=${currentUrl + "verify/" + _id + "/" + uniqueString}>here</a> to proceed.</p>`,
+        html: `<div style="font-family: Arial, sans-serif; color: #333; text-align: center;">  
+            <img src="https://res.cloudinary.com/chuy/image/upload/v1678365297/logo_uiawi7.png"  alt="Logo" style="max-width: 80px margin-bottom: 20px;">
+            <p style="font-size: 18px;">Verify your email address to complete the signup and log in into your account.</p>
+            <p style="font-size: 16px; margin-bottom: 20px;">This link <b>expires in 6 hours</b>.</p>
+            <a href="${currentUrl + "verify/" + _id + "/" + uniqueString}" style="display: inline-block; background-color: #007bff; color: #fff; text-decoration: none; font-size: 20px; margin-top: 10px; padding: 10px 20px; border-radius: 4px;">Verify Email</a>
+           
+        </div>`,
     }
 
     // hash the uniqueString

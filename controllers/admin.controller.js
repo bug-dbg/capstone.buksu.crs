@@ -7,9 +7,12 @@ const AdminResources = require('./user/user.admin')
 const { Test } = require('../models/Test')
 const { Feedbacks } = require('../models/Feedback')
 const { Reports } = require('../models/Report')
+const { Users } = require('../models/User')
 
 
 /** @type {import('adminjs').AdminJSOptions} */
+
+
 
 const options = {
     resources: [AdminResources, Test, Feedbacks, Reports],
@@ -30,13 +33,18 @@ const options = {
                 loginWelcome: 'BukSU CRS Admin Page', // this could be your project name
             },
         }
-    }
+    },
+
+    // custom admin.js dashboard
     // dashboard: {
     //     handler: async () => {
-
-    //     },
-    //     component: AdminJS.bundle('./my-dashboard-component')
+    //         // Asynchronous code where you, e. g. fetch data from your database
+    
+    //         return { message: 'Hello World' }
+    //     }, 
+    //     component: AdminJS.bundle('./components/dashboard'),
     //   }
+
 }
 
 module.exports = options

@@ -5,25 +5,55 @@ const axios = require('axios')
 var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb+srv://Admin:pYg96SY5pQrNUpIo@cluster0.urjcmww.mongodb.net/?retryWrites=true&w=majority";
 
+var ObjectID = require('mongodb').ObjectId;
+
+
 
 
 const reportCtrl = {
     numOfUsers: async (req, res)  => {
         try {
-         
-            const { data } = await axios.get("http://localhost:5000/all-users");
+            
+            
+          
+            const allReports = await Reports.find()
+       
+            var o_id = new ObjectID("63de063a1e8e7041b46c0b85");
 
-            console.log(data.length)
-
-            const value = new Reports({
-                numberOfUsers: data.length
+            const  data  = await Users.find({
+                role: 0
             })
-            await value.save()
 
-        
-        
+            // console.log(data)
+            console.log(allReports)
+
+            // const value = new Reports({
+            //     numberOfUsers: data.length
+            // })
+
+            // await value.save()
+
+            if(!allReports) {
+                const value = new Reports({
+                    numberOfUsers: data.length
+                })
+    
+                await value.save()
+            } else {
+                const client = new MongoClient(url, { useNewUrlParser: true });
+                client.connect(err => {
+                  const collection = client.db("test").collection("reports");
+                  collection.updateOne({ _id: o_id }, { $set: { numberOfUsers: data.length} }, function(err, res) {
+                    console.log("Document updated");
+                    client.close();
+                  });
+                });
+                
+            }
             
 
+        
+        
 
         } catch (err) {
             return res.status(500).json({ msg: err.message })

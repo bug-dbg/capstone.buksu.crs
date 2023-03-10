@@ -4,11 +4,11 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "nodemon server.js",
+    "test": "nodemon server.js --host=10.50.27.68 --port=5000",
     "start": "node server.js",
     "dev": "concurrently \"npm run test\" \"cd ./app && python app.py\"",
     "production": "concurrently \"npm run start\" \"cd ./app && python app.py\"",
-    "build": "node npm install"
+    "build": "npm install"
   },
   "keywords": [],
   "author": "",

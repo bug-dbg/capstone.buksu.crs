@@ -1,18 +1,18 @@
 import os
 import os.path
-from tabnanny import verbose
-from textwrap import indent
-from tkinter import Y
+# from tabnanny import verbose
+# from textwrap import indent
+# from tkinter import Y
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS,cross_origin
 
 import numpy as np
-from random import randint
-from sklearn.utils import shuffle
-from sklearn.preprocessing import LabelEncoder
-from sklearn.preprocessing import MinMaxScaler
+# from random import randint
+# from sklearn.utils import shuffle
+# from sklearn.preprocessing import LabelEncoder
+# from sklearn.preprocessing import MinMaxScaler
 
 import tensorflow as tf
 from tensorflow import keras
@@ -23,16 +23,16 @@ from keras.metrics import categorical_crossentropy
 from keras.models import load_model
 from keras.applications.vgg16 import VGG16
 
-import pandas as pd
-from pandas import DataFrame
-pd.options.mode.chained_assignment = None  # default='warn'
-import sqlite3
+# import pandas as pd
+# from pandas import DataFrame
+# pd.options.mode.chained_assignment = None  # default='warn'
+# import sqlite3
 
-import warnings
+# import warnings
 
 from flask import request
 
-import sys
+# import sys
 
 
 app = Flask(__name__)
