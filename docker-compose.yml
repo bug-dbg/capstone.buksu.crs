@@ -26,4 +26,4 @@ services:
     restart: always
     image: chuyx/buksu-crs.python:latest
     ports:
-      - "7501:5000"
+      - "7501:3000"
