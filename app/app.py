@@ -20,7 +20,7 @@ import numpy as np
 # from keras.layers import Activation, Dense, Dropout, Flatten
 # from keras.optimizers import adam_v2
 # from keras.metrics import categorical_crossentropy
-from keras.models import load_model
+# from keras.models import load_model
 # from keras.applications.vgg16 import VGG16
 
 # import pandas as pd
@@ -55,7 +55,6 @@ def get_course_recommendation():
         actual_sample = np.array([request.get_json()])
 
         prediction = new_model.predict(actual_sample, batch_size=None, verbose=0, steps=None)
-        print(prediction)
 
         convertedPrediction = np.array(prediction).tolist()
 
