@@ -14,8 +14,8 @@
         content="270040489280-ljn99nm3ve4m8su2t77dras268tp2fiu.apps.googleusercontent.com">
 
     <!-- Bootstrap core CSS -->
-    <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
-	<script src="https://kit.fontawesome.com/a81368914c.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
 
 
     <title>Sign In</title>
@@ -71,54 +71,54 @@
     </div>
 -->
 
-<img class="wave" src="/img/login_and_register/wave2.png">
-	<div class="container">
-		<div class="img">
-			<img src="/img/login_and_register/bg.svg">
-		</div>
-		<div class="login-content">
-			<form action="/login" method="post">
-				<img src="/img/logo/logo.png">
-				<h2 class="title">Login</h2>
+    <img class="wave" src="/img/login_and_register/wave2.png">
+    <div class="container">
+        <div class="img">
+            <img src="/img/login_and_register/bg.png" style="height: 500px; width: 600px;" >
+        </div>
+        <div class="login-content">
+            <form action="/login" method="post">
+                <img src="/img/logo/logo.png">
+                <h2 class="title">Login</h2>
                 <div class="error-div">
                     <% if(err){ %>
                         <div class="error-container">
                             <p>
                                 <%= msg%>
                             </p>
-            
+
                         </div>
-            
+
                         <% } else{ %>
                             <p></p>
-                    <% } %>
+                            <% } %>
                 </div>
-             
 
-           		<div class="input-div one form-control">
-           		   <div class="i">
-           		   		<i class="fas fa-user"></i>
-           		   </div>
-           		   <div class="div ">
-           		   		<h5>Email</h5>
-           		   		<input class="input" type="email" name="email" id="email" />
-           		   </div>
-           		</div>
-           		<div class="input-div pass form-control">
-           		   <div class="i"> 
-           		    	<i class="fas fa-lock"></i>
-           		   </div>
-           		   <div class="div">
-           		    	<h5>Password</h5>
-           		    	<input class="input" type="password" name="password" id="password" />
-            	   </div>
-            	</div>
-            	
-            	<input type="submit" class="btn" value="Login">
-                <div class="">
+
+                <div class="input-div one form-control">
+                    <div class="i">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="div ">
+                        <h5>Email</h5>
+                        <input class="input" type="email" name="email" id="email" />
+                    </div>
+                </div>
+                <div class="input-div pass form-control">
+                    <div class="i">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="div">
+                        <h5>Password</h5>
+                        <input class="input" type="password" name="password" id="password" />
+                    </div>
+                </div>
+
+                <input type="submit" class="btn" value="Login">
+                <div class="have-acc">
                     <p>Don't Have an Account?<a id="sign-up" href="/register">Sign up</a></p>
                 </div>
-              
+
             </form>
         </div>
     </div>
@@ -126,23 +126,23 @@
         const inputs = document.querySelectorAll(".input");
 
 
-function addcl(){
-	let parent = this.parentNode.parentNode;
-	parent.classList.add("focus");
-}
+        function addcl() {
+            let parent = this.parentNode.parentNode;
+            parent.classList.add("focus");
+        }
 
-function remcl(){
-	let parent = this.parentNode.parentNode;
-	if(this.value == ""){
-		parent.classList.remove("focus");
-	}
-}
+        function remcl() {
+            let parent = this.parentNode.parentNode;
+            if (this.value == "") {
+                parent.classList.remove("focus");
+            }
+        }
 
 
-inputs.forEach(input => {
-	input.addEventListener("focus", addcl);
-	input.addEventListener("blur", remcl);
-});
+        inputs.forEach(input => {
+            input.addEventListener("focus", addcl);
+            input.addEventListener("blur", remcl);
+        });
 
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
@@ -150,13 +150,13 @@ inputs.forEach(input => {
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script defer src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <script src="/js/client-side_login-validation.js"></script>
+    <!-- <script src="/js/client-side_login-validation.js"></script> -->
 
 
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script defer src="/js/google-api.js"></script> -->
 
-    
+
 
 </body>
 

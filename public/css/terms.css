@@ -2,7 +2,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Open Sans", sans-serif;
+  /* font-family: "Open Sans", sans-serif; */
+  font-family: "Poppins", sans-serif;
 }
 
 /* new modal css */
@@ -69,11 +70,12 @@ h2 {
   margin-bottom: 20px;
 }
 
-p {
+.term-p {
   font-size: 15px;
   margin-bottom: 30px;
   text-align: justify;
   text-justify: inter-word;
+  font-weight: normal;
 }
 
 ul {
@@ -118,15 +120,6 @@ button {
 }
 
 
-/* @media screen and (max-width: 768px) {
-	#accept-btn {
-	  margin-left: 10px;
-	}
-	
-	#decline-btn {
-		margin-right: 10px;
-	}
-  } */
 
 @media screen and (max-width: 768px) {
   .accept-decline-buttons {

@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt')
 const { createTokens } = require('../middlewares/JWT')
 const { Users } = require('../models/User')
 const { UserVerification } = require('../models/UserVerification')
+const { Reports } = require('../models/Report')
 
 const axios = require('axios')
 
@@ -37,44 +38,13 @@ transporter.verify((error, success) => {
 
 // send verication email function
 const sendVerificationEmail = ({_id, email}, res) => {
-    const currentUrl = 'http://192.168.254.105:5000/'
-    const devUrl = 'http://localhost:5000/'
+    const devUrl1 = 'http://10.50.27.68:5000/'
+    const devUrl2 = 'http://192.168.254.105:5000/'
+    const productionUrl = 'https://buksu-crs.systems'
 
     const uniqueString = uuidv4() + _id
 
     // nodemailer mail options 
-    // const mailOptions = {
-    //     from: process.env.AUTH_EMAIL,
-    //     to: email,
-    //     subject: "Verify Your Email",
-    //     html: `<p>Verify you email address to complete the signup and log in into your account.</p>
-    //     <p>This link <b>expires in 6 hours</b>.</p>
-    //     <p>Press <a href=${currentUrl + "verify/" + _id + "/" + uniqueString}>here</a> to proceed.</p>`,
-    // }
-    // const mailOptions = {
-    //     from: process.env.AUTH_EMAIL,
-    //     to: email,
-    //     subject: "Verify Your Email",
-    //     html: `<div style="font-family: Arial, sans-serif; color: #333;">
-    //         <p style="font-size: 16px;">Verify your email address to complete the signup and log in into your account.</p>
-    //         <p style="font-size: 14px; margin-bottom: 20px;">This link <b>expires in 6 hours</b>.</p>
-    //         <a href="${currentUrl + "verify/" + _id + "/" + uniqueString}" style="display: inline-block; background-color: #007bff; color: #fff; text-decoration: none; font-size: 16px; padding: 10px 20px; border-radius: 4px;">Verify Email</a>
-    //     </div>`,
-    // }
-
-
-    // const mailOptions = {
-    //     from: process.env.AUTH_EMAIL,
-    //     to: email,
-    //     subject: "Verify Your Email",
-    //     html: `<div style="font-family: Arial, sans-serif; color: #333;">
-    //         <img src="https://res.cloudinary.com/chuy/image/upload/v1678365297/logo_uiawi7.png" alt="Logo" style="max-width: 100px; margin-bottom: 20px;">
-    //         <p style="font-size: 16px;">Verify your email address to complete the signup and log in into your account.</p>
-    //         <p style="font-size: 14px; margin-bottom: 20px;">This link <b>expires in 6 hours</b>.</p>
-    //         <a href="${currentUrl + "verify/" + _id + "/" + uniqueString}" style="display: inline-block; align-items: center; background-color: #007bff; color: #fff; text-decoration: none; font-size: 16px; padding: 10px 20px; border-radius: 4px;">Verify Email</a>
-    //     </div>`,
-    // }
-
     const mailOptions = {
         from: process.env.AUTH_EMAIL,
         to: email,
@@ -83,7 +53,7 @@ const sendVerificationEmail = ({_id, email}, res) => {
             <img src="https://res.cloudinary.com/chuy/image/upload/v1678365297/logo_uiawi7.png"  alt="Logo" style="max-width: 80px margin-bottom: 20px;">
             <p style="font-size: 18px;">Verify your email address to complete the signup and log in into your account.</p>
             <p style="font-size: 16px; margin-bottom: 20px;">This link <b>expires in 6 hours</b>.</p>
-            <a href="${currentUrl + "verify/" + _id + "/" + uniqueString}" style="display: inline-block; background-color: #007bff; color: #fff; text-decoration: none; font-size: 20px; margin-top: 10px; padding: 10px 20px; border-radius: 4px;">Verify Email</a>
+            <a href="${devUrl1 + "verify/" + _id + "/" + uniqueString}" style="display: inline-block; background-color: #007bff; color: #fff; text-decoration: none; font-size: 20px; margin-top: 10px; padding: 10px 20px; border-radius: 4px;">Verify Email</a>
            
         </div>`,
     }
@@ -138,11 +108,15 @@ const sendVerificationEmail = ({_id, email}, res) => {
         })
 }
 
+function isEmail(email) {
+    return /^(([^<>()\[\]\\.,:\s@"]+(\.[^<>()\[\]\\.,:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)
+}
+
 
 const userCtrl = {
     register: async (req, res) => {
         try {
-            const { firstName, lastName, email, password } = req.body
+            const { firstName, lastName, email, password, password2 } = req.body
             const { terms } = req.body
             const user = await Users.findOne({ email })
             if (user) {
@@ -155,15 +129,32 @@ const userCtrl = {
             //     return res.render('register_view/register', { err: true, msg: 'Please fill in all the fields!' })
             // }
 
-            // check if terms and conditions is checked
-            if(!terms) {
-                return res.render('register_view/register', { err: true, msg: 'Please accept the terms and conditions to proceed.' })
+            if(!firstName || !lastName || !email || !password) {
+                return res.render('register_view/register', { err: true, msg: 'Please fill in all the fields!'})
+            }
+  
+
+            if(!isEmail(email)) {
+                return res.render('register_view/register', { err: true, msg: 'Not a valid email!'})
             }
 
 
-            // if(password.length < 6){
-            //     return res.status(400).json({msg: "Password is at least 6 characters long."})
-            // }
+            if(password.length < 6){
+                return res.render('register_view/register', { err: true, msg: 'Password is at least 6 characters long.'})
+            }
+
+            if(password !== password2) {
+                return res.render('register_view/register', { err: true, msg: 'Password does not match!'})
+            }
+
+             // check if terms and conditions is checked
+             if(!terms) {
+                return res.render('register_view/register', { err: true, msg: 'Please accept the terms and conditions to proceed!'})
+            }
+
+            
+
+          
 
             // Password Encryption
             const passwordHash = await bcrypt.hash(password, 10)
@@ -189,7 +180,28 @@ const userCtrl = {
                 return res.render('register_view/register', { err: true, msg: message })
             })
 
-            // res.redirect('/')
+            // add user to reports collection
+
+
+            try{
+                const filter = { _id: '63de063a1e8e7041b46c0b85' };
+                const update = { numberOfUsers: await Users.countDocuments() };
+                const options = { upsert: true, new: true, setDefaultsOnInsert: true };
+                let report = await Reports.findOneAndUpdate(filter, update, options);
+    
+                if (!report) { // report was not found, create a new one
+                    const userCount = await Users.countDocuments();
+                    report = new Reports({
+                        numberOfUsers: userCount > 0 ? userCount : 1,
+                    });
+                    await report.save();
+                    
+                    console.log("Successfully created a new report document")
+                }     
+
+            } catch(err) {
+                console.log("msg:" + err.message)
+            }
         } catch (err) {
             return res.status(500).json({ msg: err.message })
         }
@@ -297,6 +309,10 @@ const userCtrl = {
             const { email, password } = req.body
 
             const user = await Users.findOne({ email: email })
+
+            if(!email || !password) {
+                return res.render('index', { err: true, msg: 'Please fill in all the fields!'})
+            }
 
             // if(!user) return res.status(400).json({ error: "User Doesn't Exist" })
             if (!user) {

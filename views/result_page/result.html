@@ -38,9 +38,10 @@
   <header id="header" class="fixed-top d-flex align-items-center header-transparent">
     <div class="container d-flex align-items-center">
 
-      <h1 class="logo me-auto"><a href="/home">CRS</a></h1>
+      <!-- <h1 class="logo me-auto"><a href="/home">CRS</a></h1> -->
       <!-- Uncomment below if you prefer to use an image logo -->
-      <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+      <a href="/home" class="logo me-auto"><img
+          src="https://res.cloudinary.com/chuy/image/upload/v1678365297/logo_uiawi7.png" alt="" class="img-fluid"></a>
 
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
@@ -94,6 +95,13 @@
           <% } %>
       </div>
 
+      <div class="call-to-action">
+        <h3 class="section-title">Ready to Apply?</h3>
+        <p class="section-description">Take the first step towards your future:</p>
+        <a href="https://admissions.buksu.edu.ph/" class="btn btn-primary">Apply Now</a>
+      </div>
+
+
       <!-- <div class="col-lg email-button float-right">
         <form action="/api/user/result/email" method="post">
           <button class="btn btn-lg float-right"><i class="bi bi-envelope"></i><span>Send to Email</span></button>
@@ -105,7 +113,7 @@
   </section>
 
   <!-- ======= Footer ======= -->
-  <footer id="footer" class="section-bg">
+  <!-- <footer id="footer" class="section-bg">
 
     <div class="container">
       <div class="copyright">
@@ -115,7 +123,28 @@
 
       </div>
     </div>
-  </footer><!-- End  Footer -->
+  </footer> -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="container">
+      <div class="row d-flex align-items-center">
+        <div class="col-lg-6 text-lg-left text-center">
+          <div class="copyright">
+            &copy; Copyright <strong>BukSU CRS</strong>. All Rights Reserved
+          </div>
+
+        </div>
+        <div class="col-lg-6">
+          <nav class="footer-links text-lg-right text-center pt-2 pt-lg-0">
+            <a href="#hero" class="scrollto">Home</a>
+            <a href="#why-us" class="scrollto">About</a>
+            <!-- <a href="#" id="myBtn">Terms and Conditions</a> -->
+          </nav>
+        </div>
+      </div>
+    </div>
+  </footer><!-- End Footer -->
 
   <form action="/api/user/result/email" method="post">
     <button class="email-icon d-flex align-items-center justify-content-center"><i class="bi bi-envelope"></i></button>
@@ -123,7 +152,7 @@
 
 
 
-  <!-- Feedback modal -->
+  <!-- Feedback modal
   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -143,14 +172,34 @@
         </div>
       </div>
     </div>
+  </div> -->
+
+  <!-- Feedback Modal -->
+  <div class="modal fade" id="form" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="text-right cross"> <i class="fa fa-times mr-2"></i> </div>
+        <div class="card-body text-center"> <img src=" https://i.imgur.com/d2dKtI7.png" height="100" width="100">
+          <div class="comment-box text-center">
+            <h4>Feedback</h4>
+            <form action="/test-feedback" method="post">
+              <div class="comment-area"> <textarea class="form-control" name="userFeedback"
+                  placeholder="Enter feedback..." rows="4" cols="80"></textarea> </div>
+
+              <div class="text-center mt-4"> <button class="btn btn-success send px-5">Send<i
+                    class="fa fa-long-arrow-right ml-1"></i></button>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-
-
 
   <script type='text/javascript'>
     $(window).on("load", function () {
       setTimeout(function () {
-        $('#myModal').modal('show');
+        $('#form').modal('show');
       }, 3000);
     })
   </script>

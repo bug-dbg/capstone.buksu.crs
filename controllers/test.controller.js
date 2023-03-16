@@ -7,8 +7,12 @@ const { OAuth2Client } = require('google-auth-library');
 const CLIENT_ID = '270040489280-ljn99nm3ve4m8su2t77dras268tp2fiu.apps.googleusercontent.com'
 const client = new OAuth2Client(CLIENT_ID);
 
-var MongoClient = require('mongodb').MongoClient;
+var { MongoClient } = require('mongodb');
 var url = "mongodb+srv://Admin:pYg96SY5pQrNUpIo@cluster0.urjcmww.mongodb.net/?retryWrites=true&w=majority";
+const { Reports } = require('../models/Report')
+
+const currentUrl = 'http://localhost'
+const productionUrl = 'https://buksu-crs.systems'
 
 const testCtrl = {
     getTestData: async (req, res) => {
@@ -73,17 +77,72 @@ const testCtrl = {
                 await value.save()
 
             } else {
-                MongoClient.connect(url, function (err, db) {
-                    if (err) throw err;
-                    var dbo = db.db("tests");
-                    var myquery = { currentQuestionID: id };
-                    var newvalues = { $set: { value: answer } };
-                    dbo.collection("testvalues").updateOne(myquery, newvalues, function (err, res) {
-                        if (err) throw err;
-                        console.log("1 document updated");
-                        db.close();
-                    });
-                });
+                // MongoClient.connect(url, function (err, db) {
+                //     if (err) throw err;
+                //     var dbo = db.db("tests");
+                //     var myquery = { currentQuestionID: id };
+                //     var newvalues = { $set: { value: answer } };
+                //     dbo.collection("testvalues").updateOne(myquery, newvalues, function (err, res) {
+                //         if (err) throw err;
+                //         console.log("1 document updated");
+                //         db.close();
+                //     });
+                // });
+
+                MongoClient.connect(url, { useUnifiedTopology: true })
+                    .then(client => {
+                        const db = client.db('test');
+                        const collection = db.collection('testvalues');
+                        const options = { upsert: true };
+                        const filter = { currentQuestionID: id, currentUserID: userID};
+                        const update = { $set: { value: answer } };
+
+                        return collection.updateOne(filter, update, options);
+                    })
+                    .then(result => {
+                        console.log(`${result.modifiedCount} document updated`);
+                    })
+                    .catch(error => console.error(error));
+
+              
+
+                // try {
+                //     await client.connect();
+                //     const db = client.db('test');
+                //     const collection = db.collection('testvalues');
+                //     const filter = { currentQuestionID: id, currentUserID: userID };
+                //     const update = { $set: { value: answer } };
+                //     const options = { upsert: true };
+                //     const result = await collection.updateOne(filter, update, options);
+                //     console.log(`${result.modifiedCount} document updated`);
+                //   } catch (error) {
+                //     console.error(error);
+                //   } finally {
+                //     await client.close();
+                //   }
+
+                
+                // const client = new MongoClient(url);
+                // try {
+                //     const database = client.db("test");
+                //     const collection = database.collection("testvalues");
+                //     // create a filter for a movie to update
+                //     const filter = { currentQuestionID: id, currentUserID: userID };
+                //     // this option instructs the method to create a document if no documents match the filter
+                //     const options = { upsert: true };
+                //     // create a document that sets the plot of the movie
+                //     const updateDoc = {
+                //       $set: {
+                //         value: answer
+                //       },
+                //     };
+                //     const result = await collection.updateOne(filter, updateDoc, options);
+                //     console.log(
+                //       `${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`,
+                //     );
+                //   } finally {
+                //     await client.close();
+                //   }
             }
             res.redirect('/test')
 
@@ -98,12 +157,44 @@ const testCtrl = {
 
         try {
 
+              // get user id 
+              if (req.cookies['access-token']) {
+                var accessToken = req.cookies['access-token']
+            } else {
+                var sessionToken = req.cookies['session-token']
+            }
+
+            if (accessToken) {
+
+                var user = verify(accessToken, process.env.JWT_SECRET)
+
+            } else {
+                var ticket = await client.verifyIdToken({
+                    idToken: sessionToken,
+                    audience: CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
+                })
+            }
+
+            if (user) {
+                req.user = user
+                var userID = req.user.id
+
+            } else {
+                const payload = ticket.getPayload();
+                var userid = payload['sub']
+
+            }
+
             const { id, answer } = req.body
 
             let arr = []
 
 
-            const value = await TestValue.find({ currentQuestion: id }, 'value -_id')
+            const value = await TestValue.find({ 
+                    currentQuestion: id, 
+                    currentUserID: userID }, 
+                    'value -_id'
+                )
 
             // loop through the value and push it into an array
             value.forEach(function (data) {
@@ -116,9 +207,10 @@ const testCtrl = {
                 //     length: arr.length,
                 //     data: arr
                 // }) 
-                const { data } = await axios.post("http://localhost:3000/api/courses/recommend/", arr);
+                console.log("node array=" + arr)
+                const { data } = await axios.post(`${currentUrl + ":3000/api/courses/recommend/"}`, arr);
 
-                // console.log(data);
+                
 
                 const ratings = data.prediction[0]
 
@@ -165,13 +257,55 @@ const testCtrl = {
 
 
                 // Sort the top three result of the recommendation
-                const topThreeResult = courses.sort((a, b) => b.ratings - a.ratings).slice(0, 6)
+                const topThreeResult = courses.sort((a, b) => b.ratings - a.ratings).slice(0, 3)
                 console.log(topThreeResult);
 
-                return res.render('result_page/result', { prediction: topThreeResult });
-            }
+                // add the top three result to the database for reports
 
-            else {
+                // try{
+                //     const filter = { _id: '63de063a1e8e7041b46c0b85' };
+                //     const update = { numberOfUsers: await Users.countDocuments() };
+                //     const options = { upsert: true, new: true, setDefaultsOnInsert: true };
+                //     let report = await Reports.findOneAndUpdate(filter, update, options);
+
+                //     if (!report) { // report was not found, create a new one
+                //         const userCount = await Users.countDocuments();
+                //         report = new Reports({
+                //             numberOfUsers: userCount > 0 ? userCount : 1,
+                //         });
+                //         await report.save();
+
+                //         console.log("Successfully created a new report document")
+                //     }     
+
+                // } catch(err) {
+                //     console.log("msg:" + err.message)
+                // }
+
+                // const courseName = [
+                //     'Bachelor of Science in Biology Major in Biotechnology','Bachelor of Science in Environmental Science Major in Environmental Heritage Studies', 'Bachelor of Arts in English Language', 'Bachelor of Arts in Economics', 'Bachelor of Arts in Sociology', 'Bachelor of Arts in Philosophy', 'Bachelor of Arts in Social Sciences', 'Bachelor of Science in Mathematics', 'Bachelor of Science in Community Development', 'Bachelor of Science in Development Communication', 'Bachelor of Public Administration Major in Local Governance', 'Bachelor of Science in Nursing', 'Bachelor of Science in Accountancy', 'Bachelor of Science in Business Administration Major in Financial Management', 'Bachelor of Science in Hospitality Management', 'Bachelor of Science in Automotive Technology', 'Bachelor of Science in Electronics Technology', 'Bachelor of Science in Food Technology', 'Bachelor of Science in Information Technology', 'Bachelor of Science in Entertainment and Multimedia Computing major in Digital Animation Technology Game Development', 'Bachelor of Elementary Education', 'Bachelor of Secondary Education Major in Mathematics', 'Bachelor of Secondary Education Major in Filipino', 'Bachelor of Secondary Education Major in English', 'Bachelor of Secondary Education Major in Social Studies', 'Bachelor of Secondary Education Major in Science', 'Bachelor of Early Childhood Education', 'Bachelor of Physical Education']; 
+                // const filter = { _id: '63de063a1e8e7041b46c0b85' }; // replace with actual report ID
+                // const update = { $inc: { [`coursePredictions.${courseName}`]: 1 } };
+                // const options = { upsert: true, new: true, setDefaultsOnInsert: true };
+
+                // try {
+                //     let report = await Reports.findOneAndUpdate(filter, update, options);
+
+                //     if (!report) { // report was not found, create a new one
+                //         report = new Reports({
+                //             numberOfUsers: await Users.countDocuments(),
+                //             coursePredictions: { [courseName]: 1 }
+                //         });
+                //         await report.save();
+                //         console.log("Successfully created a new report document")
+                //     }
+                // } catch (err) {
+                //     console.log("msg:" + err.message)
+                // }
+
+                return res.render('result_page/result', { prediction: topThreeResult });
+
+            } else {
                 return res.status(500).json({ error: "ERROR" });
             }
 

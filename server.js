@@ -23,7 +23,6 @@ const admin = new AdminJS(options)
 const router = buildAdminRouter(admin)
 app.use(admin.options.rootPath, router)
 
-
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser())

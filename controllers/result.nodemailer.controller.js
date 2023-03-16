@@ -114,7 +114,7 @@ const emailSender = {
 
 
             // Sort the top three result of the recommendation
-            const topThreeResult = courses.sort((a, b) => b.ratings - a.ratings).slice(0, 6)
+            const topThreeResult = courses.sort((a, b) => b.ratings - a.ratings).slice(0, 3)
 
 
             // responsible for sending the email

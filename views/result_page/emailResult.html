@@ -245,9 +245,93 @@
     }
 
     .admission-btn {
-     
+
       align-items: center;
       width: 100%;
+    }
+
+    /* apply now style */
+
+    /* .call-to-action {
+      background-color: #f9f9f9;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+      padding: 40px;
+      margin-top: 80px;
+    }
+
+    .call-to-action .section-title {
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #3d3d3d;
+    }
+
+    .call-to-action .section-description {
+      font-size: 18px;
+      margin-bottom: 40px;
+      color: #555;
+    }
+
+    .call-to-action .btn-primary {
+      background-color: #007bff;
+      color: #fff;
+      font-size: 20px;
+      font-weight: bold;
+      padding: 10px 30px;
+      border-radius: 30px;
+      text-transform: uppercase;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .call-to-action .btn-primary:hover {
+      background-color: #0062cc;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    } */
+
+    .call-to-action {
+      background-color: #007bff;
+      border-radius: 30px;
+      text-align: center;
+      margin-top: 80px;
+      padding: 30px;
+    }
+
+    .call-to-action .section-title {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+
+    .call-to-action .section-description {
+      font-size: 16px;
+      margin-bottom: 20px;
+      color: #fff;
+    }
+
+    .call-to-action .btn-primary {
+      background-color: #fff;
+      color: #007bff;
+      font-size: 16px;
+      font-weight: bold;
+      padding: 10px 30px;
+      border-radius: 30px;
+      text-transform: uppercase;
+      transition: all 0.3s ease-in-out;
+      text-decoration: none;
+    }
+
+    .call-to-action .btn-primary:hover {
+      background-color: #eee;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      color: #007bff;
     }
   </style>
 
@@ -259,15 +343,16 @@
   <header id="header" class="fixed-top d-flex align-items-center header-transparent">
     <div class="container d-flex align-items-center">
 
-      <h1 class="logo me-auto"><a href="">CRS</a></h1>
+      <!-- <h1 class="logo me-auto"><a href="">CRS</a></h1> -->
       <!-- Uncomment below if you prefer to use an image logo -->
-      <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+      <a href="index.html" class="logo me-auto"><img
+          src="https://res.cloudinary.com/chuy/image/upload/v1678365297/logo_uiawi7.png" alt="" class="img-fluid"></a>
 
 
     </div>
   </header><!-- End Header -->
 
-  <!-- ======= result Section ======= -->
+  <!-- ======= Services Section ======= -->
   <section id="result" class="result section-bg">
     <div class="container" data-aos="fade-up">
 
@@ -276,21 +361,25 @@
         <p>These are the following recommendations that our systems made:</p>
       </header>
 
-      <div class="row gy-5" id="foo">
+      <div class="row " id="foo">
         <% for(var i=0; i < prediction.length; i++) { %>
-          <div class="col-md-6 col-lg-4 wow bounceInUp" data-aos="zoom-in" data-aos-delay="100">
+          <div class="col-md-6 offset-md-3 wow bounceInUp" style="margin-bottom: 25px;" data-aos="zoom-in"
+            data-aos-delay="100">
+
             <div class="box">
               <div class="ranking">
                 <%= i + 1 %>
               </div>
               <br>
               <br>
-              <!-- <div class="icon" style="background: #fceef3;"><i class="bi bi-journal-check" style="color: #ff689b;"></i>
+
+              <!-- <div class="icon" style="background: #fceef3; position:relative; right: 30px; margin-bottom: 20px;"><i
+                  class="bi bi-journal-check" style="color: #ff689b;"></i>
               </div> -->
               <h4 class="title">
                 <%= prediction[i].name %>
               </h4>
-              <p class="description">
+              <p class="description" style="text-align: justify; text-justify: inter-word;">
                 <%= prediction[i].description %>
               </p>
             </div>
@@ -299,20 +388,19 @@
       </div>
 
     </div>
-  </section>
 
-   <!-- ======= buksu admission instructions Section ======= -->
-   <section id="result" class="result section-bg">
-    <div class="container" data-aos="fade-up">
-
-      <header class="section-header">
-        <h3>Interested with the following recommendations?</h3>
-        <p>To proceed with the enrollment <a href="https://admissions.buksu.edu.ph/">Click here!</a> </p>
-        
-      </header>
     </div>
-
   </section>
+
+
+  <section id="result" class="result section-bg">
+    <div class="call-to-action">
+      <h3 class="section-title">Ready to Apply?</h3>
+      <p class="section-description">Take the first step towards your future:</p>
+      <a href="https://admissions.buksu.edu.ph/" class="btn btn-primary">Apply Now</a>
+    </div>
+  </section>
+
 
 
 

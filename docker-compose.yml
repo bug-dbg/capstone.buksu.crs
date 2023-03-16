@@ -1,13 +1,30 @@
 version: '2'
 
 services:
-  chubybunnies:
-    container_name: chubybunniescontainer
+  chubbybunnies:
+    environment:
+      - PORT=5000
+      - LOCAL_MONGODB_URL=mongodb://localhost/CRS-Capstone-Project-LocalDB
+      - MONGODB_URL=mongodb+srv://Admin:pYg96SY5pQrNUpIo@cluster0.urjcmww.mongodb.net/?retryWrites=true&w=majority
+      - JWT_SECRET=Yum_<e7-S?SH9EMB}z56_L)U[$#,/P_)!ujGJYU4EN*"j+yDTH
+      - CLIENT_ID=270040489280-ljn99nm3ve4m8su2t77dras268tp2fiu.apps.googleusercontent.com
+      - AUTH_EMAIL=buksu.crs@gmail.com
+      - AUTH_PASS=fewoqaxknakacupm
+    container_name: chubbybunnies
     build:
       context: .
       dockerfile: Dockerfile
     restart: always
-    image: chubybunnies:latest
+    image: chubbybunnies:latest
     ports:
       - "7000:5000"
+
+  pythonbunnies:
+    container_name: pythonbunnies
+    build:
+      context: .
+      dockerfile: DockerfilePython
+    restart: always
+    image: pythonbunnies:latest
+    ports:
       - "7001:3000"

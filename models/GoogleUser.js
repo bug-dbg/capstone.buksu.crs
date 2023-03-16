@@ -1,11 +1,11 @@
 const mongoose = require('mongoose')
 
 const googleUserSchema = new mongoose.Schema({
-    given_name: {
+    firstName: {
         type: String,
         required: true,
     },
-    family_name: {
+    lastName: {
         type: String,
         required: true,
     },

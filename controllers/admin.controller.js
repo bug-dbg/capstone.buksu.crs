@@ -22,6 +22,7 @@ const options = {
     branding: {
         companyName: 'BukSU CRS',
         softwareBrothers: false,
+        // logo: '../img/logo/logo.png',
     },
 
     locale: {

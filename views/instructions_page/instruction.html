@@ -21,6 +21,8 @@
     <link rel="stylesheet" href="/css/instructions.css">
 
     <title>Instructions</title>
+
+
 </head>
 
 <body>
@@ -29,9 +31,11 @@
     <header id="header" class="fixed-top d-flex align-items-center header-transparent">
         <div class="container d-flex align-items-center">
 
-            <h1 class="logo me-auto"><a href="/home">CRS</a></h1>
+            <!-- <h1 class="logo me-auto"><a href="/home">CRS</a></h1> -->
             <!-- Uncomment below if you prefer to use an image logo -->
-            <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+            <a href="/home" class="logo me-auto"><img
+                    src="https://res.cloudinary.com/chuy/image/upload/v1678365297/logo_uiawi7.png" alt=""
+                    class="img-fluid"></a>
 
             <nav id="navbar" class="navbar order-last order-lg-0">
                 <ul>
@@ -52,7 +56,7 @@
     <br>
     <br>
     <br>
-    <main>
+    <!-- <main>
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -98,7 +102,118 @@
                 </div>
             </div>
         </div>
+    </main> -->
+
+    <main>
+        <div class="instructions-container container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 col-md-10">
+                    <h2 class="headline1 text-center">Instructions</h2>
+                    <p class="guide-subtext text-center"
+                        style="font-size: 1.2rem; font-family: 'Rubik', sans-serif;font-weight:400;color:#000;">You will
+                        be shown questions and asked to rate how much you agree with the questions.</p>
+                </div>
+            </div>
+
+            <div class="row instructions-row ">
+                <div class="col-md-6 col-lg-3 inst-cont">
+                    <div class="numberCircle">1</div>
+                    <div class="cont1">
+                        <p class="text-center"><strong>Rate how much you agree or disagree with the following
+                                questions.</strong></p>
+                        <img src="img/inst-1.gif" class="img-fluid d-block mx-auto" alt="Instruction 1">
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3 inst-cont">
+                    <div class="numberCircle">2</div>
+                    <div class="cont1">
+                        <p class="text-center"><strong>Tap Next to proceed.</strong></p>
+                        <img src="img/inst-2.gif" class="img-fluid d-block mx-auto" alt="Instruction 2">
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3 inst-cont">
+                    <div class="numberCircle">3</div>
+                    <div class="cont1">
+                        <p class="text-center"><strong>After you've answered the questions, click "Evaluate
+                                Result."</strong></p>
+                        <img src="img/inst-3.gif" class="img-fluid d-block mx-auto" alt="Instruction 3">
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-3 inst-cont text-center">
+                    <p class="guide-text1" style="font-family: 'Rubik', sans-serif;font-weight:700;color:#000;">
+                        Are you ready to begin?</p>
+                    <a href="/test" class="guide-text1_sub">Start</a>
+                </div>
+            </div>
+        </div>
     </main>
+    <!-- 
+    <main>
+        <div class="instructions-container container">
+            <div class="instructions-row row justify-content-center">
+                <div class="col-lg-8 col-md-10">
+                    <h2 class="headline1 text-center">Instructions</h2>
+                    <p class="guide-subtext text-center">You will be shown questions and asked to rate how much you agree with the questions.</p>
+                </div>
+            </div>
+    
+            <div class="row">
+                <div class="col-md-6 col-lg-3 inst-cont">
+                    <div class="numberCircle">1</div>
+                    <div class="cont1">
+                        <p class="text-center"><strong>Rate how much you agree or disagree with the following questions.</strong></p>
+                        <img src="img/inst-1.gif" class="img-fluid d-block mx-auto" alt="Instruction 1">
+                    </div>
+                </div>
+    
+                <div class="col-md-6 col-lg-3 inst-cont">
+                    <div class="numberCircle">2</div>
+                    <div class="cont1">
+                        <p class="text-center"><strong>Tap Next to proceed.</strong></p>
+                        <img src="img/inst-2.gif" class="img-fluid d-block mx-auto" alt="Instruction 2">
+                    </div>
+                </div>
+    
+                <div class="col-md-6 col-lg-3 inst-cont">
+                    <div class="numberCircle">3</div>
+                    <div class="cont1">
+                        <p class="text-center"><strong>After you've answered the questions, click "Evaluate Result."</strong></p>
+                        <img src="img/inst-3.gif" class="img-fluid d-block mx-auto" alt="Instruction 3">
+                    </div>
+                </div>
+    
+                <div class="col-md-6 col-lg-3 inst-cont text-center">
+                    <p class="guide-text1">Are you ready to begin?</p>
+                    <a href="/test" class="guide-text1_sub">Start</a>
+                </div>
+            </div>
+        </div>
+    </main> -->
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer">
+        <div class="container">
+            <div class="row d-flex align-items-center">
+                <div class="col-lg-6 text-lg-left text-center">
+                    <div class="copyright">
+                        &copy; Copyright <strong>BukSU CRS</strong>. All Rights Reserved
+                    </div>
+
+                </div>
+                <div class="col-lg-6">
+                    <nav class="footer-links text-lg-right text-center pt-2 pt-lg-0">
+                        <a href="#hero" class="scrollto">Home</a>
+                        <a href="#why-us" class="scrollto">About</a>
+                        <!-- <a href="#" id="myBtn">Terms and Conditions</a> -->
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </footer><!-- End Footer -->
+
 
     <!-- Vendor JS Files -->
     <script src="/vendor/purecounter/purecounter.js"></script>

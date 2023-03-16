@@ -7,6 +7,8 @@ const session = require('express-session')
 const { default: mongoose } = require('mongoose')
 const MongoStore = require('connect-mongo')
 
+const mongodbUrl = "mongodb+srv://Admin:pYg96SY5pQrNUpIo@cluster0.urjcmww.mongodb.net/?retryWrites=true&w=majority"
+
 
 /**
  * @param {AdminJS} adminjs
@@ -27,7 +29,7 @@ const buildAdminRouter = (admin) => {
   }, null, {
     resave: false,
     saveUninitialized: true,
-    store: MongoStore.create({ mongoUrl: process.env.LOCAL_MONGODB_URL })
+    store: MongoStore.create({ mongoUrl: mongodbUrl})
   })
   return router
 }

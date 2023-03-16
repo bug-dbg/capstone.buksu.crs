@@ -121,7 +121,7 @@ h6 {
 }
 
 #header .logo img {
-  max-height: 40px;
+  max-height: 80px;
 }
 
 #header .social-links {
@@ -488,31 +488,6 @@ section {
   text-align: left;
 }
 
-#footer {
-  padding-bottom: 20px;
-}
-
-#footer .copyright {
-  text-align: center;
-  padding-top: 30px;
-  color: #535074;
-  font-size: 15px;
-}
-
-#footer .credits {
-  text-align: center;
-  font-size: 14px;
-  padding-top: 4px;
-  color: #8582a8;
-}
-
-#footer .credits a {
-  color: #1bb1dc;
-}
-
-#footer .credits a:hover {
-  color: #0a98c0;
-}
 
 
 /* Send to Email */
@@ -592,3 +567,146 @@ i {
   color: #fff;
 }
 
+/* Feedback Modal */
+
+/* Modal background */
+.modal-backdrop {
+  opacity: 0.6;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Modal container */
+.modal-content {
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Modal close button */
+.close {
+  color: #999;
+  opacity: 1;
+  font-size: 30px;
+  font-weight: normal;
+}
+
+.close:hover {
+  color: #000;
+}
+
+/* Feedback form */
+.comment-box {
+  align-items: center;
+  padding: 30px;
+  width: 100%;
+}
+
+.comment-box h4 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.comment-area textarea {
+  border: none;
+  border-bottom: 2px solid #ccc;
+  background-color: transparent;
+  font-size: 18px;
+  color: #333;
+  padding: 10px;
+  width: 100%;
+  resize: none;
+  outline: none;
+}
+
+.comment-area textarea:focus {
+  border-color: #29a7ca;
+}
+
+.send {
+  background-color: #29a7ca;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.send:hover {
+  background-color: #1c7a8c;
+}
+
+/* Center the modal vertically and horizontally */
+.modal-dialog {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%;
+}
+
+.modal-content {
+  margin: 0 auto;
+}
+
+@media only screen and (max-width: 767px) {
+  .modal-content {
+    width: 90%;
+  }
+}
+
+/* feedback button */
+
+.feedback-button {
+  height: 40px;
+  border: solid 3px #29a7ca;
+  background: #0a98c0;
+  width: 100px;
+  line-height: 22px;
+  -webkit-transform: rotate(-90deg);
+  font-weight: 600;
+  color: white;
+  transform: rotate(-90deg);
+  -ms-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  text-align: center;
+  font-size: 17px;
+  position: fixed;
+  right: -30px;
+  top: 65%;
+  z-index: 999;
+}
+
+
+
+/*--------------------------------------------------------------
+# Footer
+--------------------------------------------------------------*/
+#footer {
+  background: #fff;
+  box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.1);
+  padding: 30px 0;
+  color: #222222;
+  font-size: 14px;
+}
+
+#footer .credits {
+  font-size: 13px;
+  padding-top: 5px;
+  color: #222222;
+}
+
+#footer .footer-links a {
+  color: #222222;
+  padding-left: 15px;
+}
+
+#footer .footer-links a:first-child {
+  padding-left: 0;
+}
+
+#footer .footer-links a:hover {
+  color: #3498db;
+}

@@ -8,6 +8,14 @@ const password = document.getElementById('password')
 const password2 = document.getElementById('password2')
 
 
+function isChecked() {
+	if (document.getElementById('terms').checked) {
+		document.getElementById('message').textContent = ''
+	} else {
+		document.getElementById('message').textContent = 'Must accept the terms and condition.'
+	}
+}
+
 
 var success = false
 
@@ -83,6 +91,14 @@ function checkInputs() {
 		setsuccessFor(password2)
 		success = true
 	}
+
+	if (document.getElementById('terms').checked) {
+		success = true
+	} else {
+		document.getElementById('message').textContent = 'Must accept the terms and condition.'
+	}
+
+
 	
 }
 
