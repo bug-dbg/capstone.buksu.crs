@@ -20,7 +20,7 @@ import numpy as np
 # from keras.layers import Activation, Dense, Dropout, Flatten
 # from keras.optimizers import adam_v2
 # from keras.metrics import categorical_crossentropy
-from keras.models import load_model
+# from keras.models import load_model
 # from keras.applications.vgg16 import VGG16
 
 # import pandas as pd
