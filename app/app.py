@@ -14,13 +14,13 @@ import numpy as np
 # from sklearn.preprocessing import LabelEncoder
 # from sklearn.preprocessing import MinMaxScaler
 
-# import tensorflow as tf
-# from tensorflow import keras
-# from keras.models import Sequential
-# from keras.layers import Activation, Dense, Dropout, Flatten
-# from keras.optimizers import adam_v2
-# from keras.metrics import categorical_crossentropy
-# from keras.models import load_model
+import tensorflow as tf
+from tensorflow import keras
+from keras.models import Sequential
+from keras.layers import Activation, Dense, Dropout, Flatten
+from keras.optimizers import adam_v2
+from keras.metrics import categorical_crossentropy
+from keras.models import load_model
 # from keras.applications.vgg16 import VGG16
 
 # import pandas as pd
