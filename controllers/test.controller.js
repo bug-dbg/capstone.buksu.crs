@@ -11,8 +11,7 @@ var { MongoClient } = require('mongodb');
 var url = "mongodb+srv://Admin:pYg96SY5pQrNUpIo@cluster0.urjcmww.mongodb.net/?retryWrites=true&w=majority";
 const { Reports } = require('../models/Report')
 
-const currentUrl = process.env.NODE_ENV === 'production' ? process.env.PROD_PYTHON_URL : 'http://localhost:3000'
-const productionUrl = 'https://buksu-crs.systems'
+const currentUrl = process.env.NODE_ENV === 'production' ? process.env.PROD_PYTHON_URL : 'https://ai.buksu-crs.systems'
 
 const testCtrl = {
     getTestData: async (req, res) => {
