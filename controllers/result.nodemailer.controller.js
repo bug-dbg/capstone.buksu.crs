@@ -12,7 +12,10 @@ const client = new OAuth2Client(CLIENT_ID);
 
 const { TestValue } = require('../models/TestValue')
 
+
 const productionUrl = 'https://ai.buksu-crs.systems'
+
+const currentUrl = process.env.NODE_ENV === 'production' ? productionUrl : 'http://localhost:3000'
 
 const emailSender = {
     sendEmail: async (req, res) => {
@@ -40,6 +43,7 @@ const emailSender = {
             if (user) {
                 req.user = user
                 var normalSignedEmail = req.user.email
+                var userID = req.user.id
 
             } else {
                 const payload = ticket.getPayload();
@@ -58,14 +62,14 @@ const emailSender = {
             let arr = []
 
 
-            const value = await TestValue.find({ currentQuestion: id }, 'value -_id')
+            const value = await TestValue.find({ currentQuestion: id, currentUserID: userID }, 'value -_id')
 
             // loop through the value and push it into an array
             value.forEach(function (data) {
                 arr.push(data.value)
             })
 
-            const { data } = await axios.post(`${productionUrl + "/api/courses/recommend/"}`, arr);
+            const { data } = await axios.post(`${currentUrl + "/api/courses/recommend/"}`, arr);
 
             // console.log(data);
 

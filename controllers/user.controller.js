@@ -4,6 +4,10 @@ const { Users } = require('../models/User')
 const { UserVerification } = require('../models/UserVerification')
 const { Reports } = require('../models/Report')
 
+const productionUrl = 'https://buksu-crs.systems'
+
+const currentUrl = process.env.NODE_ENV === 'production' ? productionUrl : 'http://localhost:5000'
+
 const axios = require('axios')
 
 const { numOfUsers } = require('./reports.controller')
@@ -38,9 +42,7 @@ transporter.verify((error, success) => {
 
 // send verication email function
 const sendVerificationEmail = ({_id, email}, res) => {
-    const devUrl1 = 'http://10.50.27.68:5000/'
-    const devUrl2 = 'http://192.168.254.105:5000/'
-    const productionUrl = 'https://buksu-crs.systems'
+
 
     const uniqueString = uuidv4() + _id
 
@@ -53,7 +55,7 @@ const sendVerificationEmail = ({_id, email}, res) => {
             <img src="https://res.cloudinary.com/chuy/image/upload/v1678365297/logo_uiawi7.png"  alt="Logo" style="max-width: 80px margin-bottom: 20px;">
             <p style="font-size: 18px;">Verify your email address to complete the signup and log in into your account.</p>
             <p style="font-size: 16px; margin-bottom: 20px;">This link <b>expires in 3 minutes</b>.</p>
-            <a href="${productionUrl + "/verify/" + _id + "/" + uniqueString}" style="display: inline-block; background-color: #007bff; color: #fff; text-decoration: none; font-size: 20px; margin-top: 10px; padding: 10px 20px; border-radius: 4px;">Verify Email</a>
+            <a href="${currentUrl + "/verify/" + _id + "/" + uniqueString}" style="display: inline-block; background-color: #007bff; color: #fff; text-decoration: none; font-size: 20px; margin-top: 10px; padding: 10px 20px; border-radius: 4px;">Verify Email</a>
            
         </div>`,
     }
