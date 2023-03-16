@@ -34,8 +34,7 @@ jobs:
       - name: Build and push python
         uses: docker/build-push-action@v4
         with:
-          context: .
-          file: /DockerfilePython
+          file: ./DockerfilePython
           push: true
           tags: chuyx/buksu-crs.python:latest
 
