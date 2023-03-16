@@ -17,7 +17,7 @@ services:
     restart: always
     image: chuyx/buksu-crs.node:latest
     ports:
-      - "7500:5000"
+      - "7400:5000"
 
   pythonbunnies:
     container_name: buksu-crs.python
@@ -26,4 +26,4 @@ services:
     restart: always
     image: chuyx/buksu-crs.python:latest
     ports:
-      - "7501:3000"
+      - "7401:3000"
