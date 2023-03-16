@@ -30,10 +30,12 @@ jobs:
           push: true
           tags: chuyx/buksu-crs.node:latest
 
+      
       - name: Build and push python
         uses: docker/build-push-action@v4
         with:
-          context: /DockerfilePython
+          context: .
+          file: /DockerfilePython
           push: true
           tags: chuyx/buksu-crs.python:latest
 
