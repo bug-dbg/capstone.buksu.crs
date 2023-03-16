@@ -53,7 +53,7 @@ const sendVerificationEmail = ({_id, email}, res) => {
             <img src="https://res.cloudinary.com/chuy/image/upload/v1678365297/logo_uiawi7.png"  alt="Logo" style="max-width: 80px margin-bottom: 20px;">
             <p style="font-size: 18px;">Verify your email address to complete the signup and log in into your account.</p>
             <p style="font-size: 16px; margin-bottom: 20px;">This link <b>expires in 6 hours</b>.</p>
-            <a href="${productionUrl + "verify/" + _id + "/" + uniqueString}" style="display: inline-block; background-color: #007bff; color: #fff; text-decoration: none; font-size: 20px; margin-top: 10px; padding: 10px 20px; border-radius: 4px;">Verify Email</a>
+            <a href="${productionUrl + "/verify/" + _id + "/" + uniqueString}" style="display: inline-block; background-color: #007bff; color: #fff; text-decoration: none; font-size: 20px; margin-top: 10px; padding: 10px 20px; border-radius: 4px;">Verify Email</a>
            
         </div>`,
     }
