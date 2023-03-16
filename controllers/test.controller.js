@@ -11,7 +11,7 @@ var { MongoClient } = require('mongodb');
 var url = "mongodb+srv://Admin:pYg96SY5pQrNUpIo@cluster0.urjcmww.mongodb.net/?retryWrites=true&w=majority";
 const { Reports } = require('../models/Report')
 
-const currentUrl = 'http://localhost'
+const currentUrl = process.env.NODE_ENV === 'production' ? process.env.PROD_PYTHON_URL : 'http://localhost:3000'
 const productionUrl = 'https://buksu-crs.systems'
 
 const testCtrl = {
@@ -208,7 +208,7 @@ const testCtrl = {
                 //     data: arr
                 // }) 
                 console.log("node array=" + arr)
-                const { data } = await axios.post(`${currentUrl + ":3000/api/courses/recommend/"}`, arr);
+                const { data } = await axios.post(`${currentUrl + "/api/courses/recommend/"}`, arr);
 
                 
 
