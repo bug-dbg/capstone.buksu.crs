@@ -12,6 +12,8 @@ const client = new OAuth2Client(CLIENT_ID);
 
 const { TestValue } = require('../models/TestValue')
 
+const productionUrl = 'https://ai.buksu-crs.systems'
+
 const emailSender = {
     sendEmail: async (req, res) => {
 
@@ -63,13 +65,12 @@ const emailSender = {
                 arr.push(data.value)
             })
 
-            const { data } = await axios.post("http://localhost:3000/api/courses/recommend/", arr);
+            const { data } = await axios.post(`${productionUrl + "/api/courses/recommend/"}`, arr);
 
             // console.log(data);
 
             const ratings = data.prediction[0]
 
-            console.log(ratings)
 
 
             let courses = [
