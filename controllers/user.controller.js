@@ -70,8 +70,7 @@ const sendVerificationEmail = ({_id, email}, res) => {
                 userID: _id,
                 uniqueString: hashUniqueString,
                 createdAt: Date.now(),
-                expiresAt: Date.now() + 180,
-
+                expiresAt: + (3 * 60 * 1000) // 3 minutes in milliseconds
             })
 
             newVerification

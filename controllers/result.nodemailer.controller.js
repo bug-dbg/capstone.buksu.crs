@@ -22,40 +22,18 @@ const emailSender = {
 
         try {
 
-            // get user id 
-            if (req.cookies['access-token']) {
-                var accessToken = req.cookies['access-token']
-            } else {
-                var sessionToken = req.cookies['session-token']
-            }
+        
+            var accessToken = req.cookies['access-token']
+            var user = verify(accessToken, process.env.JWT_SECRET)
 
-            if (accessToken) {
-
-                var user = verify(accessToken, process.env.JWT_SECRET)
-
-            } else {
-                var ticket = await client.verifyIdToken({
-                    idToken: sessionToken,
-                    audience: CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
-                })
-            }
 
             if (user) {
                 req.user = user
-                var normalSignedEmail = req.user.email
                 var userID = req.user.id
 
             } else {
-                const payload = ticket.getPayload();
-                console.log(payload)
-                var googleSignedEmail = payload['email']
-
+                console.log('Something went wrong when getting user ID!')
             }
-
-
-
-
-
 
             const { id, answer } = req.body
 

@@ -9,28 +9,9 @@ const feedbackCtrl = {
     homeFeedback: async (req, res) => {
         try {
 
-            if (req.cookies['access-token']) {
-                var accessToken = req.cookies['access-token']
-            } else {
-                var sessionToken = req.cookies['session-token']
-            }
-
-            const { userFeedback } = req.body
-
-
-
-            if (accessToken) {
-
-                var user = verify(accessToken, process.env.JWT_SECRET)
-
-            } else {
-                var ticket = await client.verifyIdToken({
-                    idToken: sessionToken,
-                    audience: CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
-                })
-            }
-
-
+        
+            var accessToken = req.cookies['access-token']
+            var user = verify(accessToken, process.env.JWT_SECRET)
 
 
             if (user) {
@@ -38,8 +19,7 @@ const feedbackCtrl = {
                 var userID = req.user.id
 
             } else {
-                const payload = ticket.getPayload();
-                var userid = payload['sub']
+                console.log('Something went wrong when getting user ID!')
             }
 
 
@@ -48,7 +28,7 @@ const feedbackCtrl = {
 
             const newFeedback = new Feedbacks({
                 userFeedback,
-                userID: userID || userid
+                userID: userID
 
             })
 
@@ -62,28 +42,8 @@ const feedbackCtrl = {
     testFeedback: async (req, res) => {
         try {
 
-            if (req.cookies['access-token']) {
-                var accessToken = req.cookies['access-token']
-            } else {
-                var sessionToken = req.cookies['session-token']
-            }
-
-            const { userFeedback } = req.body
-
-
-
-            if (accessToken) {
-
-                var user = verify(accessToken, process.env.JWT_SECRET)
-
-            } else {
-                var ticket = await client.verifyIdToken({
-                    idToken: sessionToken,
-                    audience: CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
-                })
-            }
-
-
+            var accessToken = req.cookies['access-token']
+            var user = verify(accessToken, process.env.JWT_SECRET)
 
 
             if (user) {
@@ -91,17 +51,13 @@ const feedbackCtrl = {
                 var userID = req.user.id
 
             } else {
-                const payload = ticket.getPayload();
-                var userid = payload['sub']
+                console.log('Something went wrong when getting user ID!')
             }
-
-
-
 
 
             const newFeedback = new Feedbacks({
                 userFeedback,
-                userID: userID || userid
+                userID: userID
 
             })
 

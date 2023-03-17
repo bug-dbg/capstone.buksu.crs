@@ -33,34 +33,18 @@ const testCtrl = {
 
     saveTestDataToDB: async (req, res) => {
         try {
-
-            // get user id 
-            if (req.cookies['access-token']) {
-                var accessToken = req.cookies['access-token']
-            } else {
-                var sessionToken = req.cookies['session-token']
-            }
-
-            if (accessToken) {
-
-                var user = verify(accessToken, process.env.JWT_SECRET)
-
-            } else {
-                var ticket = await client.verifyIdToken({
-                    idToken: sessionToken,
-                    audience: CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
-                })
-            }
+            // get user id from cookies
+            var accessToken = req.cookies['access-token']
+            var user = verify(accessToken, process.env.JWT_SECRET)
 
             if (user) {
                 req.user = user
                 var userID = req.user.id
 
             } else {
-                const payload = ticket.getPayload();
-                var userid = payload['sub']
-
+                console.log('Something went wrong when getting user ID!')
             }
+
 
             // get user choice value
 
@@ -71,7 +55,7 @@ const testCtrl = {
             if (!questionID) {
                 const value = new TestValue({
                     value: answer,
-                    currentUserID: userID || userid,
+                    currentUserID: userID,
                     currentQuestionID: id
                 })
 
@@ -158,33 +142,17 @@ const testCtrl = {
     evaluate: async (req, res, next) => {
 
         try {
+            // get user id from cookies
+            var accessToken = req.cookies['access-token']
+            var user = verify(accessToken, process.env.JWT_SECRET)
 
-              // get user id 
-              if (req.cookies['access-token']) {
-                var accessToken = req.cookies['access-token']
-            } else {
-                var sessionToken = req.cookies['session-token']
-            }
-
-            if (accessToken) {
-
-                var user = verify(accessToken, process.env.JWT_SECRET)
-
-            } else {
-                var ticket = await client.verifyIdToken({
-                    idToken: sessionToken,
-                    audience: CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
-                })
-            }
 
             if (user) {
                 req.user = user
                 var userID = req.user.id
 
             } else {
-                const payload = ticket.getPayload();
-                var userid = payload['sub']
-
+                console.log('Something went wrong when getting user ID!')
             }
 
             const { id, answer } = req.body
@@ -317,45 +285,6 @@ const testCtrl = {
         }
 
     }
-
-    // getTestDataResult: async (req, res) => {
-    //     try {
-    //         const { data } = await axios.get("http://localhost:3000/api/courses/recommend/")
-
-    //         const ratings = data.prediction[0]
-
-    //         console.log(ratings)
-
-
-    //         let courses = [
-    //             { name: "Bachelor of Science in Biology Major in Biotechnology ", description: "BS Bio Description" },
-    //             { name: "Bachelor of Arts in English Language", description: "BA EL Description" },
-    //             { name: "Bachelor of Secondary Education Major in Social Studies", description: "BSE Social Studies Description" },
-    //             { name: "Bachelor of Arts in Economics", description: "BA Economics Description" },
-    //             { name: "Bachelor of Arts in Sociology", description: "BA Sociology Description" },
-
-    //         ]
-
-    //         // Map to courses Object 
-
-    //         let i = 0;
-    //         courses.forEach(function (c) {
-    //             c.ratings = ratings[i]
-    //             i++
-    //         })
-
-
-    //         // Sort the top three result of the recommendation
-    //         const topThreeResult = courses.sort((a, b) => b.ratings - a.ratings).slice(0, 3)
-    //         console.log(topThreeResult)
-
-
-    //         return res.status(200).json({ prediction: topThreeResult });
-
-    //     } catch (err) {
-    //         return res.status(500).json({ msg: err.message })
-    //     }
-    // }
 }
 
 module.exports = testCtrl
