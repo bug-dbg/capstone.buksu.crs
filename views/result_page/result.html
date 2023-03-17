@@ -196,12 +196,50 @@
     </div>
   </div>
 
-  <script type='text/javascript'>
+  <!-- <script type='text/javascript'>
     $(window).on("load", function () {
       setTimeout(function () {
         $('#form').modal('show');
       }, 3000);
     })
+  </script> -->
+  <!-- 
+  <script type='text/javascript'>
+    $(document).ready(function() {
+      var feedbackShown = localStorage.getItem('feedbackShown');
+      if (!feedbackShown) {
+        setTimeout(function () {
+          $('#form').modal('show');
+          localStorage.setItem('feedbackShown', 'true');
+        }, 3000);
+      }
+    });
+  
+    $('#form').on('hidden.bs.modal', function () {
+      localStorage.removeItem('feedbackShown');
+    });
+  </script> -->
+
+  <script type='text/javascript'>
+    $(document).ready(function () {
+      var feedbackShown = localStorage.getItem('feedbackShown');
+      if (!feedbackShown) {
+        setTimeout(function () {
+          $('#form').modal('show');
+          localStorage.setItem('feedbackShown', 'true');
+        }, 3000);
+      }
+    });
+
+    $('#form').on('hidden.bs.modal', function (e) {
+      if (e.target.id === 'form') {
+        localStorage.removeItem('feedbackShown');
+      }
+    });
+
+    $(window).on('beforeunload', function () {
+      localStorage.removeItem('feedbackShown');
+    });
   </script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
