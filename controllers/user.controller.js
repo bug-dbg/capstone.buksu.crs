@@ -13,7 +13,7 @@ const productionUrl = 'https://buksu-crs.systems'
 //     ? 'http://localhost:5000'
 //     : 'http://192.168.254.107:5000' || 'http://192.168.254.107:5000'
 const currentUrl = process.env.NODE_ENV === 'production'
-  ? process.env.PROD_URL
+  ? productionUrl
   : process.env.NODE_ENV === 'development'
     ? 'http://localhost:5000'
     : 'http://192.168.254.107:5000' || 'http:/10.50.27.68:5000' ||'http://192.168.1.162:5000'
