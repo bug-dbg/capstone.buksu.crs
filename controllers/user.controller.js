@@ -29,7 +29,7 @@ let transporter = nodemailer.createTransport({
 })
 
 const fetch = require('node-fetch');
-const { RECAPTCHA_SECRET } = '6Lf3DvUjAAAAABlWt0K5f1E7sk7Vw6VUhBAa5WbQ'; // Replace with your own reCAPTCHA secret key
+const { RECAPTCHA_SECRET } = '6Lc1lB8lAAAAAG-BnjV83APLlyS5m4mMrUFZ1txv'; // Replace with your own reCAPTCHA secret key
 
 const validateRecaptcha = async (token) => {
   const response = await fetch(`https://www.google.com/recaptcha/api/siteverify?secret=${RECAPTCHA_SECRET}&response=${token}`, {
