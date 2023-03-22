@@ -24,22 +24,55 @@
         }
     </script> -->
 
-    <script src="https://www.google.com/recaptcha/api.js?render=6LeWpR8lAAAAAG3z4f1BFqnohrHmny9YRQ3qdDj-"></script>
+    <!-- <script src="https://www.google.com/recaptcha/api.js?render=6LeWpR8lAAAAAG3z4f1BFqnohrHmny9YRQ3qdDj-"></script> -->
     <!-- reCAPTCHA -->
-    <script>
+    <!-- <script>
         document.getElementById('registerBtn').addEventListener('click', function(e) {
             e.preventDefault();
-            grecaptcha.execute('6LeWpR8lAAAAAG3z4f1BFqnohrHmny9YRQ3qdDj-', {action: 'register'}).then(function(token) {
-                var form = document.getElementById('form');
-                var input = document.createElement('input');
-                input.setAttribute('type', 'hidden');
-                input.setAttribute('name', 'recaptcha_response');
-                input.setAttribute('value', token);
-                form.appendChild(input);
-                form.submit();
+            grecaptcha.execute('6LeWpR8lAAAAAK9bVPXlySwHU0542JQPL6Sdri0i', {action: 'register'}).then(function(token) {
+                // var form = document.getElementById('form');
+                // var input = document.createElement('input');
+                // input.setAttribute('type', 'hidden');
+                // input.setAttribute('name', 'recaptcha_response');
+                // input.setAttribute('value', token);
+                // form.appendChild(input);
+                // form.submit();
+                var recaptchaResponse = document.getElementById('recaptchaResponse');
+                recaptchaResponse.value = token;
             });
         });
-    </script>
+    </script> -->
+
+    <!-- <script>
+        grecaptcha.ready(function() {
+          grecaptcha.execute('6LeWpR8lAAAAAK9bVPXlySwHU0542JQPL6Sdri0i', {action: '/register'}).then(function(token) {
+            var recaptchaResponse = document.getElementById('recaptchaResponse');
+            recaptchaResponse.value = token;
+          });
+        });
+      </script> -->
+
+      <!-- <script>
+        function onSubmit(token) {
+          alert('thanks ' + document.getElementById('field').value);
+        }
+    
+        function validate(event) {
+          event.preventDefault();
+          if (!document.getElementById('field').value) {
+            alert("You must add text to the required field");
+          } else {
+            grecaptcha.execute();
+          }
+        }
+    
+        function onload() {
+          var element = document.getElementById('submit');
+          element.onclick = validate;
+        }
+      </script>
+      <script src="https://www.google.com/recaptcha/api.js" async defer></script> -->
+
 
     <!-- <script>
         grecaptcha.ready(function() {
@@ -170,14 +203,16 @@
                     data-sitekey="6Lf3DvUjAAAAABlWt0K5f1E7sk7Vw6VUhBAa5WbQ" data-callback="onSubmit" type="submit"
                     value="Sign in"> -->
                     <!-- <button class="g-recaptcha btn" data-sitekey="6Lc1lB8lAAAAANfPXq4EJOJpTOGZ9ZMImerP3s-Q" data-callback="onSubmit" type="submit">Sign Up</button> -->
-               
-                    <button class="btn" id="registerBtn" type="submit">Sign Up</button>
+                    <button class="btn" type="submit">Sign Up</button>
+                  
+                 
                 
                 <div class="have-account">
                     <p>Already have an Account?<a id="sign-up" href="/">Sign up</a></p>
                 </div>
 
             </form>
+            <script>onload();</script>
         </div>
     </div>
 
