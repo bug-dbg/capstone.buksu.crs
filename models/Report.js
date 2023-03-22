@@ -1,12 +1,18 @@
 const mongoose = require('mongoose')
 
 const ReportSchema = new mongoose.Schema({
-    numberOfUsers: {
+    currentUserID: {
         type: String,
     },
-    coursePredictions: [{
+    prediction1: {
         type: String,
-    }]
+    },
+    prediction2: {
+        type: String,
+    },
+    prediction3: {
+        type: String,
+    },
 })
 
 const Reports = mongoose.model('Reports', ReportSchema)

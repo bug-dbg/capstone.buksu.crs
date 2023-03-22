@@ -682,18 +682,19 @@ i {
 
 .btn {
   padding: 10px 20px;
+  
 }
 
 /* Responsive styles */
 @media screen and (max-width: 767px) {
   .btn {
-    font-size: 0.8em;
+    font-size: 1em;
   }
 }
 
 @media screen and (max-width: 480px) {
   .btn {
-    font-size: 0.7em;
+    font-size: 0.9em;
     padding: 8px 16px;
   }
 }

@@ -14,12 +14,13 @@ const { Reports } = require('../models/Report')
 
 const productionUrl = 'https://ai.buksu-crs.systems'
 
-// const currentUrl = process.env.NODE_ENV === 'production' ? productionUrl : 'http://localhost:3000'
-const currentUrl = process.env.NODE_ENV === 'production'
-  ? productionUrl
-  : process.env.NODE_ENV === 'development'
-    ? 'http://localhost:3000'
-    : 'http://192.168.254.107:3000' || 'http:/10.50.27.68:3000' ||'http://192.168.1.162:3000'
+const currentUrl = process.env.NODE_ENV === 'production' ? productionUrl : 'http://localhost:3000'
+// const currentUrl = process.env.NODE_ENV === 'production'
+//   ? productionUrl
+//   : process.env.NODE_ENV === 'development'
+//     ? 'http://localhost:3000'
+//     : 'http://192.168.254.107:3000' || 'http://10.50.27.68:3000' ||'http://192.168.1.162:3000'
+
 
 
 const testCtrl = {
@@ -80,6 +81,22 @@ const testCtrl = {
                 //         db.close();
                 //     });
                 // });
+
+                // local update
+                // MongoClient.connect(localMongoUrl, { useUnifiedTopology: true })
+                //     .then(client => {
+                //         const db = client.db('CRS-Capstone-Project-LocalDB');
+                //         const collection = db.collection('testvalues');
+                //         const options = { upsert: true };
+                //         const filter = { currentQuestionID: id, currentUserID: userID};
+                //         const update = { $set: { value: answer } };
+
+                //         return collection.updateOne(filter, update, options);
+                //     })
+                //     .then(result => {
+                //         console.log(`${result.modifiedCount} document updated`);
+                //     })
+                //     .catch(error => console.error(error));
 
                 MongoClient.connect(url, { useUnifiedTopology: true })
                     .then(client => {
@@ -235,6 +252,44 @@ const testCtrl = {
                 // Sort the top three result of the recommendation
                 const topThreeResult = courses.sort((a, b) => b.ratings - a.ratings).slice(0, 3)
                 console.log(topThreeResult);
+
+                const reports = await Reports.find({currentUserID: userID})
+                
+                try {
+                    if(!reports) {
+                        const value = new Reports({
+                            currentUserID: userID,
+                            prediction1: topThreeResult[0].name,
+                            prediction2: topThreeResult[1].name,
+                            prediction3: topThreeResult[2].name,
+                        })
+        
+                        // console.log(value)
+                        await value.save()
+                    } else {
+                        MongoClient.connect(localMongoUrl, { useUnifiedTopology: true })
+                            .then(client => {
+                                const db = client.db('CRS-Capstone-Project-LocalDB');
+                                const collection = db.collection('reports');
+                                const options = { upsert: true };
+                                const filter = {currentUserID: userID};
+                                const update = { $set: {  
+                                    prediction1: topThreeResult[0].name,
+                                    prediction2: topThreeResult[1].name,
+                                    prediction3: topThreeResult[2].name, 
+                                }};
+
+                                return collection.updateOne(filter, update, options);
+                            })
+                            .then(result => {
+                                console.log(`${result.modifiedCount} document updated`);
+                            })
+                            .catch(error => console.error(error));
+                        }
+
+                }catch(err) {
+                    console.log("msg:" + err.message)
+                }
 
                 // add the top three result to the database for reports
 

@@ -610,6 +610,25 @@ section {
   padding-left: 10px;
 }
 
+.section-header {
+  text-align: justify;
+  text-justify: inter-word; /* Optional: improves word spacing */
+}
+
+@media screen and (max-width: 768px) {
+  .section-header h2 {
+    font-size: 30px;
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .section-header h2 {
+    font-size: 28px;
+    text-align: center;
+  }
+}
+
 /* 
 button {
     background-color: #1bb1dc;

@@ -51,7 +51,8 @@ def get_course_recommendation():
 
     # Load trained model
     try:
-        new_model = load_model('./models/final_crs_ai_trained_model.h5')
+        # new_model = load_model('./models/final_crs_ai_trained_model.h5')
+        new_model = load_model('./models/crs_trained_model_final.h5')
         actual_sample = np.array([request.get_json()])
 
         prediction = new_model.predict(actual_sample, batch_size=None, verbose=0, steps=None)

@@ -196,13 +196,13 @@
             <div class="d-flex justify-content-end count">
               <p>${currentQuestion + 1} out of  ${questions.length}</p>
             </div>
-            <header class="section-header">
+            <header class="section-header text-center">
               <h2>${currentQuestion + 1}. ${questions[currentQuestion].question}</h2>
             </header>
 
             <form id="form">
               <input type="hidden" name="id" value="${questions[currentQuestion]._id}">
-              <div class="row g-2" style="padding: 50px">
+              <div class="row g-2" style="padding: 30px">
                 <div class="col wow bounceInUp" data-aos="zoom-in" data-aos-delay="100">
                   <div class="radio-buttons ">
                     <label class="custom-radio" for="choice1">
