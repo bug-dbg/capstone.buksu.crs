@@ -24,8 +24,47 @@
         }
     </script> -->
 
-    <script src="https://www.google.com/recaptcha/api.js?render=6Lc1lB8lAAAAANfPXq4EJOJpTOGZ9ZMImerP3s-Q"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LeWpR8lAAAAAG3z4f1BFqnohrHmny9YRQ3qdDj-"></script>
+    <!-- reCAPTCHA -->
+    <script>
+        document.getElementById('registerBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            grecaptcha.execute('6LeWpR8lAAAAAG3z4f1BFqnohrHmny9YRQ3qdDj-', {action: 'register'}).then(function(token) {
+                var form = document.getElementById('form');
+                var input = document.createElement('input');
+                input.setAttribute('type', 'hidden');
+                input.setAttribute('name', 'recaptcha_response');
+                input.setAttribute('value', token);
+                form.appendChild(input);
+                form.submit();
+            });
+        });
+    </script>
 
+    <!-- <script>
+        grecaptcha.ready(function() {
+          grecaptcha.execute('6Lc1lB8lAAAAANfPXq4EJOJpTOGZ9ZMImerP3s-Q', {action: 'register'}).then(function(token) {
+            var recaptchaResponse = document.getElementById('recaptchaResponse');
+            recaptchaResponse.value = token;
+          });
+        });
+      </script> -->
+      <!-- <script>
+        document.getElementById('registerBtn').addEventListener('click', function(e) {
+          e.preventDefault();
+          grecaptcha.ready(function() {
+            grecaptcha.execute('6Lc1lB8lAAAAANfPXq4EJOJpTOGZ9ZMImerP3s-Q', {action: 'submit'}).then(function(token) {
+              var form = document.getElementById('form');
+              var input = document.createElement('input');
+              input.setAttribute('type', 'hidden');
+              input.setAttribute('name', 'token');
+              input.setAttribute('value', token);
+              form.appendChild(input);
+              form.submit();
+            });
+          });
+        });
+      </script> -->
     <!-- <script src="https://www.google.com/recaptcha/enterprise.js?render=6LfXoh4lAAAAALOoyVIgRYf6lSpPE2jPmm-BJMAY" async defer></script>
     <script>
         function onSubmit(token) {
@@ -79,7 +118,7 @@
                     </div>
                     <div class="div">
                         <h5>First Name</h5>
-                        <input class="input" type="name" name="firstName" id="firstName" required />
+                        <input class="input" type="name" name="firstName" id="firstName"  />
                     </div>
                 </div>
                 <div class="input-div one form-control">
@@ -88,7 +127,7 @@
                     </div>
                     <div class="div">
                         <h5>Last Name</h5>
-                        <input class="input" type="name" name="lastName" id="lastName" required/>
+                        <input class="input" type="name" name="lastName" id="lastName" />
                     </div>
                 </div>
                 <div class="input-div one form-control">
@@ -97,7 +136,7 @@
                     </div>
                     <div class="div ">
                         <h5>Email</h5>
-                        <input class="input" type="email" name="email" id="email" required/>
+                        <input class="input" type="email" name="email" id="email" />
                     </div>
                 </div>
                 <div class="input-div one form-control">
@@ -106,7 +145,7 @@
                     </div>
                     <div class="div ">
                         <h5>Password</h5>
-                        <input class="input" type="password" name="password" id="password" required/>
+                        <input class="input" type="password" name="password" id="password" />
                     </div>
                 </div>
                 <div class="input-div one form-control">
@@ -115,13 +154,13 @@
                     </div>
                     <div class="div ">
                         <h5>Confirm Password</h5>
-                        <input class="input" type="password" name="password2" id="password2" required/>
+                        <input class="input" type="password" name="password2" id="password2" />
                     </div>
                 </div>
 
                 <div class="checkbox-text">
                     <div class="checkbox-content">
-                        <input type="checkbox" id="terms" name="terms" value="true required">
+                        <input type="checkbox" id="terms" name="terms" value="true ">
                         <label for="termCon" class="text">I accepted all <a href="#" id="myBtn">terms and
                                 conditions</a></label>
                     </div>
@@ -130,7 +169,8 @@
                 <!-- <input type="submit" class="g-recaptcha btn" 
                     data-sitekey="6Lf3DvUjAAAAABlWt0K5f1E7sk7Vw6VUhBAa5WbQ" data-callback="onSubmit" type="submit"
                     value="Sign in"> -->
-                    <!-- <button class="g-recaptcha btn" data-sitekey="6Lf3DvUjAAAAABlWt0K5f1E7sk7Vw6VUhBAa5WbQ" data-callback="onSubmit" type="submit">Sign Up</button> -->
+                    <!-- <button class="g-recaptcha btn" data-sitekey="6Lc1lB8lAAAAANfPXq4EJOJpTOGZ9ZMImerP3s-Q" data-callback="onSubmit" type="submit">Sign Up</button> -->
+               
                     <button class="btn" id="registerBtn" type="submit">Sign Up</button>
                 
                 <div class="have-account">
@@ -409,23 +449,7 @@
         }
     </script>
 
-    <!-- reCAPTCHA -->
-    <script>
-        document.getElementById('registerBtn').addEventListener('click', function(e) {
-            e.preventDefault();
-            grecaptcha.ready(function() {
-                grecaptcha.execute('6Lc1lB8lAAAAANfPXq4EJOJpTOGZ9ZMImerP3s-Q', {action: 'submit'}).then(function(token) {
-                    var form = document.getElementById('form');
-                    var input = document.createElement('input');
-                    input.setAttribute('type', 'hidden');
-                    input.setAttribute('name', 'token');
-                    input.setAttribute('value', token);
-                    form.appendChild(input);
-                    form.submit();
-                });
-            });
-        });
-    </script>
+
 
 
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"

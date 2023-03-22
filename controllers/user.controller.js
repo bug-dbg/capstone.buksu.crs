@@ -28,11 +28,22 @@ let transporter = nodemailer.createTransport({
     }
 })
 
-const fetch = require('node-fetch');
-const { RECAPTCHA_SECRET } = '6Lc1lB8lAAAAAG-BnjV83APLlyS5m4mMrUFZ1txv'; // Replace with your own reCAPTCHA secret key
+// const fetch = require('node-fetch');
+// const { RECAPTCHA_SECRET } = '6Lc1lB8lAAAAAG-BnjV83APLlyS5m4mMrUFZ1txv'; // Replace with your own reCAPTCHA secret key
 
-const validateRecaptcha = async (token) => {
-  const response = await fetch(`https://www.google.com/recaptcha/api/siteverify?secret=${RECAPTCHA_SECRET}&response=${token}`, {
+// const validateRecaptcha = async (token) => {
+//   const response = await fetch(`https://www.google.com/recaptcha/api/siteverify?secret=${RECAPTCHA_SECRET}&response=${token}`, {
+//     method: 'POST'
+//   });
+//   const data = await response.json();
+//   return data.success;
+// }
+
+const fetch = require('node-fetch');
+
+async function verifyRecaptcha(token) {
+  const secretKey = '6LeWpR8lAAAAAK9bVPXlySwHU0542JQPL6Sdri0i';
+  const response = await fetch(`https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${token}`, {
     method: 'POST'
   });
   const data = await response.json();
@@ -128,7 +139,11 @@ function isEmail(email) {
 const userCtrl = {
     register: async (req, res) => {
         try {
-            const { token } = req.body
+            // const { token } = req.body
+            // recaptcha server side verification
+            const recaptchaResponse = req.body.recaptcha_response;
+            const isHuman = await verifyRecaptcha(recaptchaResponse);
+
             const { firstName, lastName, email, password, password2 } = req.body
             const { terms } = req.body
             const user = await Users.findOne({ email })
@@ -179,21 +194,28 @@ const userCtrl = {
                 createdAt: new Date()
             })
 
-            validateRecaptcha(token)
+            // validateRecaptcha(token)
             // Save to database
-            await newUser
-            .save()
-            .then((result) => {
-                // handle account verification
-                sendVerificationEmail(result, res)
-            })
-            .catch((err) => {
-                console.log(err)
 
-                let message = "An error occured while saving the user account!"
-                return res.render('register_view/register', { err: true, msg: message })
-            })
-
+            if (!isHuman) {
+                return res.render('register_view/register', { err: true, msg: 'You are not human!'})
+            } else {
+                // Process the form submission
+                await newUser
+                .save()
+                .then((result) => {
+                    // handle account verification
+                    sendVerificationEmail(result, res)
+                })
+                .catch((err) => {
+                    console.log(err)
+    
+                    let message = "An error occured while saving the user account!"
+                    return res.render('register_view/register', { err: true, msg: message })
+                })
+    
+            }
+          
             // add user to reports collection
 
 
