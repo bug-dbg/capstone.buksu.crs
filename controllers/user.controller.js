@@ -6,7 +6,17 @@ const { Reports } = require('../models/Report')
 
 const productionUrl = 'https://buksu-crs.systems'
 
-const currentUrl = process.env.NODE_ENV === 'production' ? productionUrl : 'http://localhost:5000'
+// const currentUrl = process.env.NODE_ENV === 'production' ? process.env.PROD_URL : 'http://localhost:5000' 
+// const currentUrl = process.env.NODE_ENV === 'production'
+//   ? process.env.PROD_URL
+//   : process.env.NODE_ENV === 'development'
+//     ? 'http://localhost:5000'
+//     : 'http://192.168.254.107:5000' || 'http://192.168.254.107:5000'
+const currentUrl = process.env.NODE_ENV === 'production'
+  ? process.env.PROD_URL
+  : process.env.NODE_ENV === 'development'
+    ? 'http://localhost:5000'
+    : 'http://192.168.254.107:5000' || 'http:/10.50.27.68:5000' ||'http://192.168.1.162:5000'
 
 const axios = require('axios')
 
@@ -39,16 +49,17 @@ let transporter = nodemailer.createTransport({
 //   return data.success;
 // }
 
-const fetch = require('node-fetch');
+// const fetch = require('node-fetch');
 
-async function verifyRecaptcha(token) {
-  const secretKey = '6LeWpR8lAAAAAK9bVPXlySwHU0542JQPL6Sdri0i';
-  const response = await fetch(`https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${token}`, {
-    method: 'POST'
-  });
-  const data = await response.json();
-  return data.success;
-}
+// async function verifyRecaptcha(token) {
+//   const secretKey = '6LeWpR8lAAAAAK9bVPXlySwHU0542JQPL6Sdri0i';
+//   const response = await fetch(`https://www.google.com/recaptcha/api/siteverify?secret=${secretKey}&response=${token}`, {
+//     method: 'POST'
+//   });
+//   const data = await response.json();
+//   console.log(data)
+//   return data.success;
+// }
 
 
 // testing
@@ -141,8 +152,9 @@ const userCtrl = {
         try {
             // const { token } = req.body
             // recaptcha server side verification
-            const recaptchaResponse = req.body.recaptcha_response;
-            const isHuman = await verifyRecaptcha(recaptchaResponse);
+            // console.log(req.body)
+            // const { recaptcha_response } = req.body;
+            // const isHuman = await verifyRecaptcha(recaptcha_response);
 
             const { firstName, lastName, email, password, password2 } = req.body
             const { terms } = req.body
@@ -194,55 +206,25 @@ const userCtrl = {
                 createdAt: new Date()
             })
 
-            // validateRecaptcha(token)
             // Save to database
+ 
+            await newUser
+            .save()
+            .then((result) => {
+                // handle account verification
+                sendVerificationEmail(result, res)
+            })
+            .catch((err) => {
+                console.log(err)
 
-            if (!isHuman) {
-                return res.render('register_view/register', { err: true, msg: 'You are not human!'})
-            } else {
-                // Process the form submission
-                await newUser
-                .save()
-                .then((result) => {
-                    // handle account verification
-                    sendVerificationEmail(result, res)
-                })
-                .catch((err) => {
-                    console.log(err)
+                let message = "An error occured while saving the user account!"
+                return res.render('register_view/register', { err: true, msg: message })
+            })
     
-                    let message = "An error occured while saving the user account!"
-                    return res.render('register_view/register', { err: true, msg: message })
-                })
-    
-            }
-          
-            // add user to reports collection
 
-
-            try{
-                const filter = { _id: '63de063a1e8e7041b46c0b85' };
-                const update = { numberOfUsers: await Users.countDocuments() };
-                const options = { upsert: true, new: true, setDefaultsOnInsert: true };
-                let report = await Reports.findOneAndUpdate(filter, update, options);
-    
-                if (!report) { // report was not found, create a new one
-                    const userCount = await Users.countDocuments();
-                    report = new Reports({
-                        numberOfUsers: userCount > 0 ? userCount : 1,
-                    });
-                    await report.save();
-                    
-                    console.log("Successfully created a new report document")
-                }     
-
-            } catch(err) {
-                console.log("msg:" + err.message)
-            }
         } catch (err) {
             return res.status(500).json({ msg: err.message })
         }
-
-
 
     },
 

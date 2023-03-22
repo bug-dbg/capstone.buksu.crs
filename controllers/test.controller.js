@@ -9,11 +9,17 @@ const client = new OAuth2Client(CLIENT_ID);
 
 var { MongoClient } = require('mongodb');
 var url = "mongodb+srv://Admin:pYg96SY5pQrNUpIo@cluster0.urjcmww.mongodb.net/?retryWrites=true&w=majority";
+var localMongoUrl = "mongodb://localhost/CRS-Capstone-Project-LocalDB"
 const { Reports } = require('../models/Report')
 
 const productionUrl = 'https://ai.buksu-crs.systems'
 
-const currentUrl = process.env.NODE_ENV === 'production' ? productionUrl : 'http://localhost:3000'
+// const currentUrl = process.env.NODE_ENV === 'production' ? productionUrl : 'http://localhost:3000'
+const currentUrl = process.env.NODE_ENV === 'production'
+  ? process.env.PROD_PYTHON_URL
+  : process.env.NODE_ENV === 'development'
+    ? 'http://localhost:3000'
+    : 'http://192.168.254.107:3000' || 'http:/10.50.27.68:3000' ||'http://192.168.1.162:3000'
 
 
 const testCtrl = {
@@ -75,7 +81,7 @@ const testCtrl = {
                 //     });
                 // });
 
-                MongoClient.connect(url, { useUnifiedTopology: true })
+                MongoClient.connect(localMongoUrl, { useUnifiedTopology: true })
                     .then(client => {
                         const db = client.db('test');
                         const collection = db.collection('testvalues');

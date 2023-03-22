@@ -15,7 +15,14 @@ const { TestValue } = require('../models/TestValue')
 
 const productionUrl = 'https://ai.buksu-crs.systems'
 
-const currentUrl = process.env.NODE_ENV === 'production' ? productionUrl : 'http://localhost:3000'
+// const currentUrl = process.env.NODE_ENV === 'production' ? productionUrl : 'http://localhost:3000'
+
+const currentUrl = process.env.NODE_ENV === 'production'
+  ? process.env.PROD_PYTHON_URL
+  : process.env.NODE_ENV === 'development'
+    ? 'http://localhost:3000'
+    : 'http://192.168.254.107:3000' || 'http:/10.50.27.68:3000' ||'http://192.168.1.162:3000'
+        
 
 const emailSender = {
     sendEmail: async (req, res) => {
