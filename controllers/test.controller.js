@@ -81,7 +81,7 @@ const testCtrl = {
                 //     });
                 // });
 
-                MongoClient.connect(localMongoUrl, { useUnifiedTopology: true })
+                MongoClient.connect(url, { useUnifiedTopology: true })
                     .then(client => {
                         const db = client.db('test');
                         const collection = db.collection('testvalues');

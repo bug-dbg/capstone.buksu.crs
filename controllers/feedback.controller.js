@@ -53,7 +53,7 @@ const feedbackCtrl = {
                 var userID = req.user.id
 
             } else {
-                console.log('Something went wrong when getting user!')
+                console.log('Something went wrong when getting user ID!')
             }
 
             const newFeedback = new Feedbacks({
