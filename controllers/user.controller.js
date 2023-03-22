@@ -28,6 +28,17 @@ let transporter = nodemailer.createTransport({
     }
 })
 
+const fetch = require('node-fetch');
+const { RECAPTCHA_SECRET } = '6Lf3DvUjAAAAABlWt0K5f1E7sk7Vw6VUhBAa5WbQ'; // Replace with your own reCAPTCHA secret key
+
+const validateRecaptcha = async (token) => {
+  const response = await fetch(`https://www.google.com/recaptcha/api/siteverify?secret=${RECAPTCHA_SECRET}&response=${token}`, {
+    method: 'POST'
+  });
+  const data = await response.json();
+  return data.success;
+}
+
 
 // testing
 
@@ -70,7 +81,7 @@ const sendVerificationEmail = ({_id, email}, res) => {
                 userID: _id,
                 uniqueString: hashUniqueString,
                 createdAt: Date.now(),
-                expiresAt: + (3 * 60 * 1000) // 3 minutes in milliseconds
+                expiresAt: Date.now() + (3 * 60 * 1000) // 3 minutes in milliseconds
             })
 
             newVerification
@@ -117,6 +128,7 @@ function isEmail(email) {
 const userCtrl = {
     register: async (req, res) => {
         try {
+            const { token } = req.body
             const { firstName, lastName, email, password, password2 } = req.body
             const { terms } = req.body
             const user = await Users.findOne({ email })
@@ -155,7 +167,6 @@ const userCtrl = {
 
             
 
-          
 
             // Password Encryption
             const passwordHash = await bcrypt.hash(password, 10)
@@ -164,9 +175,11 @@ const userCtrl = {
                 lastName, 
                 email, 
                 encryptedPassword: passwordHash,
-                verified: false
+                verified: false,
+                createdAt: new Date()
             })
 
+            validateRecaptcha(token)
             // Save to database
             await newUser
             .save()
@@ -402,5 +415,16 @@ const userCtrl = {
         res.redirect('/')
     }
 }
+
+// setInterval(async () => {
+//     const unverifiedUsers = await Users.find({
+//       verified: false,
+//       createdAt: { $lt: new Date(Date.now() - 3 * 60 * 1000) } // 3 minutes in milliseconds
+//     });
+  
+//     for (const user of unverifiedUsers) {
+//       await user.remove();
+//     }
+//   }, 60 * 1000); // run every minute
 
 module.exports = userCtrl

@@ -22,13 +22,13 @@ const emailSender = {
 
         try {
 
-        
             var accessToken = req.cookies['access-token']
             var user = verify(accessToken, process.env.JWT_SECRET)
 
 
             if (user) {
                 req.user = user
+                var normalSignedEmail = req.user.email
                 var userID = req.user.id
 
             } else {
@@ -116,12 +116,12 @@ const emailSender = {
                 } else {
                     var mainOptions = {
                         from: 'buksu.crs@gmail.com',
-                        to: normalSignedEmail || googleSignedEmail,
+                        to: normalSignedEmail,
                         subject: 'Buksu CRS Result',
                         html: data
                     }
 
-                    console.log(normalSignedEmail || googleSignedEmail)
+                    console.log(normalSignedEmail)
 
                     console.log("html data ======================>", mainOptions.html);
 

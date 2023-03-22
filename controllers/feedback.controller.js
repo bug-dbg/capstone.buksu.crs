@@ -12,6 +12,7 @@ const feedbackCtrl = {
         
             var accessToken = req.cookies['access-token']
             var user = verify(accessToken, process.env.JWT_SECRET)
+            const { userFeedback } = req.body
 
 
             if (user) {
@@ -19,7 +20,7 @@ const feedbackCtrl = {
                 var userID = req.user.id
 
             } else {
-                console.log('Something went wrong when getting user ID!')
+                console.log('Something went wrong when getting user!')
             }
 
 
@@ -44,6 +45,7 @@ const feedbackCtrl = {
 
             var accessToken = req.cookies['access-token']
             var user = verify(accessToken, process.env.JWT_SECRET)
+            const { userFeedback } = req.body
 
 
             if (user) {
@@ -51,13 +53,12 @@ const feedbackCtrl = {
                 var userID = req.user.id
 
             } else {
-                console.log('Something went wrong when getting user ID!')
+                console.log('Something went wrong when getting user!')
             }
-
 
             const newFeedback = new Feedbacks({
                 userFeedback,
-                userID: userID
+                userID: userID 
 
             })
 

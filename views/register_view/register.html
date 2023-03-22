@@ -16,13 +16,32 @@
 
     <!-- <script defer src="/js/client-side_validation.js"></script> -->
 
-    <!-- Google recaptcha-->
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <!--  Google recaptcha-->
+    <!-- <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script>
         function onSubmit(token) {
             document.getElementById("form").submit();
         }
-    </script>
+    </script> -->
+
+    <script src="https://www.google.com/recaptcha/api.js?render=6Lf3DvUjAAAAABlWt0K5f1E7sk7Vw6VUhBAa5WbQ"></script>
+
+    <!-- <script src="https://www.google.com/recaptcha/enterprise.js?render=6LfXoh4lAAAAALOoyVIgRYf6lSpPE2jPmm-BJMAY" async defer></script>
+    <script>
+        function onSubmit(token) {
+            document.getElementById("form").submit();
+        }
+    </script> -->
+
+    <!-- <<script src="https://www.google.com/recaptcha/enterprise.js?render=6LfXoh4lAAAAALOoyVIgRYf6lSpPE2jPmm-BJMAY"></script>
+    <script>
+    grecaptcha.enterprise.ready(function() {
+        grecaptcha.enterprise.execute('6LfXoh4lAAAAALOoyVIgRYf6lSpPE2jPmm-BJMAY', {action: 'login'}).then(function(token) {
+            document.getElementById("form").submit();
+        
+        });
+    });
+    </script> -->
 
     <title>Sign Up</title>
 </head>
@@ -60,7 +79,7 @@
                     </div>
                     <div class="div">
                         <h5>First Name</h5>
-                        <input class="input" type="name" name="firstName" id="firstName" value="<%= typeof firstName !== 'undefined' ? firstName : '' %>" />
+                        <input class="input" type="name" name="firstName" id="firstName" required />
                     </div>
                 </div>
                 <div class="input-div one form-control">
@@ -69,7 +88,7 @@
                     </div>
                     <div class="div">
                         <h5>Last Name</h5>
-                        <input class="input" type="name" name="lastName" id="lastName" value="<%= typeof lastName !== 'undefined' ? lastName : '' %>"/>
+                        <input class="input" type="name" name="lastName" id="lastName" required/>
                     </div>
                 </div>
                 <div class="input-div one form-control">
@@ -78,7 +97,7 @@
                     </div>
                     <div class="div ">
                         <h5>Email</h5>
-                        <input class="input" type="email" name="email" id="email" value="<%= typeof email !== 'undefined' ? email : '' %>"/>
+                        <input class="input" type="email" name="email" id="email" required/>
                     </div>
                 </div>
                 <div class="input-div one form-control">
@@ -87,7 +106,7 @@
                     </div>
                     <div class="div ">
                         <h5>Password</h5>
-                        <input class="input" type="password" name="password" id="password" value="<%= typeof password !== 'undefined' ? password : '' %>"/>
+                        <input class="input" type="password" name="password" id="password" required/>
                     </div>
                 </div>
                 <div class="input-div one form-control">
@@ -96,13 +115,13 @@
                     </div>
                     <div class="div ">
                         <h5>Confirm Password</h5>
-                        <input class="input" type="password" name="password2" id="password2" value="<%= typeof password2 !== 'undefined' ? password2 : '' %>"/>
+                        <input class="input" type="password" name="password2" id="password2" required/>
                     </div>
                 </div>
 
                 <div class="checkbox-text">
                     <div class="checkbox-content">
-                        <input type="checkbox" id="terms" name="terms" value="<%= typeof terms !== 'undefined' ? terms : '' ? terms: true %>">
+                        <input type="checkbox" id="terms" name="terms" value="true required">
                         <label for="termCon" class="text">I accepted all <a href="#" id="myBtn">terms and
                                 conditions</a></label>
                     </div>
@@ -111,7 +130,8 @@
                 <!-- <input type="submit" class="g-recaptcha btn" 
                     data-sitekey="6Lf3DvUjAAAAABlWt0K5f1E7sk7Vw6VUhBAa5WbQ" data-callback="onSubmit" type="submit"
                     value="Sign in"> -->
-                    <button class="g-recaptcha btn" data-sitekey="6Lf3DvUjAAAAABlWt0K5f1E7sk7Vw6VUhBAa5WbQ" data-callback="onSubmit" type="submit">Sign Up</button>
+                    <!-- <button class="g-recaptcha btn" data-sitekey="6Lf3DvUjAAAAABlWt0K5f1E7sk7Vw6VUhBAa5WbQ" data-callback="onSubmit" type="submit">Sign Up</button> -->
+                    <button class="btn" id="registerBtn" type="submit">Sign Up</button>
                 
                 <div class="have-account">
                     <p>Already have an Account?<a id="sign-up" href="/">Sign up</a></p>
@@ -387,6 +407,24 @@
             modal.style.display = "none";
             // Add your decline button logic here
         }
+    </script>
+
+    <!-- reCAPTCHA -->
+    <script>
+        document.getElementById('registerBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            grecaptcha.ready(function() {
+                grecaptcha.execute('6Lf3DvUjAAAAABlWt0K5f1E7sk7Vw6VUhBAa5WbQ', {action: 'submit'}).then(function(token) {
+                    var form = document.getElementById('form');
+                    var input = document.createElement('input');
+                    input.setAttribute('type', 'hidden');
+                    input.setAttribute('name', 'token');
+                    input.setAttribute('value', token);
+                    form.appendChild(input);
+                    form.submit();
+                });
+            });
+        });
     </script>
 
 
