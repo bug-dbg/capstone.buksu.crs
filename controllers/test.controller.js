@@ -267,9 +267,9 @@ const testCtrl = {
                         // console.log(value)
                         await value.save()
                     } else {
-                        MongoClient.connect(localMongoUrl, { useUnifiedTopology: true })
+                        MongoClient.connect(url, { useUnifiedTopology: true })
                             .then(client => {
-                                const db = client.db('CRS-Capstone-Project-LocalDB');
+                                const db = client.db('test');
                                 const collection = db.collection('reports');
                                 const options = { upsert: true };
                                 const filter = {currentUserID: userID};
