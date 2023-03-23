@@ -57,7 +57,7 @@ const testCtrl = {
 
             const { id, answer } = req.body
 
-            const questionID = await TestValue.findOne({ currentQuestionID: id })
+            const questionID = await TestValue.findOne({ currentQuestionID: id, currentUserID: userID})
 
             if (!questionID) {
                 const value = new TestValue({
@@ -267,9 +267,9 @@ const testCtrl = {
                         // console.log(value)
                         await value.save()
                     } else {
-                        MongoClient.connect(url, { useUnifiedTopology: true })
+                        MongoClient.connect(localMongoUrl, { useUnifiedTopology: true })
                             .then(client => {
-                                const db = client.db('test');
+                                const db = client.db('CRS-Capstone-Project-LocalDB');
                                 const collection = db.collection('reports');
                                 const options = { upsert: true };
                                 const filter = {currentUserID: userID};
