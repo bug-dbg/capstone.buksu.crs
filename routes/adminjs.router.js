@@ -8,6 +8,7 @@ const { default: mongoose } = require('mongoose')
 const MongoStore = require('connect-mongo')
 
 const mongodbUrl = "mongodb+srv://Admin:pYg96SY5pQrNUpIo@cluster0.urjcmww.mongodb.net/?retryWrites=true&w=majority"
+const localMongoUrl = "mongodb://localhost/CRS-Capstone-Project-LocalDB"
 
 
 /**
@@ -29,7 +30,16 @@ const buildAdminRouter = (admin) => {
   }, null, {
     resave: false,
     saveUninitialized: true,
-    store: MongoStore.create({ mongoUrl: mongodbUrl})
+    store: MongoStore.create({ 
+      mongoUrl: mongodbUrl,
+      touchAfter: 3600, // time period in seconds
+      crypto: {
+        secret: 'process.env.JWT_SECRET'
+      },
+      autoRemove: 'interval',
+      autoRemoveInterval: 180, // 180 minutes, or 3 hours
+      ttl: 60 * 60 * 3 // 3 hours in seconds
+    })
   })
   return router
 }
