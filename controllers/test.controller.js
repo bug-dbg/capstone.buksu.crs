@@ -253,6 +253,7 @@ const testCtrl = {
                 const topThreeResult = courses.sort((a, b) => b.ratings - a.ratings).slice(0, 3)
                 console.log(topThreeResult);
 
+                // add the top three result to the database for reports
                 const reports = await Reports.find({currentUserID: userID})
                 
                 try {
@@ -267,9 +268,9 @@ const testCtrl = {
                         // console.log(value)
                         await value.save()
                     } else {
-                        MongoClient.connect(localMongoUrl, { useUnifiedTopology: true })
+                        MongoClient.connect(url, { useUnifiedTopology: true })
                             .then(client => {
-                                const db = client.db('CRS-Capstone-Project-LocalDB');
+                                const db = client.db('test');
                                 const collection = db.collection('reports');
                                 const options = { upsert: true };
                                 const filter = {currentUserID: userID};
@@ -291,48 +292,6 @@ const testCtrl = {
                     console.log("msg:" + err.message)
                 }
 
-                // add the top three result to the database for reports
-
-                // try{
-                //     const filter = { _id: '63de063a1e8e7041b46c0b85' };
-                //     const update = { numberOfUsers: await Users.countDocuments() };
-                //     const options = { upsert: true, new: true, setDefaultsOnInsert: true };
-                //     let report = await Reports.findOneAndUpdate(filter, update, options);
-
-                //     if (!report) { // report was not found, create a new one
-                //         const userCount = await Users.countDocuments();
-                //         report = new Reports({
-                //             numberOfUsers: userCount > 0 ? userCount : 1,
-                //         });
-                //         await report.save();
-
-                //         console.log("Successfully created a new report document")
-                //     }     
-
-                // } catch(err) {
-                //     console.log("msg:" + err.message)
-                // }
-
-                // const courseName = [
-                //     'Bachelor of Science in Biology Major in Biotechnology','Bachelor of Science in Environmental Science Major in Environmental Heritage Studies', 'Bachelor of Arts in English Language', 'Bachelor of Arts in Economics', 'Bachelor of Arts in Sociology', 'Bachelor of Arts in Philosophy', 'Bachelor of Arts in Social Sciences', 'Bachelor of Science in Mathematics', 'Bachelor of Science in Community Development', 'Bachelor of Science in Development Communication', 'Bachelor of Public Administration Major in Local Governance', 'Bachelor of Science in Nursing', 'Bachelor of Science in Accountancy', 'Bachelor of Science in Business Administration Major in Financial Management', 'Bachelor of Science in Hospitality Management', 'Bachelor of Science in Automotive Technology', 'Bachelor of Science in Electronics Technology', 'Bachelor of Science in Food Technology', 'Bachelor of Science in Information Technology', 'Bachelor of Science in Entertainment and Multimedia Computing major in Digital Animation Technology Game Development', 'Bachelor of Elementary Education', 'Bachelor of Secondary Education Major in Mathematics', 'Bachelor of Secondary Education Major in Filipino', 'Bachelor of Secondary Education Major in English', 'Bachelor of Secondary Education Major in Social Studies', 'Bachelor of Secondary Education Major in Science', 'Bachelor of Early Childhood Education', 'Bachelor of Physical Education']; 
-                // const filter = { _id: '63de063a1e8e7041b46c0b85' }; // replace with actual report ID
-                // const update = { $inc: { [`coursePredictions.${courseName}`]: 1 } };
-                // const options = { upsert: true, new: true, setDefaultsOnInsert: true };
-
-                // try {
-                //     let report = await Reports.findOneAndUpdate(filter, update, options);
-
-                //     if (!report) { // report was not found, create a new one
-                //         report = new Reports({
-                //             numberOfUsers: await Users.countDocuments(),
-                //             coursePredictions: { [courseName]: 1 }
-                //         });
-                //         await report.save();
-                //         console.log("Successfully created a new report document")
-                //     }
-                // } catch (err) {
-                //     console.log("msg:" + err.message)
-                // }
 
                 return res.render('result_page/result', { prediction: topThreeResult });
 
