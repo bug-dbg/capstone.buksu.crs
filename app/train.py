@@ -103,7 +103,7 @@ def get_course_recommendation():
         [5,5,5,5,5,2,5,1,2,3,2,1,1,1,2,5,5,4,4,5,3,3,3,4,4,3,4,3,5,5,5,4,5,5,5,4,4,3,4,3,4,3,3,3,3,3,4,5,5,5,5,5,5,4,4,5,5,5,4,4,3,5,5,4,4,5,5,5,4,4,4,4,4,4,3,3,3,4,4,4,4,4], 
         [5,4,4,5,4,3,5,4,4,4,4,4,2,4,5,5,5,3,3,3,3,3,2,4,4,3,3,3,4,4,4,4,4,4,4,4,4,5,4,5,4,5,4,4,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,4,5,5,3,4], 
         [5,5,5,5,5,2,5,1,2,3,2,1,1,1,2,5,4,4,4,5,3,3,3,4,4,3,4,3,5,5,5,4,5,5,5,4,4,3,4,3,4,3,3,3,3,3,4,5,5,5,5,5,5,4,4,5,5,5,4,4,3,5,5,4,4,5,5,5,4,4,4,4,4,4,3,3,3,4,4,4,4,4], 
-        [5,5,5,5,5,2,5,1,2,3,2,1,1,1,2,5,4,4,4,5,3,3,3,4,4,3,4,3,5,5,5,4,5,5,5,4,4,3,4,3,4,3,3,3,3,3,4,5,5,5,5,5,5,4,4,5,5,5,4,4,3,5,5,4,4,5,5,5,4,4,4,4,4,4,3,3,3,4,4,4,4,4], 
+        [5,1,1,2,5,1,5,1,2,1,1,1,1,1,1,1,1,2,2,2,2,2,3,1,1,1,1,1,3,3,3,3,4,4,4,4,4,2,4,1,4,4,4,1,4,5,4,5,5,4,4,5,5,5,5,5,5,5,5,5,3,2,2,2,1,5,5,1,1,1,1,4,1,1,1,1,1,1,1,1,1,1], 
         [5,5,5,5,5,2,5,1,2,3,2,1,1,1,2,5,4,4,4,5,3,3,3,4,4,3,4,3,5,5,5,4,5,5,5,4,4,3,4,3,4,3,3,3,3,3,4,5,5,5,5,5,5,4,4,5,5,5,4,4,3,5,5,4,4,5,5,5,4,4,4,4,4,4,3,3,3,4,4,4,4,4], 
         [5,5,5,5,5,2,5,1,2,3,2,1,1,1,2,5,4,4,4,5,3,3,3,4,4,3,4,3,5,5,5,4,5,5,5,4,4,3,4,3,4,3,3,3,3,3,4,5,5,5,5,5,5,4,4,5,5,5,4,4,3,5,5,4,4,5,5,5,4,4,4,4,4,4,3,3,3,4,4,4,4,4], 
         [5,5,5,5,5,2,5,1,2,3,2,1,1,1,2,5,4,4,4,5,3,3,3,4,4,3,4,3,5,5,5,4,5,5,5,4,4,3,4,3,4,3,3,3,3,3,4,5,5,5,5,5,5,4,4,5,5,5,4,4,3,5,5,4,4,5,5,5,4,4,4,4,4,4,3,3,3,4,4,4,4,4], 
@@ -116,7 +116,7 @@ def get_course_recommendation():
     train_labels = np.array(train_labels)
     train_samples = np.array(train_samples)
     # used the shuffle function to shuffle both train samples and labels to remove any impose order for the data generation process
-    # train_labels, train_samples = shuffle(train_labels, train_samples)
+    train_labels, train_samples = shuffle(train_labels, train_samples)
 
     # we are normalizing or standardizing the data to train the data much quicker and effecient
     # MinMaxScaler function is use to create a feature range of (0 - 1)
@@ -156,14 +156,14 @@ def get_course_recommendation():
     print("%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
 
     # Save trained model
-    if os.path.isfile('models/march_15_v5_crs_data_model.h5') is False:
-        model.save('models/march_15_v5_crs_data_model.h5')
+    if os.path.isfile('models/crs_trained_model_final101.h5') is False:
+        model.save('models/crs_trained_model_final101.h5')
 
 
     
     # # Load trained model
     try:
-        new_model = load_model('models/march_15_v5_crs_data_model.h5')
+        new_model = load_model('models/crs_trained_model_final101.h5')
         # actual_sample = np.array([request.get_json()])
         actual_sample = np.array([5,4,5,4,4,2,5,3,3,4,3,4,2,4,3,3,3,3,2,3,3,2,1,3,3,2,1,2,3,4,4,3,4,4,4,4,3,3,3,2,3,3,2,2,2,3,2,2,2,4,3,3,3,3,1,3,3,4,3,1,2,2,4,4,2,3,3,3,3,3,3,3,2,2,2,2,1,1,1,2,1,2])
 
