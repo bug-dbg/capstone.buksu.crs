@@ -25,6 +25,10 @@ const testSchema = new mongoose.Schema({
     choice5: {
         type: String,
         default: "Strongly Disagree",
+    }, 
+    category: {
+        type: String,
+        required: true,
     }
 })
 

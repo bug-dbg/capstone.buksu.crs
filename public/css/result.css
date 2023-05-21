@@ -382,11 +382,14 @@ section {
   overflow: hidden;
 }
 
+.category-header {
+  padding-top: 50px;
+}
 
 /* Sections Header
 --------------------------------*/
 .section-header {
-  margin-top: 80px;
+  margin-top: 20px;
 }
 
 .section-header h3 {

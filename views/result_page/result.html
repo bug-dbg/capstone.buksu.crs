@@ -43,8 +43,8 @@
 
       <!-- <h1 class="logo me-auto"><a href="/home">CRS</a></h1> -->
       <!-- Uncomment below if you prefer to use an image logo -->
-      <a href="/home" class="logo me-auto"><img
-          src="https://res.cloudinary.com/chuy/image/upload/v1678365297/logo_uiawi7.png" alt="" class="img-fluid"></a>
+      <a href="/" class="logo me-auto"><img
+        src="/img/logo/logo.png" alt="" class="img-fluid"></a>
 
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
@@ -66,13 +66,24 @@
   <!-- ======= Services Section ======= -->
   <section id="result" class="result section-bg">
     <div class="container" data-aos="fade-up">
+    
+   
+      <div class="row category-header">
+        
+      </div>
 
       <header class="section-header">
-        <h3>Recommendations</h3>
-        <p>These are the following recommendations that our systems made:</p>
-      </header>
+        <h3>Recommended Field</h3>
 
+        <div class="col-md-12 text-center" >
+          <span class="badge bg-primary text-white mb-3" style="font-size: 2.2rem;"><%= category %></span>
+        </div>
+
+        <p>These are the following courses under this field:</p>
+      </header>
+      
       <div class="row " id="foo">
+
         <% for(var i=0; i < prediction.length; i++) { %>
           <div class="col-md-6 offset-md-3 wow bounceInUp" style="margin-bottom: 25px;" data-aos="zoom-in"
             data-aos-delay="100">

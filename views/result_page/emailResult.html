@@ -333,6 +333,31 @@
       box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
       color: #007bff;
     }
+
+    span {
+      display: flex;
+      /* justify-content: center; */
+      align-items: center;
+      
+      background-color: #007bff;
+      border-radius: 30px;
+      text-align: center;
+      padding: 30px;
+    
+    }
+
+    .category-span {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* text-align: center; */
+      /* display: inline-block; */
+      font-size: 28px;
+      padding: 10px 20px;
+      margin-bottom: 30px;
+    }
+
+    
   </style>
 
 </head>
@@ -346,7 +371,7 @@
       <!-- <h1 class="logo me-auto"><a href="">CRS</a></h1> -->
       <!-- Uncomment below if you prefer to use an image logo -->
       <a href="index.html" class="logo me-auto"><img
-          src="https://res.cloudinary.com/chuy/image/upload/v1678365297/logo_uiawi7.png" alt="" class="img-fluid"></a>
+          src="https://res.cloudinary.com/chuy/image/upload/v1683006097/logo_-_Copy_n71c77.png" alt="" class="img-fluid"></a>
 
 
     </div>
@@ -357,8 +382,13 @@
     <div class="container" data-aos="fade-up">
 
       <header class="section-header">
-        <h3>Recommendations</h3>
-        <p>These are the following recommendations that our systems made:</p>
+        <h3>Recommended Field</h3>
+
+        <div class="category-span" >
+          <span style="font-size: 2.2rem; display: flex; justify-content: center; align-items: center;"><%= category %></span>
+        </div>
+
+        <p>These are the following courses under this field:</p>
       </header>
 
       <div class="row " id="foo">

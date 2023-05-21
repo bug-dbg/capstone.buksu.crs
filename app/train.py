@@ -79,7 +79,9 @@ def get_course_recommendation():
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0],
         [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
     ]
+    
     train_samples = [
+        
         [5,4,5,4,4,2,5,3,3,4,3,4,2,4,3,3,3,3,2,3,3,2,1,3,3,2,1,2,3,4,4,3,4,4,4,4,3,3,3,2,3,3,2,2,2,3,2,2,2,4,3,3,3,3,1,3,3,4,3,1,2,2,4,4,2,3,3,3,3,3,3,3,2,2,2,2,1,1,1,2,1,2], 
         [5,4,5,4,4,2,5,3,3,4,3,4,2,4,3,3,3,3,2,3,3,2,1,3,3,2,1,2,3,4,4,3,4,4,4,4,3,3,3,2,3,3,2,2,2,3,2,2,2,4,3,3,3,3,1,3,3,4,3,1,2,2,4,4,2,3,3,3,3,3,3,3,2,2,2,2,1,1,1,2,1,2], 
         [5,1,1,2,5,1,5,1,2,1,1,1,1,1,1,1,1,2,2,2,2,2,3,1,1,1,1,1,3,3,3,3,4,4,4,4,4,2,4,1,4,4,4,1,4,5,4,5,5,4,4,5,5,5,5,5,5,5,5,5,3,2,2,2,1,5,5,1,1,1,1,4,1,1,1,1,1,1,1,1,1,1], 
@@ -128,13 +130,22 @@ def get_course_recommendation():
     # reshape the data because the fit function does not accecpt 1 dimensional data
 
 
-    # training the data model
+    # # training the data model
+    # model = Sequential([
+    # # Dense(units = 28, activation = 'relu', input_shape = (28, 28, 82, 1)),
+    # # Dense(units = 82, activation = 'relu', input_shape = (scaled_train_samples.shape[1], )),
+    # Dense(units = 28, activation = 'relu', input_shape = (scaled_train_samples.shape[1], )),
+    # Dense(units = 32, activation = 'relu'),
+    # Dense(units = 28, activation = 'sigmoid')
+    # ])
+
+     # training the data model
     model = Sequential([
     # Dense(units = 28, activation = 'relu', input_shape = (28, 28, 82, 1)),
     # Dense(units = 82, activation = 'relu', input_shape = (scaled_train_samples.shape[1], )),
-    Dense(units = 28, activation = 'relu', input_shape = (scaled_train_samples.shape[1], )),
+    Dense(units = 16, activation = 'relu', input_shape = (scaled_train_samples.shape[1], )),
     Dense(units = 32, activation = 'relu'),
-    Dense(units = 28, activation = 'sigmoid')
+    Dense(units = 4, activation = 'sigmoid')
     ])
 
     print(model.summary())
@@ -150,30 +161,30 @@ def get_course_recommendation():
     # verbose, option to see output when we run the fit function
     # validation_split, it splits the portion of the training dataset to a validation dataset
 
-    model.fit(x=scaled_train_samples, y=train_labels, batch_size=10, epochs=5000)
+    model.fit(x=scaled_train_samples, y=train_labels, batch_size=10, epochs=1000)
     scores = model.evaluate(scaled_train_samples, train_labels, verbose=0)
 
     print("%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
 
     # Save trained model
-    if os.path.isfile('models/crs_trained_model_final101.h5') is False:
-        model.save('models/crs_trained_model_final101.h5')
+    if os.path.isfile('new_models/new_model.h5') is False:
+        model.save('new_models/new_model.h5')
 
 
     
     # # Load trained model
     try:
-        new_model = load_model('models/crs_trained_model_final101.h5')
+        new_model = load_model('new_models/new_model.h5')
         # actual_sample = np.array([request.get_json()])
-        actual_sample = np.array([5,4,5,4,4,2,5,3,3,4,3,4,2,4,3,3,3,3,2,3,3,2,1,3,3,2,1,2,3,4,4,3,4,4,4,4,3,3,3,2,3,3,2,2,2,3,2,2,2,4,3,3,3,3,1,3,3,4,3,1,2,2,4,4,2,3,3,3,3,3,3,3,2,2,2,2,1,1,1,2,1,2])
+        actual_sample = np.array([[73,58,97,79,91,46,30,50,44,72]])
 
         prediction = new_model.predict(actual_sample, batch_size=None, verbose=0, steps=None)
-        print(prediction)
+       
 
         convertedPrediction = np.array(prediction).tolist()
+        print(convertedPrediction)
 
-
-        return jsonify({'prediction': convertedPrediction})
+        # return jsonify({'prediction': convertedPrediction})
 
     except Exception as err:
         print(f"Unexpected {err=}, {type(err)=}")

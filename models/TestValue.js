@@ -12,6 +12,10 @@ const saveTestValueSchema = new mongoose.Schema({
     currentQuestionID: {
         type: String,
         required: true
+    },
+    category: {
+        type: String,
+        required: true
     }
     
    

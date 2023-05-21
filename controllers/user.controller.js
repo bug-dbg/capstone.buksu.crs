@@ -6,17 +6,18 @@ const { Reports } = require('../models/Report')
 
 const productionUrl = 'https://buksu-crs.systems'
 
-// const currentUrl = process.env.NODE_ENV === 'production' ? process.env.PROD_URL : 'http://localhost:5000' 
+const currentUrl = process.env.NODE_ENV === 'production' ? process.env.PROD_URL : 'http://localhost:5000' 
 // const currentUrl = process.env.NODE_ENV === 'production'
 //   ? process.env.PROD_URL
 //   : process.env.NODE_ENV === 'development'
 //     ? 'http://localhost:5000'
 //     : 'http://192.168.254.107:5000' || 'http://192.168.254.107:5000'
-const currentUrl = process.env.NODE_ENV === 'production'
-  ? productionUrl
-  : process.env.NODE_ENV === 'development'
-    ? 'http://localhost:5000'
-    : 'http://192.168.254.107:5000' || 'http:/10.50.27.68:5000' ||'http://192.168.1.162:5000'
+// const currentUrl = process.env.NODE_ENV === 'production'
+//   ? productionUrl
+//   : process.env.NODE_ENV === 'development'
+//     ? 'http://localhost:5000'
+//     : 'http://192.168.254.112:5000'
+//      // : 'http://10.50.27.68:5000'
 
 const axios = require('axios')
 
@@ -103,7 +104,7 @@ const sendVerificationEmail = ({_id, email}, res) => {
                 userID: _id,
                 uniqueString: hashUniqueString,
                 createdAt: Date.now(),
-                expiresAt: Date.now() + (3 * 60 * 1000) // 3 minutes in milliseconds
+                expiresAt: Date.now() + (5 * 60 * 1000) // 5 minutes in milliseconds
             })
 
             newVerification

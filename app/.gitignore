@@ -185,6 +185,6 @@ htmlcov/
 .coverage.*
 *,cover
 
-data
+
 # Ignore the default SQLite database.
 db.sqlite3

@@ -4,9 +4,9 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "nodemon server.js --host=10.50.27.68 || --host=192.168.254.107 || --host=192.168.1.162 --port=5000",
+    "test": "nodemon server.js --host=10.50.27.102 --port=5000",
     "start": "node server.js",
-    "dev": "concurrently \"npm run test\" \"cd ./app && python app.py\"",
+    "dev": "concurrently \"npm run test\" \"python ./app/app.py\"",
     "production": "concurrently \"npm run start\" \"python ./app/app.py\"",
     "build": "npm install"
   },

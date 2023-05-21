@@ -4,15 +4,12 @@ const ReportSchema = new mongoose.Schema({
     currentUserID: {
         type: String,
     },
-    prediction1: {
+    field: {
         type: String,
     },
-    prediction2: {
-        type: String,
-    },
-    prediction3: {
-        type: String,
-    },
+    courses: {
+        type: Array
+    }
 })
 
 const Reports = mongoose.model('Reports', ReportSchema)
